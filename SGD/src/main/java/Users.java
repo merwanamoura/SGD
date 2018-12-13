@@ -12,6 +12,10 @@ public class Users {
     
     private int idU;
     private String nom;
+
+    private int id;
+    private String test;
+
     private String pseudo; 
     private String passWord;
     
@@ -68,4 +72,5 @@ public class Users {
     
     
     
+
 }
