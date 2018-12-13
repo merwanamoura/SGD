@@ -1,10 +1,79 @@
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+class ListEntry
+{
+   private String value;
+   private ImageIcon icon;
+  
+   public ListEntry(String value, ImageIcon icon) {
+      this.value = value;
+      this.icon = icon;
+   }
+  
+   public String getValue() {
+      return value;
+   }
+  
+   public ImageIcon getIcon() {
+      return icon;
+   }
+  
+   public String toString() {
+      return value;
+   }
+}
+  
 
+class ListEntryCellRenderer
+ extends JLabel implements ListCellRenderer
+{
+   private JLabel label;
+  
+   public Component getListCellRendererComponent(JList list, Object value,  int index, boolean isSelected,  boolean cellHasFocus) 
+   {
+      ListEntry entry = (ListEntry) value;
+  
+      setText(value.toString());
+      setIcon(entry.getIcon());
+   
+      if (isSelected) {
+         setBackground(list.getSelectionBackground());
+         setForeground(list.getSelectionForeground());
+      }
+      else {
+         setBackground(list.getBackground());
+         setForeground(list.getForeground());
+      }
+  
+      setEnabled(list.isEnabled());
+      setFont(list.getFont());
+      setOpaque(true);
+  
+      return this;
+   }
+}
 /**
  *
  * @author ma522501
@@ -16,6 +85,20 @@ public class pageAcceuil extends javax.swing.JFrame {
      */
     public pageAcceuil() {
         initComponents();
+        fillJlistRecent();
+    }
+    
+    public void fillJlistRecent()
+    {
+        
+      DefaultListModel dlm = new DefaultListModel();
+      dlm.addElement(new ListEntry("mario", new ImageIcon("mario.png")));
+
+      JList list = new JList(dlm);
+      list.setCellRenderer(new ListEntryCellRenderer());
+     
+      jScrollPane1.add(list); jScrollPane1.setViewportView(list);
+
     }
 
     /**
@@ -38,29 +121,34 @@ public class pageAcceuil extends javax.swing.JFrame {
         recherche = new javax.swing.JButton();
         corps = new javax.swing.JPanel();
         nouveaujeupanel = new javax.swing.JPanel();
-        jScrollBar1 = new javax.swing.JScrollBar();
-        jPanel4 = new javax.swing.JPanel();
+        panneauprincipal = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelTop = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        panelmarge = new javax.swing.JPanel();
+        panelmarge2 = new javax.swing.JPanel();
+        panelmarge3 = new javax.swing.JPanel();
         nouveaujeupanel1 = new javax.swing.JPanel();
-        jScrollBar2 = new javax.swing.JScrollBar();
+        panneauprincipal1 = new javax.swing.JPanel();
+        jScrollPane1Populaire = new javax.swing.JScrollPane();
+        jListPopulaire = new javax.swing.JList<>();
+        panelTop1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        panelmarge1 = new javax.swing.JPanel();
+        panelmarge4 = new javax.swing.JPanel();
+        panelmarge5 = new javax.swing.JPanel();
         nouveaujeupanel2 = new javax.swing.JPanel();
-        jScrollBar3 = new javax.swing.JScrollBar();
-        jPanel11 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
+        panneauprincipal2 = new javax.swing.JPanel();
+        jScrollPane1Comment = new javax.swing.JScrollPane();
+        jListCommente = new javax.swing.JList<>();
+        panelTop2 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
+        panelmarge6 = new javax.swing.JPanel();
+        panelmarge7 = new javax.swing.JPanel();
+        panelmarge8 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,11 +170,16 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         jpanelrecherche.setLayout(new java.awt.BorderLayout());
 
-        backtoacceuil.setText("Acceuil");
+        backtoacceuil.setText("Accueil");
+        backtoacceuil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backtoacceuilActionPerformed(evt);
+            }
+        });
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
         barrerecherche.setText("Entrer votre recherche ...");
-        barrerecherche.setPreferredSize(new java.awt.Dimension(300, 19));
+        barrerecherche.setPreferredSize(new java.awt.Dimension(400, 19));
         jpanelrecherche.add(barrerecherche, java.awt.BorderLayout.CENTER);
 
         recherche.setText("Recherche");
@@ -99,194 +192,239 @@ public class pageAcceuil extends javax.swing.JFrame {
         corps.setLayout(new java.awt.GridLayout(1, 3));
 
         nouveaujeupanel.setLayout(new java.awt.BorderLayout());
-        nouveaujeupanel.add(jScrollBar1, java.awt.BorderLayout.CENTER);
 
-        jPanel4.setLayout(new java.awt.GridLayout(2, 1));
+        panneauprincipal.setMinimumSize(new java.awt.Dimension(36, 0));
+        panneauprincipal.setLayout(new java.awt.BorderLayout());
+        panneauprincipal.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        nouveaujeupanel.add(panneauprincipal, java.awt.BorderLayout.CENTER);
+
+        panelTop.setPreferredSize(new java.awt.Dimension(298, 100));
+        panelTop.setLayout(new java.awt.GridLayout(2, 1));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 352, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        jPanel4.add(jPanel5);
+        panelTop.add(jPanel5);
 
-        jLabel1.setText("jLabel1");
-        jPanel4.add(jLabel1);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Jeux récents");
+        panelTop.add(jLabel1);
 
-        nouveaujeupanel.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        nouveaujeupanel.add(panelTop, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+        panelmarge.setPreferredSize(new java.awt.Dimension(50, 235));
+
+        javax.swing.GroupLayout panelmargeLayout = new javax.swing.GroupLayout(panelmarge);
+        panelmarge.setLayout(panelmargeLayout);
+        panelmargeLayout.setHorizontalGroup(
+            panelmargeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
-        );
-
-        nouveaujeupanel.add(jPanel1, java.awt.BorderLayout.LINE_END);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
+        panelmargeLayout.setVerticalGroup(
+            panelmargeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
-        nouveaujeupanel.add(jPanel2, java.awt.BorderLayout.LINE_START);
+        nouveaujeupanel.add(panelmarge, java.awt.BorderLayout.EAST);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+        panelmarge2.setPreferredSize(new java.awt.Dimension(50, 335));
+
+        javax.swing.GroupLayout panelmarge2Layout = new javax.swing.GroupLayout(panelmarge2);
+        panelmarge2.setLayout(panelmarge2Layout);
+        panelmarge2Layout.setHorizontalGroup(
+            panelmarge2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        panelmarge2Layout.setVerticalGroup(
+            panelmarge2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
-        nouveaujeupanel.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        nouveaujeupanel.add(panelmarge2, java.awt.BorderLayout.LINE_START);
+
+        panelmarge3.setPreferredSize(new java.awt.Dimension(298, 50));
+
+        javax.swing.GroupLayout panelmarge3Layout = new javax.swing.GroupLayout(panelmarge3);
+        panelmarge3.setLayout(panelmarge3Layout);
+        panelmarge3Layout.setHorizontalGroup(
+            panelmarge3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 352, Short.MAX_VALUE)
+        );
+        panelmarge3Layout.setVerticalGroup(
+            panelmarge3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        nouveaujeupanel.add(panelmarge3, java.awt.BorderLayout.PAGE_END);
 
         corps.add(nouveaujeupanel);
 
         nouveaujeupanel1.setLayout(new java.awt.BorderLayout());
-        nouveaujeupanel1.add(jScrollBar2, java.awt.BorderLayout.CENTER);
 
-        jPanel6.setLayout(new java.awt.GridLayout(2, 1));
+        panneauprincipal1.setMinimumSize(new java.awt.Dimension(36, 0));
+        panneauprincipal1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1Populaire.setViewportView(jListPopulaire);
+
+        panneauprincipal1.add(jScrollPane1Populaire, java.awt.BorderLayout.CENTER);
+
+        nouveaujeupanel1.add(panneauprincipal1, java.awt.BorderLayout.CENTER);
+
+        panelTop1.setPreferredSize(new java.awt.Dimension(298, 100));
+        panelTop1.setLayout(new java.awt.GridLayout(2, 1));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 352, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        panelTop1.add(jPanel6);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Jeux populaire");
+        panelTop1.add(jLabel2);
+
+        nouveaujeupanel1.add(panelTop1, java.awt.BorderLayout.PAGE_START);
+
+        panelmarge1.setPreferredSize(new java.awt.Dimension(50, 235));
+
+        javax.swing.GroupLayout panelmarge1Layout = new javax.swing.GroupLayout(panelmarge1);
+        panelmarge1.setLayout(panelmarge1Layout);
+        panelmarge1Layout.setHorizontalGroup(
+            panelmarge1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        panelmarge1Layout.setVerticalGroup(
+            panelmarge1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
+        );
+
+        nouveaujeupanel1.add(panelmarge1, java.awt.BorderLayout.EAST);
+
+        panelmarge4.setPreferredSize(new java.awt.Dimension(50, 335));
+
+        javax.swing.GroupLayout panelmarge4Layout = new javax.swing.GroupLayout(panelmarge4);
+        panelmarge4.setLayout(panelmarge4Layout);
+        panelmarge4Layout.setHorizontalGroup(
+            panelmarge4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        panelmarge4Layout.setVerticalGroup(
+            panelmarge4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
+        );
+
+        nouveaujeupanel1.add(panelmarge4, java.awt.BorderLayout.LINE_START);
+
+        panelmarge5.setPreferredSize(new java.awt.Dimension(298, 50));
+
+        javax.swing.GroupLayout panelmarge5Layout = new javax.swing.GroupLayout(panelmarge5);
+        panelmarge5.setLayout(panelmarge5Layout);
+        panelmarge5Layout.setHorizontalGroup(
+            panelmarge5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 352, Short.MAX_VALUE)
+        );
+        panelmarge5Layout.setVerticalGroup(
+            panelmarge5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        nouveaujeupanel1.add(panelmarge5, java.awt.BorderLayout.PAGE_END);
+
+        corps.add(nouveaujeupanel1);
+
+        nouveaujeupanel2.setLayout(new java.awt.BorderLayout());
+
+        panneauprincipal2.setMinimumSize(new java.awt.Dimension(36, 0));
+        panneauprincipal2.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1Comment.setViewportView(jListCommente);
+
+        panneauprincipal2.add(jScrollPane1Comment, java.awt.BorderLayout.CENTER);
+
+        nouveaujeupanel2.add(panneauprincipal2, java.awt.BorderLayout.CENTER);
+
+        panelTop2.setPreferredSize(new java.awt.Dimension(298, 100));
+        panelTop2.setLayout(new java.awt.GridLayout(2, 1));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 352, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        jPanel6.add(jPanel7);
+        panelTop2.add(jPanel7);
 
-        jLabel2.setText("jLabel1");
-        jPanel6.add(jLabel2);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Jeux commentés");
+        panelTop2.add(jLabel3);
 
-        nouveaujeupanel1.add(jPanel6, java.awt.BorderLayout.PAGE_START);
+        nouveaujeupanel2.add(panelTop2, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+        panelmarge6.setPreferredSize(new java.awt.Dimension(50, 235));
+
+        javax.swing.GroupLayout panelmarge6Layout = new javax.swing.GroupLayout(panelmarge6);
+        panelmarge6.setLayout(panelmarge6Layout);
+        panelmarge6Layout.setHorizontalGroup(
+            panelmarge6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
-        );
-
-        nouveaujeupanel1.add(jPanel8, java.awt.BorderLayout.LINE_END);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
+        panelmarge6Layout.setVerticalGroup(
+            panelmarge6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
-        nouveaujeupanel1.add(jPanel9, java.awt.BorderLayout.LINE_START);
+        nouveaujeupanel2.add(panelmarge6, java.awt.BorderLayout.EAST);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+        panelmarge7.setPreferredSize(new java.awt.Dimension(50, 335));
+
+        javax.swing.GroupLayout panelmarge7Layout = new javax.swing.GroupLayout(panelmarge7);
+        panelmarge7.setLayout(panelmarge7Layout);
+        panelmarge7Layout.setHorizontalGroup(
+            panelmarge7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        nouveaujeupanel1.add(jPanel10, java.awt.BorderLayout.PAGE_END);
-
-        corps.add(nouveaujeupanel1);
-
-        nouveaujeupanel2.setLayout(new java.awt.BorderLayout());
-        nouveaujeupanel2.add(jScrollBar3, java.awt.BorderLayout.CENTER);
-
-        jPanel11.setLayout(new java.awt.GridLayout(2, 1));
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+        panelmarge7Layout.setVerticalGroup(
+            panelmarge7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
-        jPanel11.add(jPanel12);
+        nouveaujeupanel2.add(panelmarge7, java.awt.BorderLayout.LINE_START);
 
-        jLabel3.setText("jLabel1");
-        jPanel11.add(jLabel3);
+        panelmarge8.setPreferredSize(new java.awt.Dimension(298, 50));
 
-        nouveaujeupanel2.add(jPanel11, java.awt.BorderLayout.PAGE_START);
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelmarge8Layout = new javax.swing.GroupLayout(panelmarge8);
+        panelmarge8.setLayout(panelmarge8Layout);
+        panelmarge8Layout.setHorizontalGroup(
+            panelmarge8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 352, Short.MAX_VALUE)
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
+        panelmarge8Layout.setVerticalGroup(
+            panelmarge8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        nouveaujeupanel2.add(jPanel13, java.awt.BorderLayout.LINE_END);
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
-        );
-
-        nouveaujeupanel2.add(jPanel14, java.awt.BorderLayout.LINE_START);
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        nouveaujeupanel2.add(jPanel15, java.awt.BorderLayout.PAGE_END);
+        nouveaujeupanel2.add(panelmarge8, java.awt.BorderLayout.PAGE_END);
 
         corps.add(nouveaujeupanel2);
 
@@ -294,6 +432,11 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backtoacceuilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtoacceuilActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_backtoacceuilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,13 +464,15 @@ public class pageAcceuil extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(pageAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new pageAcceuil().setVisible(true);
+               
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -340,30 +485,35 @@ public class pageAcceuil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JList<String> jListCommente;
+    private javax.swing.JList<String> jListPopulaire;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JScrollBar jScrollBar2;
-    private javax.swing.JScrollBar jScrollBar3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane1Comment;
+    private javax.swing.JScrollPane jScrollPane1Populaire;
     private javax.swing.JPanel jpanelrecherche;
     private javax.swing.JButton mesjeuxbutton;
     private javax.swing.JPanel nouveaujeupanel;
     private javax.swing.JPanel nouveaujeupanel1;
     private javax.swing.JPanel nouveaujeupanel2;
     private javax.swing.JButton optsbuttons;
+    private javax.swing.JPanel panelTop;
+    private javax.swing.JPanel panelTop1;
+    private javax.swing.JPanel panelTop2;
+    private javax.swing.JPanel panelmarge;
+    private javax.swing.JPanel panelmarge1;
+    private javax.swing.JPanel panelmarge2;
+    private javax.swing.JPanel panelmarge3;
+    private javax.swing.JPanel panelmarge4;
+    private javax.swing.JPanel panelmarge5;
+    private javax.swing.JPanel panelmarge6;
+    private javax.swing.JPanel panelmarge7;
+    private javax.swing.JPanel panelmarge8;
+    private javax.swing.JPanel panneauprincipal;
+    private javax.swing.JPanel panneauprincipal1;
+    private javax.swing.JPanel panneauprincipal2;
     private javax.swing.JButton recherche;
     // End of variables declaration//GEN-END:variables
 }
