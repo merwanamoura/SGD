@@ -10,4 +10,5 @@
  */
 public class Users {
     private String nom;
+    private int id;
 }
