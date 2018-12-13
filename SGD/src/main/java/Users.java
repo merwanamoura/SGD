@@ -14,7 +14,6 @@ public class Users {
     private String nom;
 
     private int id;
-    private String test;
 
     private String pseudo; 
     private String passWord;
