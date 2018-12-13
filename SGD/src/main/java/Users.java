@@ -9,6 +9,8 @@
  * @author ma522501
  */
 public class Users {
+    
+    private int idU;
     private String nom;
     private String pseudo; 
     private String passWord;
@@ -19,12 +21,22 @@ public class Users {
     passWord="";
     }
     
-    public Users(String n, String p, String pwd){
-        nom=n;
-        pseudo=p;
-        passWord=pwd;
+
+       public void setIdU(int idU) {
+        this.idU = idU;
     }
 
+    public int getIdU() {
+        return idU;
+    }
+
+    public Users(int idU, String nom, String pseudo, String passWord) {
+        this.idU = idU;
+        this.nom = nom;
+        this.pseudo = pseudo;
+        this.passWord = passWord;
+    }
+    
     public String getNom() {
         return nom;
     }

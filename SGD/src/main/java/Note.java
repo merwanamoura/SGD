@@ -10,16 +10,26 @@
  */
 public class Note {
     
+    private int idJeu;
     private int val;
     private int nbLikes;
     private int nbDislikes;
 
-    public Note(int val, int nbLikes, int nbDislikes) {
+      public Note(int idJeu, int val, int nbLikes, int nbDislikes) {
+        this.idJeu = idJeu;
         this.val = val;
         this.nbLikes = nbLikes;
         this.nbDislikes = nbDislikes;
     }
+      
+    public void setIdJeu(int idJeu) {
+        this.idJeu = idJeu;
+    }
 
+    public int getIdJeu() {
+        return idJeu;
+    }
+    
     public int getVal() {
         return val;
     }

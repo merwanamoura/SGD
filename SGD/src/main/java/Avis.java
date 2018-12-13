@@ -8,14 +8,14 @@
  *
  * @author ai265149
  */
-public class Client extends Users {
-
-    public Client() {
-    }
-
-    public Client(int idU, String nom, String pseudo, String passWord) {
-        super(idU, nom, pseudo, passWord);
-    }
-
+public class Avis {
+    
+    private int idUser;
+    private int idJeu; 
+    private String avis;
+    private long dateCom;
+    
+    
+    
     
 }
