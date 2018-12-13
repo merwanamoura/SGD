@@ -16,7 +16,7 @@ public class Users {
     private String passWord;
     
     public Users(){
-    nom="";
+    nom="A";
     pseudo="";
     passWord="";
     }
