@@ -9,5 +9,5 @@
  * @author ma522501
  */
 public class Users {
-    
+    private String nom;
 }
