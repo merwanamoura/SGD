@@ -11,4 +11,5 @@
 public class Users {
     private String nom;
     private int id;
+    private String test;
 }
