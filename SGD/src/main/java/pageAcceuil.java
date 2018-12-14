@@ -4,6 +4,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -55,18 +56,18 @@ public class pageAcceuil extends javax.swing.JFrame {
         MongoCursor<Document> it;
         MongoCollection<Document> jeux = db.getCollection("jeux");
 
-        it = jeux.find().iterator();
-       
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        it = jeux.find().limit(10).iterator();
         
-        int cpt = 0;
-        while (it.hasNext() && cpt<10) 
+        
+        while (it.hasNext()) 
         {
             Document doc = it.next();
-            System.out.println(doc.get("dateSortie"));
-            dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/mario.png")));
+            File f = new File((String) doc.get("pathImage"));
+            
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+            else dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+            
 
-             cpt++;
         } 
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());

@@ -1,5 +1,6 @@
 
 import java.awt.Component;
+import java.awt.Image;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -46,7 +47,10 @@ class ListEntry
         ListEntry entry = (ListEntry) value;
 
         JLabel label2 = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        label2.setIcon(entry.getIcon());
+
+        ImageIcon imageIcon = new ImageIcon(entry.getIcon().getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT));
+        label2.setIcon(imageIcon);
+        
         label2.setHorizontalTextPosition(JLabel.RIGHT);
   
         return label2;
