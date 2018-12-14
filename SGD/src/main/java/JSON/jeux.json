@@ -45,7 +45,7 @@
     "nom": "Harry Potter and the Deathly Hallows ",
     "nomEditeur": "Microsoft",
     "categorie": "Aventure",
-    "dateSortie": "12/05/2012 ",
+    "dateSortie": ISODate('2012-05-12T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
   {
@@ -85,7 +85,7 @@
     "nom": "Dragon Ball Legends",
     "nomEditeur": "Bandai",
     "categorie": "Combat",
-    "dateSortie": "9/10/2017 ",
+    "dateSortie": ISODate('2017-11-07T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
   {
