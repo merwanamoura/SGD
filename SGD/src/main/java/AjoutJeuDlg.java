@@ -4,18 +4,98 @@
  * and open the template in the editor.
  */
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.*;
+import java.util.*;
+import org.bson.Document;
+
+import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.set;
+import static java.util.Arrays.asList;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
+
+
 /**
  *
  * @author at560075
  */
 public class AjoutJeuDlg extends javax.swing.JDialog {
 
+     MongoDatabase db;
+     boolean test = false;
     /**
      * Creates new form AjoutJeuDlg
      */
     public AjoutJeuDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        connexionBD();
+    }
+    
+    public void connexionBD()
+    {
+        char[] pass = new char[10];
+        String s = "hc047736";
+        pass = s.toCharArray();
+        MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
+        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
+        db = client.getDatabase("hc047736");
+        // Liste de collections 
+        for (String name : db.listCollectionNames())
+        {
+            System.out.println(name);
+        }
+    }
+    /*
+    
+    db.jeux.insertOne({"nomJeu":"Fortnite","Editeur":"Epic Games","dateSortie":"13/10/1997" ,"Categorie" : "BattleRoyale"})
+    
+    */
+    
+    public void ajouterJeu()
+    {
+        String nomJeu;
+        String Editeur;
+        String dateSortie;
+        String categorie;
+        
+        nomJeu = jeuText.getText();
+        Editeur = editeurText.getText();
+        dateSortie = dateText.getText();
+        categorie = categorieText.getText();
+        
+        if ( (!nomJeu.equals("")) && (!editeurText.equals(""))  && (!dateText.equals(""))  && (!categorieText.equals(""))   )
+        
+        {
+            MongoCollection<Document> jeux = db.getCollection("jeux");
+
+            Document doc = new Document("", "1234");
+            doc.append("nomJeu" ,nomJeu);
+            doc.append("Editeur" ,Editeur);
+            doc.append("dateSortie",dateSortie);
+            doc.append("Categorie",categorie); 
+
+            jeux.insertOne(doc); 
+            test = true;
+        }
+        else
+        {
+            
+            showMessageDialog(null, "Veuillez remplir tous les champs !");
+
+            
+        }
     }
 
     /**
@@ -29,7 +109,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         topPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        titre = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,20 +130,20 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         topPanel.setPreferredSize(new java.awt.Dimension(469, 80));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("VEUILLEZ AJOUTER VOTRE JEU");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titre.setText("VEUILLEZ AJOUTER VOTRE JEU");
+        titre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addComponent(titre, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -119,6 +199,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         rightPanel.add(categorieText);
 
         jButton2.setText("Valider");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         rightPanel.add(jButton2);
 
         jPanel2.add(rightPanel);
@@ -150,6 +235,19 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private void jeuTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jeuTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jeuTextActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        ajouterJeu();
+        if( test == true)
+        {
+            this.setVisible(false);
+        }
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,7 +297,6 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JTextField dateText;
     private javax.swing.JTextField editeurText;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -209,6 +306,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JTextField jeuText;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel rightPanel;
+    private javax.swing.JLabel titre;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
