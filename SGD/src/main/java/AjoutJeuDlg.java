@@ -21,7 +21,10 @@ import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.group;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.set;
+import java.awt.Color;
+import java.io.File;
 import static java.util.Arrays.asList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -34,6 +37,12 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
      MongoDatabase db;
      boolean test = false;
+     String nomJeu;
+     String Editeur;
+     String dateSortie;
+     String categorie;
+     String pathImage;
+     File f;
     /**
      * Creates new form AjoutJeuDlg
      */
@@ -65,37 +74,22 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     
     public void ajouterJeu()
     {
-        String nomJeu;
-        String Editeur;
-        String dateSortie;
-        String categorie;
         
-        nomJeu = jeuText.getText();
-        Editeur = editeurText.getText();
-        dateSortie = dateText.getText();
-        categorie = categorieText.getText();
         
-        if ( (!nomJeu.equals("")) && (!editeurText.equals(""))  && (!dateText.equals(""))  && (!categorieText.equals(""))   )
-        
-        {
+      
             MongoCollection<Document> jeux = db.getCollection("jeux");
 
             Document doc = new Document("", "1234");
             doc.append("nomJeu" ,nomJeu);
-            doc.append("Editeur" ,Editeur);
+            doc.append("editeur" ,Editeur);
             doc.append("dateSortie",dateSortie);
-            doc.append("Categorie",categorie); 
-
+            doc.append("categorie",categorie); 
+            doc.append("pathImage", pathImage);
+            
             jeux.insertOne(doc); 
             test = true;
-        }
-        else
-        {
-            
-            showMessageDialog(null, "Veuillez remplir tous les champs !");
-
-            
-        }
+        
+      
     }
 
     /**
@@ -116,12 +110,14 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         annulerButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         jeuText = new javax.swing.JTextField();
         editeurText = new javax.swing.JTextField();
         dateText = new javax.swing.JTextField();
         categorieText = new javax.swing.JTextField();
+        importButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -138,7 +134,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +147,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
-        leftPanel.setLayout(new java.awt.GridLayout(5, 1));
+        leftPanel.setLayout(new java.awt.GridLayout(6, 1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nom du jeu");
@@ -169,12 +165,21 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         jLabel5.setText("Catégorie");
         leftPanel.add(jLabel5);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Image");
+        leftPanel.add(jLabel1);
+
         annulerButton.setText("Annuler");
+        annulerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annulerButtonActionPerformed(evt);
+            }
+        });
         leftPanel.add(annulerButton);
 
         jPanel2.add(leftPanel);
 
-        rightPanel.setLayout(new java.awt.GridLayout(5, 1));
+        rightPanel.setLayout(new java.awt.GridLayout(6, 1));
 
         jeuText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,6 +203,15 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         });
         rightPanel.add(categorieText);
 
+        importButton.setBackground(new java.awt.Color(188, 188, 188));
+        importButton.setText("Import");
+        importButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importButtonActionPerformed(evt);
+            }
+        });
+        rightPanel.add(importButton);
+
         jButton2.setText("Valider");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,11 +228,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
 
         pack();
@@ -237,17 +251,57 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_jeuTextActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        ajouterJeu();
+        
+        nomJeu = jeuText.getText();
+        Editeur = editeurText.getText();
+        dateSortie = dateText.getText();
+        categorie = categorieText.getText();
+        pathImage = f.getAbsolutePath();
+         if ( (!nomJeu.equals("")) && (!editeurText.equals(""))  && (!dateText.equals(""))  && (!categorieText.equals("")) && (f != null)  )
+        
+        {
+            ajouterJeu();
+        }
+           else
+        {
+            
+            showMessageDialog(null, "Veuillez remplir tous les champs !");
+            
+        }
+        
         if( test == true)
         {
             this.setVisible(false);
         }
 
+        System.out.println(f.getAbsolutePath());
 
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void annulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerButtonActionPerformed
+
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_annulerButtonActionPerformed
+
+    private void importButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importButtonActionPerformed
+
+        JFileChooser chooser = new JFileChooser();
+        // optionally set chooser options ...
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+             f = chooser.getSelectedFile();
+             importButton.setText("Fichier importé");
+             importButton.setForeground(new java.awt.Color(0, 60, 0));
+             importButton.setEnabled(false);
+             importButton.setBackground(new java.awt.Color(240, 240, 240));
+        } else {
+            // user changed their mind
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_importButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,7 +350,9 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JTextField categorieText;
     private javax.swing.JTextField dateText;
     private javax.swing.JTextField editeurText;
+    private javax.swing.JButton importButton;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
