@@ -16,6 +16,26 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.*;
+import java.util.*;
+import org.bson.Document;
+
+import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.set;
+import static java.util.Arrays.asList;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -74,12 +94,23 @@ class ListEntryCellRenderer
       return this;
    }
 }
+
+
 /**
  *
  * @author ma522501
  */
 public class pageAcceuil extends javax.swing.JFrame {
-
+    
+    void mongoDBConnection()
+    {
+        char[] pass = new char[10];
+        String s = "hc047736";
+        pass = s.toCharArray();
+        MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
+        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
+        MongoDatabase db = client.getDatabase("hc047736");
+    }   
     /**
      * Creates new form pageAcceuil
      */
@@ -101,6 +132,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     }
 
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
