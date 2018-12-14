@@ -83,6 +83,12 @@
         <Component class="javax.swing.JTextField" name="pseudoField">
           <Properties>
             <Property name="text" type="java.lang.String" value="Entrer votre pseudo .."/>
+            <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Curseur de texte"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pseudoFieldMouseClicked"/>
@@ -118,11 +124,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Oui"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yesAdminActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="noAdmin">
               <Properties>
                 <Property name="text" type="java.lang.String" value="non"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noAdminActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -130,11 +142,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Annuler "/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelConnectButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="connectButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Se connecter"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

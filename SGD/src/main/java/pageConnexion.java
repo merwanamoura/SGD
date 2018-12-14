@@ -1,5 +1,16 @@
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.Arrays;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,6 +24,8 @@ import javax.swing.ButtonGroup;
  * @author ma522501
  */
 public class pageConnexion extends javax.swing.JFrame {
+    
+    private boolean adminChecked;
 
     /**
      * Creates new form pageConnexion
@@ -20,6 +33,11 @@ public class pageConnexion extends javax.swing.JFrame {
     public pageConnexion() {
         initComponents();
         // Exclusion de sélection
+        adminChecked=false;
+        noAdmin.setSelected(true);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         ButtonGroup group = new ButtonGroup();
         group.add(yesAdmin);
         group.add(noAdmin);
@@ -79,6 +97,8 @@ public class pageConnexion extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
 
         pseudoField.setText("Entrer votre pseudo ..");
+        pseudoField.setCaretColor(new java.awt.Color(0, 0, 0));
+        pseudoField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         pseudoField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pseudoFieldMouseClicked(evt);
@@ -108,17 +128,37 @@ public class pageConnexion extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.GridLayout(1, 2));
 
         yesAdmin.setText("Oui");
+        yesAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yesAdminActionPerformed(evt);
+            }
+        });
         jPanel3.add(yesAdmin);
 
         noAdmin.setText("non");
+        noAdmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                noAdminActionPerformed(evt);
+            }
+        });
         jPanel3.add(noAdmin);
 
         jPanel1.add(jPanel3);
 
         cancelConnectButton.setText("Annuler ");
+        cancelConnectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelConnectButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(cancelConnectButton);
 
         connectButton.setText("Se connecter");
+        connectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(connectButton);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -139,6 +179,70 @@ public class pageConnexion extends javax.swing.JFrame {
         // TODO add your handling code here:
         pwField.setText("");
     }//GEN-LAST:event_pwFieldMouseClicked
+
+    private void cancelConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelConnectButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(1);
+    }//GEN-LAST:event_cancelConnectButtonActionPerformed
+
+    private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectButtonActionPerformed
+        // TODO add your handling code here:
+        
+        String pseudo = pseudoField.getText();
+        String pw = pwField.getText();
+        
+        if (pseudo.length() == 0 || pw.length() ==0 ){
+            
+            JOptionPane.showMessageDialog(this,
+            "Vous devez remplir les champs pour vous connecter",
+            "Champs vides",
+            JOptionPane.WARNING_MESSAGE);
+            
+        }
+        
+        else {
+            
+            char [ ] pass = new char[10];
+            String s="ai265149"; pass = s.toCharArray();
+            MongoCredential credential = MongoCredential.createCredential("ai265149", "ai265149", pass);
+            MongoClient client = new MongoClient(new ServerAddress("mongo", 27017), Arrays.asList(credential));
+            MongoDatabase db = client.getDatabase("ai265149");
+            
+            MongoCollection<Document> collection;
+            
+            // cas admin 
+            if (adminChecked){
+                 collection = db.getCollection("admins");
+            }
+            // cas client 
+            else{
+                collection = db.getCollection("clients");
+            }
+            
+            try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo).append("passWord", pw)).iterator()) {
+            
+            if (cursor.hasNext())  System.out.println("Connexion réussie");
+            else System.out.println("Echec de connexion ");
+            
+          
+            }
+
+            
+        }
+        
+    }//GEN-LAST:event_connectButtonActionPerformed
+
+    private void yesAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesAdminActionPerformed
+        // TODO add your handling code here:
+        adminChecked=true;
+
+    }//GEN-LAST:event_yesAdminActionPerformed
+
+    private void noAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noAdminActionPerformed
+        // TODO add your handling code here:
+        adminChecked=false;
+
+    }//GEN-LAST:event_noAdminActionPerformed
 
     /**
      * @param args the command line arguments
