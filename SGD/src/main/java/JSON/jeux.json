@@ -1,6 +1,5 @@
 [
   {
-    "_id": "5c127b3bab945f13774ffa27",
     "idJeu": 0,
     "nom": "Fifa 19",
     "nomEditeur": "EA Sports",
@@ -9,7 +8,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b4a9e5410fa0ca61c",
     "idJeu": 1,
     "nom": "Fifa 18",
     "nomEditeur": "EA Sports",
@@ -19,7 +17,6 @@
 
   },
   {
-    "_id": "5c127b3b5ec282ce3edfadbf",
     "idJeu": 2,
     "nom": "NBA 2K 92",
     "nomEditeur": "2K Games",
@@ -28,7 +25,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3bb8221f565ce7215e",
     "idJeu": 3,
     "nom": "Pokemon Go",
     "nomEditeur": "Nintendo",
@@ -37,7 +33,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b5aa4f319d45c73df",
     "idJeu": 4,
     "nom": "Tetris",
     "nomEditeur": "EA",
@@ -46,7 +41,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b7ac0293b852c6a3e",
     "idJeu": 5,
     "nom": "Harry Potter and the Deathly Hallows ",
     "nomEditeur": "Microsoft",
@@ -55,7 +49,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b91c89a3d3d103640",
     "idJeu": 6,
     "nom": "Fortnite : Sauver le monde",
     "nomEditeur": "Epic Games",
@@ -64,7 +57,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3bc2df269547609d35",
     "idJeu": 7,
     "nom": "PES 2005",
     "nomEditeur": "Konami",
@@ -73,7 +65,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3be8d00cc47bb04863",
     "idJeu": 8,
     "nom": "God of War III",
     "nomEditeur": "Sony",
@@ -82,7 +73,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b200610fb983f84e6",
     "idJeu": 9,
     "nom": "Fifa 14",
     "nomEditeur": "2K Sports",
@@ -91,7 +81,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b1d6a3a6d17d52268",
     "idJeu": 10,
     "nom": "Dragon Ball Legends",
     "nomEditeur": "Bandai",
@@ -100,7 +89,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3b727289304db52e15",
     "idJeu": 11,
     "nom": "Bully ",
     "nomEditeur": "RockStar Games",
@@ -109,7 +97,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3bd1e993e804333def",
     "idJeu": 12,
     "nom": "GTA V",
     "nomEditeur": " RockStar North ",
@@ -118,7 +105,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3bca614e88ea2da0ba",
     "idJeu": 13,
     "nom": "Lapins Crétins ",
     "nomEditeur": "Ubisoft",
@@ -127,7 +113,6 @@
     "image": "../defaultImage.png"
   },
   {
-    "_id": "5c127b3bb5874add896f6ba7",
     "idJeu": 14,
     "nom": "Fifa 16",
     "nomEditeur": "2K Sports",
