@@ -23,7 +23,11 @@ import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.set;
 import java.awt.Color;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import static java.util.Arrays.asList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -40,6 +44,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
      String nomJeu;
      String Editeur;
      String dateSortie;
+     Date dateS;
      String categorie;
      String pathImage;
      File f;
@@ -49,7 +54,59 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     public AjoutJeuDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        fillDate();
         connexionBD();
+    }
+    
+    public void fillDate()
+    {
+        for ( int i = 1 ; i < 32 ; i++)
+        {
+           String tmp; 
+           
+            if(i < 10)
+            {
+                tmp = "0" +i;
+            }
+            else
+            {
+                tmp = i + "";
+            }
+            Jour.addItem(tmp);
+        }
+        
+        for ( int i = 1 ; i < 13 ; i++)
+        {
+           String tmp; 
+           
+            if(i < 10)
+            {
+                tmp = "0" +i;
+            }
+            else
+            {
+                tmp = i + "";
+            }
+            mois.addItem(tmp);
+        }
+        
+        for ( int i = 2018 ; i > 1970 ; i--)
+        {
+           String tmp; 
+           
+            if(i < 10)
+            {
+                tmp = "0" +i;
+            }
+            else
+            {
+                tmp = i + "";
+            }
+            annee.addItem(tmp);
+        }
+        
+        
+        
     }
     
     public void connexionBD()
@@ -82,7 +139,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             Document doc = new Document("", "1234");
             doc.append("nomJeu" ,nomJeu);
             doc.append("editeur" ,Editeur);
-            doc.append("dateSortie",dateSortie);
+            doc.append("dateSortie",dateS);
             doc.append("categorie",categorie); 
             doc.append("pathImage", pathImage);
             
@@ -115,8 +172,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         rightPanel = new javax.swing.JPanel();
         jeuText = new javax.swing.JTextField();
         editeurText = new javax.swing.JTextField();
-        dateText = new javax.swing.JTextField();
         categorieText = new javax.swing.JTextField();
+        datePAnel = new javax.swing.JPanel();
+        Jour = new javax.swing.JComboBox<>();
+        mois = new javax.swing.JComboBox<>();
+        annee = new javax.swing.JComboBox<>();
         importButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -134,7 +194,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,11 +218,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         leftPanel.add(jLabel3);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Date de sortie");
+        jLabel4.setText("Catégorie");
         leftPanel.add(jLabel4);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Catégorie");
+        jLabel5.setText("Date");
         leftPanel.add(jLabel5);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -194,7 +254,6 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             }
         });
         rightPanel.add(editeurText);
-        rightPanel.add(dateText);
 
         categorieText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +261,21 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             }
         });
         rightPanel.add(categorieText);
+
+        datePAnel.setLayout(new java.awt.GridLayout(1, 3));
+
+        Jour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JourActionPerformed(evt);
+            }
+        });
+        datePAnel.add(Jour);
+
+        datePAnel.add(mois);
+
+        datePAnel.add(annee);
+
+        rightPanel.add(datePAnel);
 
         importButton.setBackground(new java.awt.Color(188, 188, 188));
         importButton.setText("Import");
@@ -251,16 +325,39 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_jeuTextActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+       
         nomJeu = jeuText.getText();
         Editeur = editeurText.getText();
-        dateSortie = dateText.getText();
+     //   dateSortie = dateText.getText();
+     
+        dateSortie = Jour.getSelectedItem().toString() + "-" + mois.getSelectedItem().toString() + "-" + annee.getSelectedItem().toString();
         categorie = categorieText.getText();
-        pathImage = f.getAbsolutePath();
-         if ( (!nomJeu.equals("")) && (!editeurText.equals(""))  && (!dateText.equals(""))  && (!categorieText.equals("")) && (f != null)  )
         
+        if ( f != null)
         {
-            ajouterJeu();
+            pathImage = f.getAbsolutePath();       
+        }
+
+     
+        
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+        
+        if(!dateSortie.equals(""))
+        {
+            try {    
+             dateS = dateFormat.parse(dateSortie+"T00:00:00");
+         } catch (ParseException ex) {
+             Logger.getLogger(AjoutJeuDlg.class.getName()).log(Level.SEVERE, null, ex);
+         }
+            
+        }
+        
+             
+         if ( (!nomJeu.equals("")) && (!editeurText.equals("")) && (!categorieText.equals("")) && (f != null)  )
+        
+        {       
+            ajouterJeu();         
         }
            else
         {
@@ -274,7 +371,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             this.setVisible(false);
         }
 
-        System.out.println(f.getAbsolutePath());
+        //System.out.println(f.getAbsolutePath());
 
 
         // TODO add your handling code here:
@@ -293,15 +390,17 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
              f = chooser.getSelectedFile();
              importButton.setText("Fichier importé");
-             importButton.setForeground(new java.awt.Color(0, 60, 0));
+             importButton.setForeground(new java.awt.Color(0, 100, 0));
              importButton.setEnabled(false);
              importButton.setBackground(new java.awt.Color(240, 240, 240));
-        } else {
-            // user changed their mind
         }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_importButtonActionPerformed
+
+    private void JourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JourActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,9 +445,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Jour;
+    private javax.swing.JComboBox<String> annee;
     private javax.swing.JButton annulerButton;
     private javax.swing.JTextField categorieText;
-    private javax.swing.JTextField dateText;
+    private javax.swing.JPanel datePAnel;
     private javax.swing.JTextField editeurText;
     private javax.swing.JButton importButton;
     private javax.swing.JButton jButton2;
@@ -361,6 +462,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jeuText;
     private javax.swing.JPanel leftPanel;
+    private javax.swing.JComboBox<String> mois;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JLabel titre;
     private javax.swing.JPanel topPanel;
