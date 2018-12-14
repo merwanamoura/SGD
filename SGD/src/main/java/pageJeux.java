@@ -53,8 +53,7 @@ public class pageJeux extends javax.swing.JFrame {
         lesCategories = new javax.swing.JPanel();
         corpspanelrecherche = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listeJeux = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,10 +154,7 @@ public class pageJeux extends javax.swing.JFrame {
         jLabel2.setText("Liste des jeux");
         jLabel2.setPreferredSize(new java.awt.Dimension(98, 70));
         corpspanelrecherche.add(jLabel2, java.awt.BorderLayout.NORTH);
-
-        jScrollPane1.setViewportView(listeJeux);
-
-        corpspanelrecherche.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        corpspanelrecherche.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         corps.add(corpspanelrecherche, java.awt.BorderLayout.CENTER);
 
@@ -215,7 +211,7 @@ public class pageJeux extends javax.swing.JFrame {
     private javax.swing.JPanel filtres;
     private javax.swing.JPanel fonctionnalitepanel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpanelrecherche;
     private javax.swing.JLabel labelCategorie;
     private javax.swing.JLabel labelEditeur;
@@ -224,7 +220,6 @@ public class pageJeux extends javax.swing.JFrame {
     private javax.swing.JPanel lesCategories;
     private javax.swing.JPanel lesEditeurs;
     private javax.swing.JPanel lesPrix;
-    private javax.swing.JList<String> listeJeux;
     private javax.swing.JButton mesjeuxbutton;
     private javax.swing.JButton optsbuttons;
     private javax.swing.JPanel panelfiltre;
