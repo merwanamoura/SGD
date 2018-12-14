@@ -118,7 +118,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         });
         rightPanel.add(categorieText);
 
-        jButton2.setText("validerButton");
+        jButton2.setText("Valider");
         rightPanel.add(jButton2);
 
         jPanel2.add(rightPanel);
