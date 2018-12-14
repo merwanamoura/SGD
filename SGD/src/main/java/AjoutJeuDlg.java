@@ -118,10 +118,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
         db = client.getDatabase("hc047736");
         // Liste de collections 
-        for (String name : db.listCollectionNames())
-        {
-            System.out.println(name);
-        }
+     
     }
     /*
     
@@ -369,6 +366,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         if( test == true)
         {
             this.setVisible(false);
+            this.dispose();
         }
 
         //System.out.println(f.getAbsolutePath());
@@ -380,6 +378,8 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private void annulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerButtonActionPerformed
 
         this.setVisible(false);
+        this.dispose();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_annulerButtonActionPerformed
 
