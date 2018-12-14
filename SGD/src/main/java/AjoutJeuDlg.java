@@ -119,18 +119,24 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     
     public void ajouterJeu()
     {
+        MongoCollection<Document> jeux = db.getCollection("jeux");
         
-        
+        AggregateIterable<Document> output = jeux.aggregate(Arrays.asList(
+                
+           Aggregates.group("idJeu", Accumulators.sum("count", 1))
+        ));
       
-            MongoCollection<Document> jeux = db.getCollection("jeux");
-
-            Document doc = new Document("", "1234");
+            int id = (int)output.iterator().next().get("count");
+           
+            id++;
+            
+            Document doc = new Document();
+            doc.append("idJeu", id);
             doc.append("nom" ,nomJeu);
             doc.append("nomEditeur" ,Editeur);
             doc.append("dateSortie",dateS);
             doc.append("categorie",categorie); 
             doc.append("image", pathImage);
-            
             jeux.insertOne(doc); 
             test = true;
         
@@ -325,6 +331,10 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         {
             pathImage = f.getAbsolutePath();       
         }
+        else
+        {
+            pathImage = "imageJeu/default.png";
+        }
 
      
         
@@ -342,7 +352,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         }
         
              
-         if ( (!nomJeu.equals("")) && (!editeurText.equals("")) && (!categorieText.equals("")) && (f != null)  )
+         if ( (!nomJeu.equals("")) && (!editeurText.equals("")) && (!categorieText.equals(""))  )
         
         {       
             ajouterJeu();         
@@ -368,8 +378,14 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
     private void annulerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerButtonActionPerformed
 
+        
         this.setVisible(false);
         this.dispose();
+      
+                        
+
+           
+        
         
         // TODO add your handling code here:
     }//GEN-LAST:event_annulerButtonActionPerformed
