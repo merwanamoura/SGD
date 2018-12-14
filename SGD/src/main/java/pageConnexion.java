@@ -1,3 +1,6 @@
+
+import javax.swing.ButtonGroup;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +19,10 @@ public class pageConnexion extends javax.swing.JFrame {
      */
     public pageConnexion() {
         initComponents();
+        // Exclusion de sélection
+        ButtonGroup group = new ButtonGroup();
+        group.add(yesAdmin);
+        group.add(noAdmin);
     }
 
     /**
@@ -27,21 +34,111 @@ public class pageConnexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pseudoField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        pwField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        yesAdmin = new javax.swing.JRadioButton();
+        noAdmin = new javax.swing.JRadioButton();
+        cancelConnectButton = new javax.swing.JButton();
+        connectButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jPanel2.setPreferredSize(new java.awt.Dimension(500, 50));
+
+        jLabel4.setText("Veuillez vous connecter pour continuer");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(110, 110, 110))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
         );
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.setLayout(new java.awt.GridLayout(4, 2));
+
+        jLabel1.setText("Pseudo ?");
+        jPanel1.add(jLabel1);
+
+        pseudoField.setText("Entrer votre pseudo ..");
+        pseudoField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pseudoFieldMouseClicked(evt);
+            }
+        });
+        pseudoField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pseudoFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pseudoField);
+
+        jLabel2.setText("Mot de passe ?");
+        jPanel1.add(jLabel2);
+
+        pwField.setText("Entrer votre mot de passe ...");
+        pwField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pwFieldMouseClicked(evt);
+            }
+        });
+        jPanel1.add(pwField);
+
+        jLabel3.setText("Admin ?");
+        jPanel1.add(jLabel3);
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 2));
+
+        yesAdmin.setText("Oui");
+        jPanel3.add(yesAdmin);
+
+        noAdmin.setText("non");
+        jPanel3.add(noAdmin);
+
+        jPanel1.add(jPanel3);
+
+        cancelConnectButton.setText("Annuler ");
+        jPanel1.add(cancelConnectButton);
+
+        connectButton.setText("Se connecter");
+        jPanel1.add(connectButton);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pseudoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pseudoFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pseudoFieldActionPerformed
+
+    private void pseudoFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pseudoFieldMouseClicked
+        // TODO add your handling code here:
+        pseudoField.setText("");
+    }//GEN-LAST:event_pseudoFieldMouseClicked
+
+    private void pwFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwFieldMouseClicked
+        // TODO add your handling code here:
+        pwField.setText("");
+    }//GEN-LAST:event_pwFieldMouseClicked
 
     /**
      * @param args the command line arguments
@@ -70,6 +167,9 @@ public class pageConnexion extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -79,5 +179,18 @@ public class pageConnexion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelConnectButton;
+    private javax.swing.JButton connectButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton noAdmin;
+    private javax.swing.JTextField pseudoField;
+    private javax.swing.JTextField pwField;
+    private javax.swing.JRadioButton yesAdmin;
     // End of variables declaration//GEN-END:variables
 }
