@@ -1,0 +1,12 @@
+[
+  {
+    "idSerie": 0,
+    "nomSerie": "FIFA",
+    "idsJeux": [0,1,9,14]
+  },
+  {
+    "idSerie": 1,
+    "nomSerie": "NBA 2K",
+    "idsJeux": [2]
+  }
+]

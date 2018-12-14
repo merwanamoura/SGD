@@ -1,0 +1,107 @@
+[
+  {
+    "_id": "5c13ab0eef81bd750d0781ff",
+    "idJeu": 0,
+    "val": 17.8489,
+    "nbLikes": 46,
+    "nbDislikes": 36
+  },
+  {
+    "_id": "5c13ab0ecf9877f5856b5de1",
+    "idJeu": 1,
+    "val": 6.3866,
+    "nbLikes": 27,
+    "nbDislikes": 33
+  },
+  {
+    "_id": "5c13ab0e0245645cb004fb18",
+    "idJeu": 2,
+    "val": 16.4979,
+    "nbLikes": 35,
+    "nbDislikes": 1
+  },
+  {
+    "_id": "5c13ab0ed3ae7acbef2611a2",
+    "idJeu": 3,
+    "val": 15.9282,
+    "nbLikes": 30,
+    "nbDislikes": 17
+  },
+  {
+    "_id": "5c13ab0eb7dba524e65c4554",
+    "idJeu": 4,
+    "val": 11.6997,
+    "nbLikes": 93,
+    "nbDislikes": 38
+  },
+  {
+    "_id": "5c13ab0e78334aad6ce82244",
+    "idJeu": 5,
+    "val": 5.3999,
+    "nbLikes": 92,
+    "nbDislikes": 30
+  },
+  {
+    "_id": "5c13ab0ee267fa2150b6351a",
+    "idJeu": 6,
+    "val": 14.1806,
+    "nbLikes": 44,
+    "nbDislikes": 14
+  },
+  {
+    "_id": "5c13ab0e37527b87d5712abb",
+    "idJeu": 7,
+    "val": 12.8123,
+    "nbLikes": 4,
+    "nbDislikes": 11
+  },
+  {
+    "_id": "5c13ab0e982564e6cdbe62d1",
+    "idJeu": 8,
+    "val": 14.1704,
+    "nbLikes": 64,
+    "nbDislikes": 18
+  },
+  {
+    "_id": "5c13ab0e7aabaca8e2964038",
+    "idJeu": 9,
+    "val": 9.6374,
+    "nbLikes": 33,
+    "nbDislikes": 38
+  },
+  {
+    "_id": "5c13ab0edb5f16dcf72fa3e0",
+    "idJeu": 10,
+    "val": 11.1908,
+    "nbLikes": 3,
+    "nbDislikes": 29
+  },
+  {
+    "_id": "5c13ab0e4f3fec3a7c50765e",
+    "idJeu": 11,
+    "val": 14.8812,
+    "nbLikes": 10,
+    "nbDislikes": 19
+  },
+  {
+    "_id": "5c13ab0e38d785f070efcec8",
+    "idJeu": 12,
+    "val": 15.3712,
+    "nbLikes": 78,
+    "nbDislikes": 0
+  },
+  {
+    "_id": "5c13ab0ed8a941f3aebe8030",
+    "idJeu": 13,
+    "val": 7.7671,
+    "nbLikes": 48,
+    "nbDislikes": 12
+  },
+  {
+    "_id": "5c13ab0eb27ffbedb7b13900",
+    "idJeu": 14,
+    "val": 8.6158,
+    "nbLikes": 90,
+    "nbDislikes": 30
+  }
+]

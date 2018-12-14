@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class SerieJeux {
     
     private int idSerie;
+    private String nomSerie;
+    private ArrayList<Integer> idsJeux;
 
     public void setIdSerie(int idSerie) {
         this.idSerie = idSerie;
@@ -44,8 +46,7 @@ public class SerieJeux {
         this.nomSerie = nomSerie;
         this.idsJeux = idsJeux;
     }
-    private String nomSerie;
-    private ArrayList<Integer> idsJeux;
+ 
 
     
     
