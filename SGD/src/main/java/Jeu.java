@@ -18,15 +18,25 @@ public class Jeu {
   private String nomEditeur;
   private long dateSortie;
   private String Categorie;
+  private String image;
 
    
 
-    public Jeu(int idJeu, String nom, String nomEditeur, long dateSortie, String Categorie) {
+    public Jeu(int idJeu, String nom, String nomEditeur, long dateSortie, String Categorie, String  image) {
         this.idJeu = idJeu;
         this.nom = nom;
         this.nomEditeur = nomEditeur;
         this.dateSortie = dateSortie;
         this.Categorie = Categorie;
+        this.image = image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public void setIdJeu(int idJeu) {

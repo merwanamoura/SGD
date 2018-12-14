@@ -5,7 +5,8 @@
     "nom": "Fifa 19",
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
-    "dateSortie": "17/11/1018 "
+    "dateSortie": "17/11/1018 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b4a9e5410fa0ca61c",
@@ -13,7 +14,9 @@
     "nom": "Fifa 18",
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
-    "dateSortie": "14/12/2017 "
+    "dateSortie": "14/12/2017 ",
+    "image": "../defaultImage.png"
+
   },
   {
     "_id": "5c127b3b5ec282ce3edfadbf",
@@ -21,7 +24,8 @@
     "nom": "NBA 2K 92",
     "nomEditeur": "2K Games",
     "categorie": "Sport",
-    "dateSortie": "11/12/1992 "
+    "dateSortie": "11/12/1992 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3bb8221f565ce7215e",
@@ -29,7 +33,8 @@
     "nom": "Pokemon Go",
     "nomEditeur": "Nintendo",
     "categorie": "Aventure",
-    "dateSortie": "15/06/2016 "
+    "dateSortie": "15/06/2016 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b5aa4f319d45c73df",
@@ -37,7 +42,8 @@
     "nom": "Tetris",
     "nomEditeur": "EA",
     "categorie": "Réflexion",
-    "dateSortie": "29/8/1984 "
+    "dateSortie": "29/8/1984 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b7ac0293b852c6a3e",
@@ -45,7 +51,8 @@
     "nom": "Harry Potter and the Deathly Hallows ",
     "nomEditeur": "Microsoft",
     "categorie": "Aventure",
-    "dateSortie": "12/05/2012 "
+    "dateSortie": "12/05/2012 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b91c89a3d3d103640",
@@ -53,7 +60,8 @@
     "nom": "Fortnite : Sauver le monde",
     "nomEditeur": "Epic Games",
     "categorie": "Action",
-    "dateSortie": "10/10/2017"
+    "dateSortie": "10/10/2017",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3bc2df269547609d35",
@@ -61,7 +69,8 @@
     "nom": "PES 2005",
     "nomEditeur": "Konami",
     "categorie": "Sport",
-    "dateSortie": "05/11/2004 "
+    "dateSortie": "05/11/2004 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3be8d00cc47bb04863",
@@ -69,7 +78,8 @@
     "nom": "God of War III",
     "nomEditeur": "Sony",
     "categorie": "Action",
-    "dateSortie": "22/4/2016 "
+    "dateSortie": "22/4/2016 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b200610fb983f84e6",
@@ -77,7 +87,8 @@
     "nom": "Fifa 14",
     "nomEditeur": "2K Sports",
     "categorie": "Sport",
-    "dateSortie": "18/09/2013 "
+    "dateSortie": "18/09/2013 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b1d6a3a6d17d52268",
@@ -85,7 +96,8 @@
     "nom": "Dragon Ball Legends",
     "nomEditeur": "Bandai",
     "categorie": "Combat",
-    "dateSortie": "9/10/2017 "
+    "dateSortie": "9/10/2017 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3b727289304db52e15",
@@ -93,7 +105,8 @@
     "nom": "Bully ",
     "nomEditeur": "RockStar Games",
     "categorie": "Rôle",
-    "dateSortie": "16/6/2006 "
+    "dateSortie": "16/6/2006 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3bd1e993e804333def",
@@ -101,7 +114,8 @@
     "nom": "GTA V",
     "nomEditeur": " RockStar North ",
     "categorie": "Rôle",
-    "dateSortie": "27/8/2015 "
+    "dateSortie": "27/8/2015 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3bca614e88ea2da0ba",
@@ -109,7 +123,8 @@
     "nom": "Lapins Crétins ",
     "nomEditeur": "Ubisoft",
     "categorie": "Aventure",
-    "dateSortie": "12/08/2014 "
+    "dateSortie": "12/08/2014 ",
+    "image": "../defaultImage.png"
   },
   {
     "_id": "5c127b3bb5874add896f6ba7",
@@ -117,6 +132,7 @@
     "nom": "Fifa 16",
     "nomEditeur": "2K Sports",
     "categorie": "Sport",
-    "dateSortie": "13/2/2016 "
+    "dateSortie": "13/2/2016 ",
+    "image": "../defaultImage.png"
   }
 ]
