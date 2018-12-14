@@ -66,43 +66,26 @@ class ListEntry
 }
   
 
-class ListEntryCellRenderer
- extends JLabel implements ListCellRenderer
+ class ListEntryCellRenderer extends DefaultListCellRenderer
 {
-   private JLabel label;
-  
    public Component getListCellRendererComponent(JList list, Object value,  int index, boolean isSelected,  boolean cellHasFocus) 
    {
-      ListEntry entry = (ListEntry) value;
+        ListEntry entry = (ListEntry) value;
+
+        JLabel label2 = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        label2.setIcon(entry.getIcon());
+        label2.setHorizontalTextPosition(JLabel.RIGHT);
   
-      setText(value.toString());
-      setIcon(entry.getIcon());
-   
-      if (isSelected) {
-         setBackground(list.getSelectionBackground());
-         setForeground(list.getSelectionForeground());
-      }
-      else {
-         setBackground(list.getBackground());
-         setForeground(list.getForeground());
-      }
-  
-      setEnabled(list.isEnabled());
-      setFont(list.getFont());
-      setOpaque(true);
-  
-      return this;
+        return label2;
    }
 }
-
-
 /**
  *
  * @author ma522501
  */
 public class pageAcceuil extends javax.swing.JFrame {
     
-    void mongoDBConnection()
+    MongoDatabase mongoDBConnection()
     {
         char[] pass = new char[10];
         String s = "hc047736";
@@ -110,20 +93,43 @@ public class pageAcceuil extends javax.swing.JFrame {
         MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
         MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
         MongoDatabase db = client.getDatabase("hc047736");
+        return db;
     }   
     /**
      * Creates new form pageAcceuil
      */
-    public pageAcceuil() {
+    public pageAcceuil()
+    {
         initComponents();
-        fillJlistRecent();
+       
+        MongoDatabase db = mongoDBConnection();
+        fillJlistRecent(db);
+         
+
+   
+   
     }
     
-    public void fillJlistRecent()
+    public void fillJlistRecent(MongoDatabase db)
     {
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it;
+        MongoCollection<Document> users = db.getCollection("users");
+
+        it = users.find(eq("gender" , "male")).iterator();
+       
         
-      DefaultListModel dlm = new DefaultListModel();
-      dlm.addElement(new ListEntry("mario", new ImageIcon("mario.png")));
+        int cpt = 0;
+        while (it.hasNext() && cpt<10) {
+            
+             Document doc = it.next();
+            dlm.addElement(new ListEntry((String) doc.get("name"), new ImageIcon("imageJeux/mario.png")));
+             cpt++;
+             
+        } 
+        
+      
+      
 
       JList list = new JList(dlm);
       list.setCellRenderer(new ListEntryCellRenderer());
