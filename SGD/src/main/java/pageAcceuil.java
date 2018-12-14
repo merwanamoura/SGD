@@ -1,4 +1,7 @@
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.net.MalformedURLException;
@@ -16,26 +19,10 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.Block;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
-import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.*;
-import java.util.*;
-import org.bson.Document;
-
-import static com.mongodb.client.model.Accumulators.sum;
-import static com.mongodb.client.model.Aggregates.group;
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Updates.set;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import static java.util.Arrays.asList;
+import org.bson.Document;
 
 
 /*
@@ -43,73 +30,23 @@ import static java.util.Arrays.asList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-class ListEntry
-{
-   private String value;
-   private ImageIcon icon;
-  
-   public ListEntry(String value, ImageIcon icon) {
-      this.value = value;
-      this.icon = icon;
-   }
-  
-   public String getValue() {
-      return value;
-   }
-  
-   public ImageIcon getIcon() {
-      return icon;
-   }
-  
-   public String toString() {
-      return value;
-   }
-}
-  
-
- class ListEntryCellRenderer extends DefaultListCellRenderer
-{
-   public Component getListCellRendererComponent(JList list, Object value,  int index, boolean isSelected,  boolean cellHasFocus) 
-   {
-        ListEntry entry = (ListEntry) value;
-
-        JLabel label2 = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        label2.setIcon(entry.getIcon());
-        label2.setHorizontalTextPosition(JLabel.RIGHT);
-  
-        return label2;
-   }
-}
 /**
  *
  * @author ma522501
  */
 public class pageAcceuil extends javax.swing.JFrame {
     
-    MongoDatabase mongoDBConnection()
-    {
-        char[] pass = new char[10];
-        String s = "hc047736";
-        pass = s.toCharArray();
-        MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
-        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
-        MongoDatabase db = client.getDatabase("hc047736");
-        return db;
-    }   
+
     /**
      * Creates new form pageAcceuil
      */
     public pageAcceuil()
     {
         initComponents();
-       
-        MongoDatabase db = mongoDBConnection();
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
         fillJlistRecent(db);
-         
 
-   
-   
     }
     
     public void fillJlistRecent(MongoDatabase db)
@@ -121,33 +58,22 @@ public class pageAcceuil extends javax.swing.JFrame {
         it = jeux.find().iterator();
        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
- 
         
         int cpt = 0;
         while (it.hasNext() && cpt<10) 
         {
-            
-            
-             Document doc = it.next();
-             System.out.println(doc.get("dateSortie"));
+            Document doc = it.next();
+            System.out.println(doc.get("dateSortie"));
             dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/mario.png")));
-            
-            
+
              cpt++;
-             
         } 
-        
-      
-      
-
-      JList list = new JList(dlm);
-      list.setCellRenderer(new ListEntryCellRenderer());
+        JList list = new JList(dlm);
+        list.setCellRenderer(new ListEntryCellRenderer());
      
-      jScrollPane1.add(list); jScrollPane1.setViewportView(list);
-        
+        jScrollPane1.add(list); 
+        jScrollPane1.setViewportView(list);
 
-       
 
     }
 
@@ -182,8 +108,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         panelmarge3 = new javax.swing.JPanel();
         nouveaujeupanel1 = new javax.swing.JPanel();
         panneauprincipal1 = new javax.swing.JPanel();
-        jScrollPane1Populaire = new javax.swing.JScrollPane();
-        jListPopulaire = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
         panelTop1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -192,8 +117,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         panelmarge5 = new javax.swing.JPanel();
         nouveaujeupanel2 = new javax.swing.JPanel();
         panneauprincipal2 = new javax.swing.JPanel();
-        jScrollPane1Comment = new javax.swing.JScrollPane();
-        jListCommente = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
         panelTop2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -323,10 +247,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         panneauprincipal1.setMinimumSize(new java.awt.Dimension(36, 0));
         panneauprincipal1.setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1Populaire.setViewportView(jListPopulaire);
-
-        panneauprincipal1.add(jScrollPane1Populaire, java.awt.BorderLayout.CENTER);
+        panneauprincipal1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         nouveaujeupanel1.add(panneauprincipal1, java.awt.BorderLayout.CENTER);
 
@@ -403,10 +324,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         panneauprincipal2.setMinimumSize(new java.awt.Dimension(36, 0));
         panneauprincipal2.setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1Comment.setViewportView(jListCommente);
-
-        panneauprincipal2.add(jScrollPane1Comment, java.awt.BorderLayout.CENTER);
+        panneauprincipal2.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
         nouveaujeupanel2.add(panneauprincipal2, java.awt.BorderLayout.CENTER);
 
@@ -536,14 +454,12 @@ public class pageAcceuil extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jListCommente;
-    private javax.swing.JList<String> jListPopulaire;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane1Comment;
-    private javax.swing.JScrollPane jScrollPane1Populaire;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel jpanelrecherche;
     private javax.swing.JButton mesjeuxbutton;
     private javax.swing.JPanel nouveaujeupanel;
