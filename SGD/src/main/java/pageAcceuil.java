@@ -33,6 +33,8 @@ import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.group;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import static java.util.Arrays.asList;
 
 
@@ -114,16 +116,24 @@ public class pageAcceuil extends javax.swing.JFrame {
     {
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
-        MongoCollection<Document> users = db.getCollection("users");
+        MongoCollection<Document> jeux = db.getCollection("jeux");
 
-        it = users.find(eq("gender" , "male")).iterator();
+        it = jeux.find().iterator();
        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+ 
         
         int cpt = 0;
-        while (it.hasNext() && cpt<10) {
+        while (it.hasNext() && cpt<10) 
+        {
+            
             
              Document doc = it.next();
-            dlm.addElement(new ListEntry((String) doc.get("name"), new ImageIcon("imageJeux/mario.png")));
+             System.out.println(doc.get("dateSortie"));
+            dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/mario.png")));
+            
+            
              cpt++;
              
         } 
@@ -135,6 +145,9 @@ public class pageAcceuil extends javax.swing.JFrame {
       list.setCellRenderer(new ListEntryCellRenderer());
      
       jScrollPane1.add(list); jScrollPane1.setViewportView(list);
+        
+
+       
 
     }
 
