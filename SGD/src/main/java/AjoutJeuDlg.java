@@ -55,7 +55,8 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         fillDate();
-        connexionBD();
+        MongoDBConnection.connect();
+        db=MongoDBConnection.getDb();
     }
     
     public void fillDate()
@@ -109,17 +110,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         
     }
     
-    public void connexionBD()
-    {
-        char[] pass = new char[10];
-        String s = "hc047736";
-        pass = s.toCharArray();
-        MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
-        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
-        db = client.getDatabase("hc047736");
-        // Liste de collections 
-     
-    }
+
     /*
     
     db.jeux.insertOne({"nomJeu":"Fortnite","Editeur":"Epic Games","dateSortie":"13/10/1997" ,"Categorie" : "BattleRoyale"})
@@ -134,11 +125,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             MongoCollection<Document> jeux = db.getCollection("jeux");
 
             Document doc = new Document("", "1234");
-            doc.append("nomJeu" ,nomJeu);
-            doc.append("editeur" ,Editeur);
+            doc.append("nom" ,nomJeu);
+            doc.append("nomEditeur" ,Editeur);
             doc.append("dateSortie",dateS);
             doc.append("categorie",categorie); 
-            doc.append("pathImage", pathImage);
+            doc.append("image", pathImage);
             
             jeux.insertOne(doc); 
             test = true;
