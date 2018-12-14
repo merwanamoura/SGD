@@ -88,8 +88,5 @@ public class Jeu {
     public String toString() {
         return "Jeu{" + "nom=" + nom + ", nomEditeur=" + nomEditeur + ", dateSortie=" + dateSortie + ", Categorie=" + Categorie + '}';
     }
-
-
-  
     
 }
