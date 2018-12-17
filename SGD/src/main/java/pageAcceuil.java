@@ -2,6 +2,9 @@
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Accumulators.sum;
+import com.mongodb.client.model.Aggregates;
+import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.File;
@@ -22,6 +25,7 @@ import javax.swing.SwingUtilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import static java.util.Arrays.asList;
 import org.bson.Document;
 
@@ -47,6 +51,8 @@ public class pageAcceuil extends javax.swing.JFrame {
         MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         fillJlistRecent(db);
+        fillJlistPopular(db);
+        fillJlistComments(db);
 
     }
     /*8*/
@@ -62,10 +68,10 @@ public class pageAcceuil extends javax.swing.JFrame {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            File f = new File((String) doc.get("pathImage"));
+            File f = new File((String) doc.get("image"));
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
             
 
         } 
@@ -78,7 +84,68 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     }
 
-  
+    public void fillJlistPopular(MongoDatabase db)
+    {
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+
+        it = jeux.aggregate( Arrays.asList(   Aggregates.lookup("Note","idJeu", "idJeu", "joinJeuxNote") ,  Aggregates.sort( eq("joinJeuxNote.nbLikes",-1) ) ) ).iterator();
+        
+        
+        while (it.hasNext()) 
+        {
+            Document doc = it.next();
+            File f = new File((String) doc.get("image"));
+            
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+            
+
+        } 
+        JList list = new JList(dlm);
+        list.setCellRenderer(new ListEntryCellRenderer());
+     
+        jScrollPane2.add(list); 
+        jScrollPane2.setViewportView(list);
+
+
+    }
+    
+        public void fillJlistComments(MongoDatabase db)
+    {
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it,it2;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+
+        it = jeux.aggregate( Arrays.asList( Aggregates.unwind("$idJeu"),  Aggregates.lookup("Avis","idJeu", "idJeu", "joinJeuxAvis") ,  Aggregates.unwind("$joinJeuxAvis"),
+                Aggregates.group(eq("_id","$idJeu"),sum("total",1)) , Aggregates.sort(eq("total",-1)) )) .iterator();
+        
+
+        while (it.hasNext()) 
+        {
+            Document doc = it.next();
+           
+             Document d = (Document) doc.get("_id");
+             
+            it2 = jeux.find(eq("idJeu",d.get("_id"))).iterator();
+
+            Document doc2 = it2.next();
+            
+            File f = new File((String) doc2.get("image"));
+            
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc2.get("nom"), new ImageIcon((String) doc2.get("image"))));
+            else dlm.addElement(new ListEntry((String) doc2.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+        } 
+        JList list = new JList(dlm);
+        list.setCellRenderer(new ListEntryCellRenderer());
+     
+        jScrollPane3.add(list); 
+        jScrollPane3.setViewportView(list);
+
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
