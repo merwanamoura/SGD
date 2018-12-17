@@ -65,7 +65,7 @@ public class pageConnexion extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         yesAdmin = new javax.swing.JRadioButton();
         noAdmin = new javax.swing.JRadioButton();
-        cancelConnectButton = new javax.swing.JButton();
+        createAccountButton = new javax.swing.JButton();
         connectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -142,13 +142,13 @@ public class pageConnexion extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3);
 
-        cancelConnectButton.setText("Annuler ");
-        cancelConnectButton.addActionListener(new java.awt.event.ActionListener() {
+        createAccountButton.setText("Annuler ");
+        createAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelConnectButtonActionPerformed(evt);
+                createAccountButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(cancelConnectButton);
+        jPanel1.add(createAccountButton);
 
         connectButton.setText("Se connecter");
         connectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -172,10 +172,10 @@ public class pageConnexion extends javax.swing.JFrame {
         pseudoField.setText("");
     }//GEN-LAST:event_pseudoFieldMouseClicked
 
-    private void cancelConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelConnectButtonActionPerformed
+    private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
-        System.exit(1);
-    }//GEN-LAST:event_cancelConnectButtonActionPerformed
+
+    }//GEN-LAST:event_createAccountButtonActionPerformed
 
     private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectButtonActionPerformed
         // TODO add your handling code here:
@@ -301,8 +301,8 @@ public class pageConnexion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelConnectButton;
     private javax.swing.JButton connectButton;
+    private javax.swing.JButton createAccountButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
