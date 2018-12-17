@@ -7,11 +7,13 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -37,19 +39,67 @@ import org.bson.Document;
 public class presentationJeu extends javax.swing.JFrame {
 
     Jeu jeu;
+    Users us;
     static int idJeu;
+    static int idUser;
     /**
      * Creates new form presentationJeu
      */
-    public presentationJeu(int id) {
+    public presentationJeu(int idJ, int idU) {
         initComponents();
-        this.idJeu = id;
-        jeu = new Jeu(7);
+        this.setSize(800,600);
+        
+        this.idUser = 0;
+        this.idJeu = 2;
+        
+        jeu = new Jeu(idJeu);
+        us=new Users(idUser);
+        
         setPresentation();
         description();
         afficheImg();
         setAvis();
         jeuSimilaire();
+        setLike();
+        setDislike();
+        setFavori();
+    }
+    
+    public void setLike(){
+        List<String> listeJeuLike = us.getListeLike();
+
+        for(int i = 0; i< listeJeuLike.size() ; i++){
+            
+            if(listeJeuLike.get(i).equals(jeu.getNom())) {
+                buttonLike.setEnabled(false);
+            }  
+        }
+    }
+    
+    public void setFavori(){
+        List<String> listeFavori = us.getListeJeuFavori();
+
+        for(int i = 0; i< listeFavori.size() ; i++){
+            
+            if(listeFavori.get(i).equals(jeu.getNom())) {
+                buttonFavori.setBackground(Color.yellow);
+            }  
+        }
+    }
+    
+    public void setDislike(){
+        List<String> listeJeuDislike = us.getListeDislike();
+
+        for(int i = 0; i< listeJeuDislike.size() ; i++){
+            
+            if(listeJeuDislike.get(i).equals(jeu.getNom())) {
+                buttonDislike.setEnabled(false);
+            } 
+        }
+    }
+    
+    public void setComment(){
+        
     }
     
     public void setPresentation(){
@@ -60,6 +110,7 @@ public class presentationJeu extends javax.swing.JFrame {
     {
         MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
+        
         MongoCursor<Document> it;
         MongoCollection<Document> desc = db.getCollection("description");
 
@@ -139,11 +190,11 @@ public class presentationJeu extends javax.swing.JFrame {
             jt.setEnabled(false);
             jp.add(jt,BorderLayout.CENTER);
             
-            JLabel jl = new JLabel((String)( ""+doc.get("idUser")));
+            
+            JLabel jl = new JLabel((String)(" " + doc.get("idUser")));
             jp.add(jl,BorderLayout.WEST);
             panel.add( jp);
-            
-            
+ 
         } 
         
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -171,6 +222,7 @@ public class presentationJeu extends javax.swing.JFrame {
         panelLikeDislike = new javax.swing.JPanel();
         buttonLike = new javax.swing.JButton();
         buttonDislike = new javax.swing.JButton();
+        buttonFavori = new javax.swing.JButton();
         panelDesc = new javax.swing.JPanel();
         labelDescription = new javax.swing.JLabel();
         panelAvis = new javax.swing.JPanel();
@@ -202,10 +254,28 @@ public class presentationJeu extends javax.swing.JFrame {
 
         buttonLike.setText("Like");
         buttonLike.setPreferredSize(new java.awt.Dimension(94, 20));
+        buttonLike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLikeActionPerformed(evt);
+            }
+        });
         panelLikeDislike.add(buttonLike, java.awt.BorderLayout.WEST);
 
         buttonDislike.setText("Dislike");
+        buttonDislike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDislikeActionPerformed(evt);
+            }
+        });
         panelLikeDislike.add(buttonDislike, java.awt.BorderLayout.EAST);
+
+        buttonFavori.setText("favori");
+        buttonFavori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFavoriActionPerformed(evt);
+            }
+        });
+        panelLikeDislike.add(buttonFavori, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(panelLikeDislike, java.awt.BorderLayout.SOUTH);
 
@@ -247,6 +317,37 @@ public class presentationJeu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLikeActionPerformed
+        // TODO add your handling code here:
+        buttonLike.setEnabled(false);
+        buttonDislike.setEnabled(true);
+        
+        String nomJeu = this.jeu.getNom();
+        this.us.addJeuLike(nomJeu);
+        this.us.removeJeuDislike(nomJeu);
+    }//GEN-LAST:event_buttonLikeActionPerformed
+
+    private void buttonDislikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDislikeActionPerformed
+        // TODO add your handling code here:
+        buttonDislike.setEnabled(false);
+        buttonLike.setEnabled(true);
+        
+        String nomJeu = this.jeu.getNom();
+        this.us.addJeuDislike(nomJeu);
+        this.us.removeJeuLike(nomJeu);
+    }//GEN-LAST:event_buttonDislikeActionPerformed
+
+    private void buttonFavoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFavoriActionPerformed
+        // TODO add your handling code here:
+        if(us.isFavori(jeu.getNom())){
+            buttonFavori.setBackground(Color.white);
+            us.removeFavori(jeu.getNom());
+        }else{
+            buttonFavori.setBackground(Color.yellow);
+            us.addFavori(jeu.getNom());
+        }
+    }//GEN-LAST:event_buttonFavoriActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -277,13 +378,14 @@ public class presentationJeu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new presentationJeu(idJeu).setVisible(true);
+                new presentationJeu(idJeu,idUser).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDislike;
+    private javax.swing.JButton buttonFavori;
     private javax.swing.JButton buttonLike;
     private javax.swing.JPanel corps;
     private javax.swing.JPanel jPanel1;

@@ -6,6 +6,9 @@
       "last": "Odom"
     },
     "pseudo": "Caroline9",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18" ],
+    "jeuLike" : ["Fifa 19","NBA 2K 92"],
+    "jeuDislike" : ["Dragon Ball Legends"],
     "passWord": "CarolineODOM237"
   },
   {
@@ -15,6 +18,9 @@
       "last": "Walker"
     },
     "pseudo": "Mcgee5",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18"],
+    "jeuLike" : ["Fifa 19","NBA 2K 92"],
+    "jeuDislike" : ["Dragon Ball Legends"],
     "passWord": "McgeeWALKER653"
   },
   {
@@ -24,6 +30,9 @@
       "last": "Combs"
     },
     "pseudo": "Madge8",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18"],
+    "jeuLike" : ["Dragon Ball Legends","Fortnite : Sauver le monde"],
+    "jeuDislike" : ["Fifa 19"],
     "passWord": "MadgeCOMBS454"
   },
   {
@@ -33,6 +42,7 @@
       "last": "Bartlett"
     },
     "pseudo": "Avis5",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18"],
     "passWord": "AvisBARTLETT81"
   },
   {
@@ -51,6 +61,7 @@
       "last": "Merrill"
     },
     "pseudo": "Castillo8",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18"],
     "passWord": "CastilloMERRILL337"
   },
   {
@@ -59,6 +70,8 @@
       "first": "Ivy",
       "last": "Owen"
     },
+    "jeuLike" : ["Fifa 19"],
+    "jeuDislike" : ["Dragon Ball Legends","Fortnite : Sauver le monde"],
     "pseudo": "Ivy1",
     "passWord": "IvyOWEN767"
   },
@@ -69,6 +82,7 @@
       "last": "Caldwell"
     },
     "pseudo": "Faye2",
+    "jeuFavori" : ["NBA 2K 92","Fifa 18"],
     "passWord": "FayeCALDWELL867"
   },
   {
@@ -86,6 +100,8 @@
       "first": "Luisa",
       "last": "Mcbride"
     },
+    "jeuLike" : ["Fifa 19"],
+    "jeuDislike" : ["Dragon Ball Legends","Fortnite : Sauver le monde"],
     "pseudo": "Luisa5",
     "passWord": "LuisaMCBRIDE374"
   }
