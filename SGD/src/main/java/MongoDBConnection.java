@@ -1,4 +1,3 @@
-import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
@@ -38,11 +37,11 @@ public class MongoDBConnection {
     static void connect()
     {
         char[] pass = new char[10];
-        String s = "ai265149";
+        String s = "hc047736";
         pass = s.toCharArray();
-        MongoCredential credential = MongoCredential.createCredential("ai265149","ai265149",pass);
+        MongoCredential credential = MongoCredential.createCredential("hc047736","hc047736",pass);
         MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
-        db = client.getDatabase("ai265149");
+        db = client.getDatabase("hc047736");
      
     }   
 

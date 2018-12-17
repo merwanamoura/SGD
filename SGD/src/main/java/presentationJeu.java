@@ -2,12 +2,16 @@
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.io.File;
+import java.util.Arrays;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -40,10 +44,16 @@ public class presentationJeu extends javax.swing.JFrame {
     public presentationJeu(int id) {
         initComponents();
         this.idJeu = id;
-        jeu = new Jeu(id);
+        jeu = new Jeu(7);
+        setPresentation();
         description();
         afficheImg();
         setAvis();
+        jeuSimilaire();
+    }
+    
+    public void setPresentation(){
+        labelNomJeu.setText(labelNomJeu.getText() + " " + jeu.getNom());
     }
     
     public void description()
@@ -57,19 +67,54 @@ public class presentationJeu extends javax.swing.JFrame {
         
         Document doc = it.next();
         
-        textFieldDescription.setText((String) doc.get("synopsis"));
+        JTextArea jt = new JTextArea((String) doc.get("synopsis"));
+        jt.setLineWrap(true);
+        jt.setEnabled(false);
+        panelDesc.add(jt,BorderLayout.CENTER);
 
     }
     
     public void afficheImg()
     {
         String img = jeu.getImage();
-        File f = new File((String) img);
-
-        if(f.exists() && !f.isDirectory()) panelImage.add(new JLabel(new ImageIcon(img)));
-        else panelImage.add(new JLabel(new ImageIcon("imageJeux/default.png")));
+        System.out.println(img);
+        
+        JLabel label = new JLabel(new ImageIcon("imageJeux/default.png"));
+        
+        panelImage.add(label, BorderLayout.CENTER);
+        
         
     }
+    public void jeuSimilaire()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+
+        it = jeux.find(eq("categorie" , jeu.getCategorie())).iterator();
+        
+        
+        while (it.hasNext()) 
+        {
+            Document doc = it.next();
+            File f = new File((String) doc.get("image"));
+            
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+            
+
+        } 
+        JList list = new JList(dlm);
+        list.setCellRenderer(new ListEntryCellRenderer());
+     
+        jScrollPane1.add(list); 
+        jScrollPane1.setViewportView(list);
+
+
+    }
+    
     
     public void setAvis()
     {
@@ -78,7 +123,7 @@ public class presentationJeu extends javax.swing.JFrame {
         MongoCursor<Document> it;
         MongoCollection<Document> avis = db.getCollection("Avis");
 
-        it = avis.find(eq("idJeu" , this.idJeu)).limit(6).iterator();
+        it = avis.find(eq("idJeu" , this.idJeu)).iterator();  
         
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(panel);
@@ -91,21 +136,21 @@ public class presentationJeu extends javax.swing.JFrame {
         
             JTextArea jt = new JTextArea((String) doc.get("avis"));
             jt.setLineWrap(true);
+            jt.setEnabled(false);
             jp.add(jt,BorderLayout.CENTER);
             
             JLabel jl = new JLabel((String)( ""+doc.get("idUser")));
             jp.add(jl,BorderLayout.WEST);
             panel.add( jp);
+            
+            
         } 
+        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(Box.createVerticalGlue());
 
-
-panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-
-
-panel.add(Box.createVerticalGlue());
-
-panelAvis.add(scrollPane);
+        panelAvis.add(scrollPane);
+        
     }   
 
     /**
@@ -126,9 +171,8 @@ panelAvis.add(scrollPane);
         panelLikeDislike = new javax.swing.JPanel();
         buttonLike = new javax.swing.JButton();
         buttonDislike = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        panelDesc = new javax.swing.JPanel();
         labelDescription = new javax.swing.JLabel();
-        textFieldDescription = new javax.swing.JTextField();
         panelAvis = new javax.swing.JPanel();
         textFieldComment = new javax.swing.JTextField();
         panelJeuSimilaire = new javax.swing.JPanel();
@@ -150,17 +194,7 @@ panelAvis.add(scrollPane);
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
-        panelImage.setLayout(panelImageLayout);
-        panelImageLayout.setHorizontalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
-        );
-        panelImageLayout.setVerticalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 187, Short.MAX_VALUE)
-        );
-
+        panelImage.setLayout(new java.awt.BorderLayout());
         jPanel4.add(panelImage, java.awt.BorderLayout.CENTER);
 
         panelLikeDislike.setPreferredSize(new java.awt.Dimension(272, 40));
@@ -177,17 +211,14 @@ panelAvis.add(scrollPane);
 
         jPanel1.add(jPanel4);
 
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        panelDesc.setLayout(new java.awt.BorderLayout());
 
         labelDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelDescription.setText("Description du jeu :");
         labelDescription.setPreferredSize(new java.awt.Dimension(138, 35));
-        jPanel3.add(labelDescription, java.awt.BorderLayout.NORTH);
+        panelDesc.add(labelDescription, java.awt.BorderLayout.NORTH);
 
-        textFieldDescription.setEnabled(false);
-        jPanel3.add(textFieldDescription, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jPanel3);
+        jPanel1.add(panelDesc);
 
         panelJeu.add(jPanel1);
 
@@ -256,18 +287,17 @@ panelAvis.add(scrollPane);
     private javax.swing.JButton buttonLike;
     private javax.swing.JPanel corps;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelJeuSimilaire;
     private javax.swing.JLabel labelNomJeu;
     private javax.swing.JPanel panelAvis;
+    private javax.swing.JPanel panelDesc;
     private javax.swing.JPanel panelImage;
     private javax.swing.JPanel panelJeu;
     private javax.swing.JPanel panelJeuSimilaire;
     private javax.swing.JPanel panelLikeDislike;
     private javax.swing.JTextField textFieldComment;
-    private javax.swing.JTextField textFieldDescription;
     // End of variables declaration//GEN-END:variables
 }
