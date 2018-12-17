@@ -8,6 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Arrays;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.bson.Document;
 
@@ -25,11 +26,11 @@ public class creationCompte extends javax.swing.JFrame {
 
  MongoDatabase db ;
  MongoCollection<Document> collection;
- 
+ JFrame previousFrame; 
     /**
      * Creates new form creationCompte
      */
-    public creationCompte() {
+    public creationCompte(JFrame connectFrame) {
         initComponents();
         
             MongoDBConnection.connect();
@@ -37,6 +38,8 @@ public class creationCompte extends javax.swing.JFrame {
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
+        previousFrame = connectFrame;
 
     }
 
@@ -124,6 +127,11 @@ public class creationCompte extends javax.swing.JFrame {
         jPanel4.add(pwdField2);
 
         cancelButton.setText("Annuler");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
         jPanel4.add(cancelButton);
 
         createAccountButton.setText("Créer Compte");
@@ -201,10 +209,12 @@ public class creationCompte extends javax.swing.JFrame {
                                             collection.insertOne(doc);
                                             
                                       JOptionPane.showMessageDialog(this,
-                                        "Parfait "+pseudo+"  ! \n . Votre compte a été créé avec succès.",
+                                        "Parfait "+pseudo+"  ! \n  Votre compte a été créé avec succès.",
                                         "Compte créé",
                                         JOptionPane.INFORMATION_MESSAGE);
                                       
+                                      // Libération espace mémoire des  frames 
+                                      previousFrame.dispose();
                                       this.dispose();
                                       
                                       pageAcceuil pa= new pageAcceuil();
@@ -217,6 +227,14 @@ public class creationCompte extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_createAccountButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        
+        this.dispose();
+        previousFrame.setVisible(true);
+        
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -25,8 +25,8 @@ import org.bson.Document;
  * @author ma522501
  */
 public class pageConnexion extends javax.swing.JFrame {
-    
-    private boolean adminChecked;
+
+     private boolean adminChecked;
     private pageAcceuil pa;
 
     /**
@@ -37,12 +37,14 @@ public class pageConnexion extends javax.swing.JFrame {
         // Exclusion de sélection
         adminChecked=false;
         noAdmin.setSelected(true);
+       
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
         ButtonGroup group = new ButtonGroup();
         group.add(yesAdmin);
         group.add(noAdmin);
+
     }
 
     /**
@@ -161,6 +163,7 @@ public class pageConnexion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void pseudoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pseudoFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pseudoFieldActionPerformed
@@ -172,10 +175,11 @@ public class pageConnexion extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
-        
-        creationCompte cc= new creationCompte();
+        this.setVisible(false);
+        creationCompte cc= new creationCompte(this);        
         cc.show();
         this.dispose();
+        
         
 
     }//GEN-LAST:event_createAccountButtonActionPerformed
@@ -224,6 +228,7 @@ public class pageConnexion extends javax.swing.JFrame {
                 if (adminChecked){
                     pa = new pageAcceuil();
                 }
+                
                 // Cas d'un client 
                 else {
                     pa = new pageAcceuil();
@@ -240,7 +245,7 @@ public class pageConnexion extends javax.swing.JFrame {
                 if (adminChecked) message = "Aucun administrateur ayant les informations entrées n'est présent dans la BD. \n Veuillez ré-essayer avec des identifiants corrects! ";
                 else  message = "Aucun client ayant les informations entrées n'est présent dans la BD. ";
                  JOptionPane.showMessageDialog(this,
-                message,
+                 message,
                 "Identifiants incorrects",
                 JOptionPane.ERROR_MESSAGE);
                 System.out.println("Echec de connexion ");
@@ -264,6 +269,7 @@ public class pageConnexion extends javax.swing.JFrame {
         adminChecked=false;
 
     }//GEN-LAST:event_noAdminActionPerformed
+
 
     /**
      * @param args the command line arguments
