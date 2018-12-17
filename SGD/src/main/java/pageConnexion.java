@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
@@ -26,6 +27,7 @@ import org.bson.Document;
 public class pageConnexion extends javax.swing.JFrame {
     
     private boolean adminChecked;
+    private pageAcceuil pa;
 
     /**
      * Creates new form pageConnexion
@@ -58,7 +60,7 @@ public class pageConnexion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pseudoField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        pwField = new javax.swing.JTextField();
+        pwField = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         yesAdmin = new javax.swing.JRadioButton();
@@ -114,12 +116,7 @@ public class pageConnexion extends javax.swing.JFrame {
         jLabel2.setText("Mot de passe ?");
         jPanel1.add(jLabel2);
 
-        pwField.setText("Entrer votre mot de passe ...");
-        pwField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pwFieldMouseClicked(evt);
-            }
-        });
+        pwField.setText("jPasswordField1");
         jPanel1.add(pwField);
 
         jLabel3.setText("Admin ?");
@@ -175,11 +172,6 @@ public class pageConnexion extends javax.swing.JFrame {
         pseudoField.setText("");
     }//GEN-LAST:event_pseudoFieldMouseClicked
 
-    private void pwFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pwFieldMouseClicked
-        // TODO add your handling code here:
-        pwField.setText("");
-    }//GEN-LAST:event_pwFieldMouseClicked
-
     private void cancelConnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelConnectButtonActionPerformed
         // TODO add your handling code here:
         System.exit(1);
@@ -221,9 +213,35 @@ public class pageConnexion extends javax.swing.JFrame {
             
             try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo).append("passWord", pw)).iterator()) {
             
-            if (cursor.hasNext())  System.out.println("Connexion réussie");
-            else System.out.println("Echec de connexion ");
-            
+            if (cursor.hasNext())  
+            {
+                System.out.println("Connexion réussie");
+
+                // Cas d'un administrateur 
+                if (adminChecked){
+                    pa = new pageAcceuil();
+                }
+                // Cas d'un client 
+                else {
+                    pa = new pageAcceuil();
+                }
+                
+                pa.show();
+                this.dispose();
+
+            }
+            else{ 
+                
+                String message;
+                
+                if (adminChecked) message = "Aucun administrateur ayant les informations entrées n'est présent dans la BD. \n Veuillez ré-essayer avec des identifiants corrects! ";
+                else  message = "Aucun client ayant les informations entrées n'est présent dans la BD. ";
+                 JOptionPane.showMessageDialog(this,
+                message,
+                "Identifiants incorrects",
+                JOptionPane.ERROR_MESSAGE);
+                System.out.println("Echec de connexion ");
+            }
           
             }
 
@@ -294,7 +312,7 @@ public class pageConnexion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton noAdmin;
     private javax.swing.JTextField pseudoField;
-    private javax.swing.JTextField pwField;
+    private javax.swing.JPasswordField pwField;
     private javax.swing.JRadioButton yesAdmin;
     // End of variables declaration//GEN-END:variables
 }
