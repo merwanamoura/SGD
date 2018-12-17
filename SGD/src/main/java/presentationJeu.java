@@ -1,3 +1,25 @@
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.io.File;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import org.bson.Document;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,12 +32,81 @@
  */
 public class presentationJeu extends javax.swing.JFrame {
 
+    Jeu jeu;
+    static int idJeu;
     /**
      * Creates new form presentationJeu
      */
-    public presentationJeu() {
+    public presentationJeu(int id) {
         initComponents();
+        this.idJeu = id;
+        jeu = new Jeu(id);
+        description();
+        afficheImg();
+        setAvis();
     }
+    
+    public void description()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> desc = db.getCollection("description");
+
+        it = desc.find(eq("idJeu" , this.idJeu)).iterator();
+        
+        Document doc = it.next();
+        
+        textFieldDescription.setText((String) doc.get("synopsis"));
+
+    }
+    
+    public void afficheImg()
+    {
+        String img = jeu.getImage();
+        File f = new File((String) img);
+
+        if(f.exists() && !f.isDirectory()) panelImage.add(new JLabel(new ImageIcon(img)));
+        else panelImage.add(new JLabel(new ImageIcon("imageJeux/default.png")));
+        
+    }
+    
+    public void setAvis()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection("Avis");
+
+        it = avis.find(eq("idJeu" , this.idJeu)).limit(6).iterator();
+        
+        JPanel panel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(panel);
+
+        while (it.hasNext()) 
+        {
+            
+            Document doc = it.next();
+            JPanel jp = new JPanel(new BorderLayout());
+        
+            JTextArea jt = new JTextArea((String) doc.get("avis"));
+            jt.setLineWrap(true);
+            jp.add(jt,BorderLayout.CENTER);
+            
+            JLabel jl = new JLabel((String)( ""+doc.get("idUser")));
+            jp.add(jl,BorderLayout.WEST);
+            panel.add( jp);
+        } 
+
+
+panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+
+
+panel.add(Box.createVerticalGlue());
+
+panelAvis.add(scrollPane);
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,9 +129,8 @@ public class presentationJeu extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         labelDescription = new javax.swing.JLabel();
         textFieldDescription = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        panelAvis = new javax.swing.JPanel();
         textFieldComment = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
         panelJeuSimilaire = new javax.swing.JPanel();
         labelJeuSimilaire = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -101,14 +191,13 @@ public class presentationJeu extends javax.swing.JFrame {
 
         panelJeu.add(jPanel1);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        panelAvis.setLayout(new java.awt.BorderLayout());
 
         textFieldComment.setText("Laissez un commentaire ...");
         textFieldComment.setPreferredSize(new java.awt.Dimension(170, 25));
-        jPanel2.add(textFieldComment, java.awt.BorderLayout.NORTH);
-        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        panelAvis.add(textFieldComment, java.awt.BorderLayout.NORTH);
 
-        panelJeu.add(jPanel2);
+        panelJeu.add(panelAvis);
 
         corps.add(panelJeu, java.awt.BorderLayout.CENTER);
 
@@ -157,7 +246,7 @@ public class presentationJeu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new presentationJeu().setVisible(true);
+                new presentationJeu(idJeu).setVisible(true);
             }
         });
     }
@@ -167,14 +256,13 @@ public class presentationJeu extends javax.swing.JFrame {
     private javax.swing.JButton buttonLike;
     private javax.swing.JPanel corps;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelJeuSimilaire;
     private javax.swing.JLabel labelNomJeu;
+    private javax.swing.JPanel panelAvis;
     private javax.swing.JPanel panelImage;
     private javax.swing.JPanel panelJeu;
     private javax.swing.JPanel panelJeuSimilaire;
