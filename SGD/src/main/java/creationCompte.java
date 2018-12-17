@@ -1,8 +1,15 @@
 
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,14 +23,17 @@ import javax.swing.JOptionPane;
  */
 public class creationCompte extends javax.swing.JFrame {
 
+ MongoDatabase db ;
+ MongoCollection<Document> collection;
+ 
     /**
      * Creates new form creationCompte
      */
     public creationCompte() {
         initComponents();
         
-        MongoDBConnection.connect();
-        MongoDatabase db = MongoDBConnection.getDb();
+            MongoDBConnection.connect();
+           db = MongoDBConnection.getDb();            
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -136,8 +146,8 @@ public class creationCompte extends javax.swing.JFrame {
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
                 String nom = nomField.getText();
-                String prenom = nomField.getText();
-                String pseudo = nomField.getText();
+                String prenom = prenomField.getText();
+                String pseudo = pseudoField.getText();
                 String pwd= pwField1.getText();
                 String pwd2= pwdField2.getText();
                 
@@ -163,6 +173,46 @@ public class creationCompte extends javax.swing.JFrame {
                 
                 else {
                     
+                    
+                               // vérification de l'unicité du compte 
+                             collection = db.getCollection("clients");
+                             try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo)).iterator()) {
+                                 
+                                 // le pseudo existe déjà 
+                                 if (cursor.hasNext())  
+                                   {
+                                        JOptionPane.showMessageDialog(this,
+                                        "Un client possède déjà ce pseudo. \n Merci d'en rentrer un autre.",
+                                        "Pseudo existe déjà",
+                                        JOptionPane.ERROR_MESSAGE);
+                                   }
+                                 
+                                 // le pseudo n'existe pas -> création de compte 
+                                 else {
+                                     
+                                      System.out.println("Le pseudo n'existe pas encore");
+                                      
+                                      Document doc = new Document("idU",(int)collection.count())
+                                                     .append("name", new Document("first",prenom).append("last", nom))
+                                                     .append("pseudo",pseudo)
+                                                     .append("passWord",pwd);
+                                      
+                                     
+                                            collection.insertOne(doc);
+                                            
+                                      JOptionPane.showMessageDialog(this,
+                                        "Parfait "+pseudo+"  ! \n . Votre compte a été créé avec succès.",
+                                        "Compte créé",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                                      
+                                      this.dispose();
+                                      
+                                      pageAcceuil pa= new pageAcceuil();
+                                      pa.show();
+                                      
+                                 }
+                                 
+                             }
                 }
         
         
