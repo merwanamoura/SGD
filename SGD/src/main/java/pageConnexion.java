@@ -69,19 +69,20 @@ public class pageConnexion extends javax.swing.JFrame {
         connectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 250));
 
         jPanel2.setPreferredSize(new java.awt.Dimension(500, 50));
 
-        jLabel4.setText("Veuillez vous connecter pour continuer");
+        jLabel4.setText("Veuillez vous connecter ou créer un compte pour continuer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(137, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
                 .addComponent(jLabel4)
-                .addGap(110, 110, 110))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +99,6 @@ public class pageConnexion extends javax.swing.JFrame {
         jLabel1.setText("Pseudo ?");
         jPanel1.add(jLabel1);
 
-        pseudoField.setText("Entrer votre pseudo ..");
         pseudoField.setCaretColor(new java.awt.Color(0, 0, 0));
         pseudoField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         pseudoField.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -115,8 +115,6 @@ public class pageConnexion extends javax.swing.JFrame {
 
         jLabel2.setText("Mot de passe ?");
         jPanel1.add(jLabel2);
-
-        pwField.setText("jPasswordField1");
         jPanel1.add(pwField);
 
         jLabel3.setText("Admin ?");
@@ -142,7 +140,7 @@ public class pageConnexion extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3);
 
-        createAccountButton.setText("Annuler ");
+        createAccountButton.setText("Créer un compte");
         createAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createAccountButtonActionPerformed(evt);
@@ -174,6 +172,11 @@ public class pageConnexion extends javax.swing.JFrame {
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
+        
+        creationCompte cc= new creationCompte();
+        cc.show();
+        this.dispose();
+        
 
     }//GEN-LAST:event_createAccountButtonActionPerformed
 
