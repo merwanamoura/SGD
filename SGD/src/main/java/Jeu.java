@@ -48,10 +48,8 @@ public class Jeu {
     {
         this.idJeu=id;
         
-        MongoDBConnection.connect();
-        MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
-        MongoCollection<Document> jeux = db.getCollection("jeux");
+        MongoCollection<Document> jeux = MongoDBConnection.getDb().getCollection("jeux");
 
         it = jeux.find(eq("idJeu" , id)).iterator();
         
@@ -63,7 +61,26 @@ public class Jeu {
         setImage((String) doc.get("image"));
         
     }
-
+    
+    public Jeu(Document doc)
+    {
+        if(doc.get("idJeu") instanceof Integer)
+        {
+            setIdJeu((int)doc.get("idJeu"));
+        }
+        else 
+        {
+            double idJeu = (double)doc.get("idJeu");
+            setIdJeu((int)idJeu);
+        }
+        
+        setNom((String) doc.get("nom"));
+        setNomEditeur((String) doc.get("nomEditeur"));
+        setCategorie((String) doc.get("categorie"));
+        setImage((String) doc.get("image"));
+        
+    }
+    
     public void setIdJeu(int idJeu) {
         this.idJeu = idJeu;
     }
