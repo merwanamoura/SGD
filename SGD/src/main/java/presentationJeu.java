@@ -181,29 +181,26 @@ public class presentationJeu extends javax.swing.JFrame {
               
         if( us.hasComment(idJeu) ){   
             jb = new JLabel(us.getPseudo() + " : ");
-            panel.add(jb,BorderLayout.WEST);
-
+            
             jt = new JTextArea(us.getAvis(this.idJeu) );
             jt.setLineWrap(true);
             jt.setEnabled(false);
-            panel.add(jt,BorderLayout.CENTER);
             
             but = new JButton("Modifier");
-            panel.add(but,BorderLayout.EAST);
         }
         else
         {
             jb = new JLabel(us.getPseudo() + " : ");
-            panel.add(jb,BorderLayout.WEST);
-            
+ 
             jt = new JTextArea("Laisser un commentaire ..." );
             jt.setLineWrap(true);
-            panel.add(jt,BorderLayout.CENTER);
-            
+
             but = new JButton("Commenter");
-            panel.add(but,BorderLayout.EAST);  
-            
         }
+        
+        panel.add(jb,BorderLayout.WEST);
+        panel.add(jt,BorderLayout.CENTER);
+        panel.add(but,BorderLayout.EAST);  
         
         but.addActionListener(new ActionListener() 
             { 
