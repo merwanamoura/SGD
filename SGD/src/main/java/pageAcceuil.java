@@ -1,4 +1,5 @@
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -60,26 +61,28 @@ public class pageAcceuil extends javax.swing.JFrame {
         ajoutSuppressionButton();
 
     }
-    /*8*/
+   
+    /* MÉTHODE POUR REMPLIR LA JLIST DES JEUX RECENTS*/
     public void fillJlistRecent(MongoDatabase db)
     {
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
         MongoCollection<Document> jeux = db.getCollection("jeux");
 
-        it = jeux.find().limit(10).iterator();
+        it = jeux.find().sort(new BasicDBObject("dateSortie",-1)).limit(10).iterator();
         
         
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            File f = new File((String) doc.get("image"));
-            
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
-            
+            Jeu jeu = new Jeu(doc);
+            File f = new File(jeu.getImage());
+
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
 
         } 
+        
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
      
@@ -98,16 +101,18 @@ public class pageAcceuil extends javax.swing.JFrame {
         it = jeux.aggregate( Arrays.asList(   Aggregates.lookup("Note","idJeu", "idJeu", "joinJeuxNote") ,  Aggregates.sort( eq("joinJeuxNote.nbLikes",-1) ) ) ).iterator();
         
         
+        
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            File f = new File((String) doc.get("image"));
-            
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
-            
+            Jeu jeu = new Jeu(doc);
+            File f = new File(jeu.getImage());
+
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
 
         } 
+        
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
      
@@ -119,10 +124,8 @@ public class pageAcceuil extends javax.swing.JFrame {
     
         public void fillJlistComments(MongoDatabase db)
     {
-        
+        DefaultListModel dlm = new DefaultListModel();            
 
-        
-        DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it,it2;
         MongoCollection<Document> jeux = db.getCollection("jeux");
 
@@ -133,19 +136,20 @@ public class pageAcceuil extends javax.swing.JFrame {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-           
-             Document d = (Document) doc.get("_id");
-             
-            it2 = jeux.find(eq("idJeu",d.get("_id"))).iterator();
+          
+            Document idJ = (Document) doc.get("_id");
+  
 
-            Document doc2 = it2.next();
+            Jeu jeu = new Jeu((int) idJ.get("_id"));
             
-            File f = new File((String) doc2.get("image"));
+            File f = new File(jeu.getImage());
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc2.get("nom"), new ImageIcon((String) doc2.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc2.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
 
         } 
+        
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
      
