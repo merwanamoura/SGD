@@ -6,7 +6,8 @@
     "categorie": "Sport",
     "prix": 49.59,
     "dateSortie": ISODate('2018-11-17T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+     "idA":1
   },
   {
     "idJeu": 1,
@@ -15,7 +16,8 @@
     "categorie": "Sport",
     "prix": 59.99,
     "dateSortie": ISODate('2017-12-14T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+     "idA":1
 
   },
   {
@@ -25,7 +27,9 @@
     "categorie": "Sport",
     "prix": 24.99,
     "dateSortie": ISODate('1992-12-11T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
+
   },
   {
     "idJeu": 3,
@@ -34,7 +38,9 @@
     "categorie": "Aventure",
     "prix": 34.99,
     "dateSortie": ISODate('2016-06-15T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
+
   },
   {
     "idJeu": 4,
@@ -43,7 +49,8 @@
     "categorie": "Réflexion",
     "prix":5.99,
     "dateSortie": ISODate('1994-08-29T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
   },
   {
     "idJeu": 5,
@@ -52,7 +59,9 @@
     "categorie": "Aventure",
     "prix": 29.99,
     "dateSortie": ISODate('2012-05-12T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
+    
   },
   {
     "idJeu": 6,
@@ -61,7 +70,9 @@
     "categorie": "Action",
     "prix": 9.99,
     "dateSortie": ISODate('2017-10-17T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
+
   },
   {
     "idJeu": 7,
@@ -70,7 +81,9 @@
     "categorie": "Sport",
     "prix": 4.99,
     "dateSortie": ISODate('2004-11-05T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
+
   },
   {
     "idJeu": 8,
@@ -79,7 +92,8 @@
     "categorie": "Action",
     "prix": 59.99,
     "dateSortie": ISODate('2016-04-22T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
   },
   {
     "idJeu": 9,
@@ -88,7 +102,8 @@
     "categorie": "Sport",
     "prix": 29.99,
     "dateSortie": ISODate('2013-09-13T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
   },
   {
     "idJeu": 10,
@@ -97,7 +112,8 @@
     "categorie": "Combat",
     "prix": 23.99,
     "dateSortie": ISODate('2017-11-07T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
   },
   {
     "idJeu": 11,
@@ -106,7 +122,8 @@
     "categorie": "Rôle",
     "prix": 23.99,
     "dateSortie": ISODate('2006-06-16T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
   },
   {
     "idJeu": 12,
@@ -115,7 +132,8 @@
     "categorie": "Rôle",
     "prix": 69.99,
     "dateSortie": ISODate('2015-11-08T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
   },
   {
     "idJeu": 13,
@@ -124,7 +142,8 @@
     "categorie": "Aventure",
     "prix": 19.99,
     "dateSortie": ISODate('2014-12-18T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":1
   },
   {
     "idJeu": 14,
@@ -133,6 +152,7 @@
     "categorie": "Sport",
     "prix": 39.99,
     "dateSortie": ISODate('2016-11-13T00:00:00.000Z'),
-    "image": "../defaultImage.png"
+    "image": "../defaultImage.png",
+    "idA":22
   }
 ]

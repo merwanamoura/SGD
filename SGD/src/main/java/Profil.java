@@ -1,7 +1,9 @@
 
+import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 /*
@@ -20,26 +22,59 @@ private JLabel mesJeux;
 private JLabel mesLikes;
 private JLabel mesDislikes;
 private JScrollPane mesJeuxScrollPane; 
+private JScrollPane mesLikesScrollPane; 
+private JScrollPane mesDislikesScrollPane; 
+private JPanel mesLikesPanel;
+private JPanel mesDislikesPanel;
+
     /**
      * Creates new form Profil
      */
-    public Profil(boolean admin) {
+    public Profil(boolean admin, int idUser) {
         
          mesJeux= new JLabel ("Mes Jeux");
          mesLikes= new JLabel ("Mes Likes");
          mesDislikes= new JLabel ("Mes Dislikes");
+        mesLikesPanel= new JPanel();
+        mesDislikesPanel= new JPanel();
+         
+         
          mesJeuxScrollPane = new JScrollPane();
+         mesLikesScrollPane = new JScrollPane();
+         mesDislikesScrollPane = new JScrollPane();
         
         initComponents();
+        
+         MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
         
         // Affichage panneau mes jeux  
         if (admin) {
             
             mesJeux.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            mesJeux.setText("Mes Jeux");
             jPanel4.add(mesJeux, java.awt.BorderLayout.PAGE_START);
-            jPanel4.add(mesJeux);
-           // jPanel4.add(mesJeuxScrollPane, java.awt.BorderLayout.CENTER);
-        
+            jPanel4.add(mesJeuxScrollPane, java.awt.BorderLayout.CENTER);
+
+        }
+        else {
+            
+             jPanel4.setLayout(new java.awt.GridLayout(2, 1));
+             
+             mesLikes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+             mesDislikes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+             
+             mesLikesPanel.setLayout(new java.awt.BorderLayout());
+             mesLikesPanel.add(mesLikes, java.awt.BorderLayout.PAGE_START);
+             mesLikesPanel.add(mesLikesScrollPane, java.awt.BorderLayout.CENTER);
+             
+             mesDislikesPanel.setLayout(new java.awt.BorderLayout());
+             mesDislikesPanel.add(mesDislikes, java.awt.BorderLayout.PAGE_START);
+             mesDislikesPanel.add(mesDislikesScrollPane, java.awt.BorderLayout.CENTER);
+             
+            jPanel4.add(mesLikesPanel);
+            jPanel4.add(mesDislikesPanel);
+             
         }
         
         
@@ -139,7 +174,9 @@ private JScrollPane mesJeuxScrollPane;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Profil(true).setVisible(true);
+                
+                new Profil(true,1).setVisible(true);
+            
             }
         });
     }
