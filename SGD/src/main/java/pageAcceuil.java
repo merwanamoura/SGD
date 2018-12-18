@@ -27,6 +27,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import static java.util.Arrays.asList;
+import javax.swing.JCheckBox;
+import javax.swing.ScrollPaneConstants;
 import org.bson.Document;
 
 
@@ -42,17 +44,20 @@ import org.bson.Document;
 public class pageAcceuil extends javax.swing.JFrame {
     
 
+    boolean isAdmin;
     /**
      * Creates new form pageAcceuil
      */
     public pageAcceuil()
     {
         initComponents();
+        isAdmin = true;
         MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         fillJlistRecent(db);
         fillJlistPopular(db);
         fillJlistComments(db);
+        ajoutSuppressionButton();
 
     }
     /*8*/
@@ -114,6 +119,9 @@ public class pageAcceuil extends javax.swing.JFrame {
     
         public void fillJlistComments(MongoDatabase db)
     {
+        
+
+        
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it,it2;
         MongoCollection<Document> jeux = db.getCollection("jeux");
@@ -146,6 +154,16 @@ public class pageAcceuil extends javax.swing.JFrame {
 
 
     }
+        
+        
+        public void ajoutSuppressionButton()
+        {
+            if(!isAdmin)
+            {
+                ajoutButton.setVisible(false);
+                SuppressionButton.setVisible(false);
+            }
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,13 +175,13 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         barrehaut = new javax.swing.JPanel();
         fonctionnalitepanel = new javax.swing.JPanel();
-        optsbuttons = new javax.swing.JButton();
-        mesjeuxbutton = new javax.swing.JButton();
-        favoributton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        ajoutButton = new javax.swing.JButton();
+        SuppressionButton = new javax.swing.JButton();
         jpanelrecherche = new javax.swing.JPanel();
         backtoacceuil = new javax.swing.JButton();
-        barrerecherche = new javax.swing.JTextField();
         recherche = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         corps = new javax.swing.JPanel();
         nouveaujeupanel = new javax.swing.JPanel();
         panneauprincipal = new javax.swing.JPanel();
@@ -200,14 +218,31 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         fonctionnalitepanel.setLayout(new java.awt.GridLayout(1, 3));
 
-        optsbuttons.setText("opts");
-        fonctionnalitepanel.add(optsbuttons);
+        jPanel1.setPreferredSize(new java.awt.Dimension(164, 30));
 
-        mesjeuxbutton.setText("Mes jeux");
-        fonctionnalitepanel.add(mesjeuxbutton);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 164, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
 
-        favoributton.setText("Favori");
-        fonctionnalitepanel.add(favoributton);
+        fonctionnalitepanel.add(jPanel1);
+
+        ajoutButton.setText("Ajout Jeu");
+        fonctionnalitepanel.add(ajoutButton);
+
+        SuppressionButton.setText("Suppression");
+        SuppressionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SuppressionButtonActionPerformed(evt);
+            }
+        });
+        fonctionnalitepanel.add(SuppressionButton);
 
         barrehaut.add(fonctionnalitepanel, java.awt.BorderLayout.EAST);
 
@@ -221,14 +256,20 @@ public class pageAcceuil extends javax.swing.JFrame {
         });
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
-        barrerecherche.setText("Entrer votre recherche ...");
-        barrerecherche.setPreferredSize(new java.awt.Dimension(400, 19));
-        jpanelrecherche.add(barrerecherche, java.awt.BorderLayout.CENTER);
-
         recherche.setText("Recherche");
         jpanelrecherche.add(recherche, java.awt.BorderLayout.EAST);
 
         barrehaut.add(jpanelrecherche, java.awt.BorderLayout.WEST);
+
+        jButton1.setText("Profil");
+        jButton1.setMinimumSize(new java.awt.Dimension(60, 25));
+        jButton1.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        barrehaut.add(jButton1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(barrehaut, java.awt.BorderLayout.NORTH);
 
@@ -274,7 +315,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmargeLayout.setVerticalGroup(
             panelmargeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel.add(panelmarge, java.awt.BorderLayout.EAST);
@@ -289,7 +330,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmarge2Layout.setVerticalGroup(
             panelmarge2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel.add(panelmarge2, java.awt.BorderLayout.LINE_START);
@@ -351,7 +392,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmarge1Layout.setVerticalGroup(
             panelmarge1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel1.add(panelmarge1, java.awt.BorderLayout.EAST);
@@ -366,7 +407,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmarge4Layout.setVerticalGroup(
             panelmarge4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel1.add(panelmarge4, java.awt.BorderLayout.LINE_START);
@@ -428,7 +469,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmarge6Layout.setVerticalGroup(
             panelmarge6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel2.add(panelmarge6, java.awt.BorderLayout.EAST);
@@ -443,7 +484,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         );
         panelmarge7Layout.setVerticalGroup(
             panelmarge7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         nouveaujeupanel2.add(panelmarge7, java.awt.BorderLayout.LINE_START);
@@ -474,6 +515,15 @@ public class pageAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_backtoacceuilActionPerformed
+
+    private void SuppressionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppressionButtonActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SuppressionButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,15 +563,17 @@ public class pageAcceuil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SuppressionButton;
+    private javax.swing.JButton ajoutButton;
     private javax.swing.JButton backtoacceuil;
     private javax.swing.JPanel barrehaut;
-    private javax.swing.JTextField barrerecherche;
     private javax.swing.JPanel corps;
-    private javax.swing.JButton favoributton;
     private javax.swing.JPanel fonctionnalitepanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -529,11 +581,9 @@ public class pageAcceuil extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel jpanelrecherche;
-    private javax.swing.JButton mesjeuxbutton;
     private javax.swing.JPanel nouveaujeupanel;
     private javax.swing.JPanel nouveaujeupanel1;
     private javax.swing.JPanel nouveaujeupanel2;
-    private javax.swing.JButton optsbuttons;
     private javax.swing.JPanel panelTop;
     private javax.swing.JPanel panelTop1;
     private javax.swing.JPanel panelTop2;
