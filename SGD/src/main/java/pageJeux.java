@@ -49,6 +49,7 @@ public class pageJeux extends javax.swing.JFrame {
     ArrayList<String> listEditeurs;
     ArrayList<String> listCategorie;
     ArrayList<String> listPrix;
+    ArrayList<String> listDates;
     /**
      * 
      * Creates new form pageJeux
@@ -125,12 +126,14 @@ public class pageJeux extends javax.swing.JFrame {
         fillLesEditeurs();
         fillLesCategories();
         fillLesprix();
+        fillLesDates();
         
     }
     
     public void fillLesEditeurs()
     {
         
+       // LesEditeurs.removeAll();
         MongoCollection<Document> jeux = db.getCollection("jeux");
               
         MongoCursor<String> c =  db.getCollection("jeux").distinct("nomEditeur", String.class).iterator();
@@ -145,7 +148,7 @@ public class pageJeux extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) 
                 { 
                   actionPerformedEditeur(e);
-                  fillAll();
+                 // fillAll();
                    rechercheJeu();
                 } 
             } );
@@ -160,7 +163,7 @@ public class pageJeux extends javax.swing.JFrame {
     
     public void fillLesCategories()
     {
-
+       // lesCategories.removeAll();
         MongoCollection <Document> jeux = db.getCollection("jeux");
               
         MongoCursor<String> c =  db.getCollection("jeux").distinct("categorie", String.class).iterator();
@@ -174,7 +177,7 @@ public class pageJeux extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) 
                 { 
                   actionPerformedCategorie(e);
-                  fillAll();
+                //  fillAll();
                    rechercheJeu();
                 } 
             } );
@@ -188,6 +191,8 @@ public class pageJeux extends javax.swing.JFrame {
     
     public void fillLesprix()
     {
+        
+       // lesPrix.removeAll();
         ButtonGroup bg = new ButtonGroup();
         
         JRadioButton b1 = new JRadioButton("0 à 20 EUR");
@@ -197,7 +202,7 @@ public class pageJeux extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             { 
               actionPerformedPrix(e);
-              fillAll();
+            //  fillAll();
                rechercheJeu();
             } 
         } );
@@ -213,7 +218,7 @@ public class pageJeux extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             { 
               actionPerformedPrix(e);
-              fillAll();
+           //   fillAll();
                rechercheJeu();
             } 
         } );
@@ -230,7 +235,7 @@ public class pageJeux extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             { 
               actionPerformedPrix(e);
-              fillAll();
+            //  fillAll();
                rechercheJeu();
             } 
         } );
@@ -246,7 +251,7 @@ public class pageJeux extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             { 
               actionPerformedPrix(e);
-              fillAll();
+             // fillAll();
                rechercheJeu();
             } 
         } );
@@ -260,13 +265,128 @@ public class pageJeux extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             { 
               actionPerformedPrix(e);
-              fillAll();
+             // fillAll();
                rechercheJeu();
             } 
         } );
         lesPrix.add(b5);
         lesPrix.setVisible(true);
     }
+    
+    public void fillLesDates()
+    {
+      //  lesDates.removeAll();
+        
+        ButtonGroup bg = new ButtonGroup();
+        
+        JRadioButton b1 = new JRadioButton("Avant 1990");
+        bg.add(b1);
+        b1.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+             // fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b1);
+        lesDates.setVisible(true);
+        
+        
+        
+        JRadioButton b2 = new JRadioButton("1990 - 2000");
+        bg.add(b2);
+        b2.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+             // fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b2);
+        lesDates.setVisible(true);
+        
+        
+        
+        JRadioButton b3 = new JRadioButton("2000 - 2005");
+        bg.add(b3);
+
+        b3.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+             // fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b3);
+        lesDates.setVisible(true);
+        
+        JRadioButton b31 = new JRadioButton("2005 - 2010");
+        bg.add(b31);
+
+        b31.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+            //  fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b31);
+        lesDates.setVisible(true);
+        
+        
+        
+        JRadioButton b4 = new JRadioButton("2010 - 2014");
+        bg.add(b4);
+        b4.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+             // fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b4);
+        lesDates.setVisible(true);
+        
+        JRadioButton b41 = new JRadioButton("2014 - 2018");
+        bg.add(b41);
+        b41.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+             // fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b41);
+        lesDates.setVisible(true);
+        
+        JRadioButton b5 = new JRadioButton("Cette année");
+        bg.add(b5);
+        b5.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+            //  fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesDates.add(b5);
+        lesDates.setVisible(true);
+    }
+    
+    
     
     void rechercheJeu()
     {
@@ -446,13 +566,10 @@ public class pageJeux extends javax.swing.JFrame {
 
         barrehaut = new javax.swing.JPanel();
         fonctionnalitepanel = new javax.swing.JPanel();
-        optsbuttons = new javax.swing.JButton();
-        mesjeuxbutton = new javax.swing.JButton();
-        favoributton = new javax.swing.JButton();
         jpanelrecherche = new javax.swing.JPanel();
         backtoacceuil = new javax.swing.JButton();
         barrerecherche = new javax.swing.JTextField();
-        recherche = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         corps = new javax.swing.JPanel();
         panelfiltre = new javax.swing.JPanel();
         labelfiltre = new java.awt.Label();
@@ -469,6 +586,10 @@ public class pageJeux extends javax.swing.JFrame {
         labelCategorie = new javax.swing.JLabel();
         scrollCategorie = new javax.swing.JScrollPane();
         lesCategories = new javax.swing.JPanel();
+        datePanel = new javax.swing.JPanel();
+        label1 = new java.awt.Label();
+        scrollDate = new javax.swing.JScrollPane();
+        lesDates = new javax.swing.JPanel();
         corpspanelrecherche = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -479,24 +600,15 @@ public class pageJeux extends javax.swing.JFrame {
         barrehaut.setLayout(new java.awt.BorderLayout());
 
         fonctionnalitepanel.setLayout(new java.awt.GridLayout(1, 3));
-
-        optsbuttons.setText("opts");
-        fonctionnalitepanel.add(optsbuttons);
-
-        mesjeuxbutton.setText("Mes jeux");
-        fonctionnalitepanel.add(mesjeuxbutton);
-
-        favoributton.setText("Favori");
-        fonctionnalitepanel.add(favoributton);
-
         barrehaut.add(fonctionnalitepanel, java.awt.BorderLayout.EAST);
 
         jpanelrecherche.setLayout(new java.awt.BorderLayout());
 
         backtoacceuil.setText("Acceuil");
+        backtoacceuil.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
-        barrerecherche.setPreferredSize(new java.awt.Dimension(300, 19));
+        barrerecherche.setPreferredSize(new java.awt.Dimension(260, 19));
         barrerecherche.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 barrerechercheActionPerformed(evt);
@@ -507,10 +619,13 @@ public class pageJeux extends javax.swing.JFrame {
                 barrerechercheKeyPressed(evt);
             }
         });
-        jpanelrecherche.add(barrerecherche, java.awt.BorderLayout.CENTER);
+        jpanelrecherche.add(barrerecherche, java.awt.BorderLayout.EAST);
 
-        recherche.setText("Recherche");
-        jpanelrecherche.add(recherche, java.awt.BorderLayout.EAST);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ENTREZ LE NOM DU JEU ->");
+        jLabel1.setMinimumSize(new java.awt.Dimension(71, 15));
+        jLabel1.setPreferredSize(new java.awt.Dimension(260, 15));
+        jpanelrecherche.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         barrehaut.add(jpanelrecherche, java.awt.BorderLayout.WEST);
 
@@ -527,10 +642,11 @@ public class pageJeux extends javax.swing.JFrame {
         labelfiltre.setText("Filtre");
         panelfiltre.add(labelfiltre, java.awt.BorderLayout.NORTH);
 
-        filtres.setLayout(new java.awt.GridLayout(3, 1));
+        filtres.setLayout(new java.awt.GridLayout(4, 1));
 
         filtreEditeur.setLayout(new java.awt.BorderLayout());
 
+        labelEditeur.setForeground(new java.awt.Color(0, 0, 0));
         labelEditeur.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelEditeur.setText("Editeur");
         labelEditeur.setPreferredSize(new java.awt.Dimension(51, 30));
@@ -545,6 +661,7 @@ public class pageJeux extends javax.swing.JFrame {
 
         filtrePrix.setLayout(new java.awt.BorderLayout());
 
+        labelPrix.setForeground(new java.awt.Color(0, 0, 0));
         labelPrix.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPrix.setText("Prix");
         labelPrix.setPreferredSize(new java.awt.Dimension(26, 30));
@@ -559,6 +676,7 @@ public class pageJeux extends javax.swing.JFrame {
 
         filtreCategorie.setLayout(new java.awt.BorderLayout());
 
+        labelCategorie.setForeground(new java.awt.Color(0, 0, 0));
         labelCategorie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCategorie.setText("Catégorie");
         labelCategorie.setPreferredSize(new java.awt.Dimension(70, 30));
@@ -570,6 +688,22 @@ public class pageJeux extends javax.swing.JFrame {
         filtreCategorie.add(scrollCategorie, java.awt.BorderLayout.CENTER);
 
         filtres.add(filtreCategorie);
+
+        datePanel.setLayout(new java.awt.BorderLayout());
+
+        label1.setAlignment(java.awt.Label.CENTER);
+        label1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        label1.setPreferredSize(new java.awt.Dimension(106, 30));
+        label1.setText("Date de sortie");
+        datePanel.add(label1, java.awt.BorderLayout.PAGE_START);
+        label1.getAccessibleContext().setAccessibleName("Date de sortie");
+
+        lesDates.setLayout(new java.awt.GridLayout(0, 1));
+        scrollDate.setViewportView(lesDates);
+
+        datePanel.add(scrollDate, java.awt.BorderLayout.CENTER);
+
+        filtres.add(datePanel);
 
         panelfiltre.add(filtres, java.awt.BorderLayout.CENTER);
 
@@ -641,26 +775,27 @@ public class pageJeux extends javax.swing.JFrame {
     private javax.swing.JTextField barrerecherche;
     private javax.swing.JPanel corps;
     private javax.swing.JPanel corpspanelrecherche;
-    private javax.swing.JButton favoributton;
+    private javax.swing.JPanel datePanel;
     private javax.swing.JPanel filtreCategorie;
     private javax.swing.JPanel filtreEditeur;
     private javax.swing.JPanel filtrePrix;
     private javax.swing.JPanel filtres;
     private javax.swing.JPanel fonctionnalitepanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpanelrecherche;
+    private java.awt.Label label1;
     private javax.swing.JLabel labelCategorie;
     private javax.swing.JLabel labelEditeur;
     private javax.swing.JLabel labelPrix;
     private java.awt.Label labelfiltre;
     private javax.swing.JPanel lesCategories;
+    private javax.swing.JPanel lesDates;
     private javax.swing.JPanel lesPrix;
-    private javax.swing.JButton mesjeuxbutton;
-    private javax.swing.JButton optsbuttons;
     private javax.swing.JPanel panelfiltre;
-    private javax.swing.JButton recherche;
     private javax.swing.JScrollPane scrollCategorie;
+    private javax.swing.JScrollPane scrollDate;
     private javax.swing.JScrollPane scrollEditeur;
     private javax.swing.JScrollPane scrollPrix;
     // End of variables declaration//GEN-END:variables
