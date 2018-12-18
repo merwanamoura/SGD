@@ -2,6 +2,7 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +19,7 @@ public class Profil extends javax.swing.JFrame {
 private JLabel mesJeux;
 private JLabel mesLikes;
 private JLabel mesDislikes;
-
+private JScrollPane mesJeuxScrollPane; 
     /**
      * Creates new form Profil
      */
@@ -27,10 +28,19 @@ private JLabel mesDislikes;
          mesJeux= new JLabel ("Mes Jeux");
          mesLikes= new JLabel ("Mes Likes");
          mesDislikes= new JLabel ("Mes Dislikes");
+         mesJeuxScrollPane = new JScrollPane();
         
         initComponents();
         
-        if (admin) ;
+        // Affichage panneau mes jeux  
+        if (admin) {
+            
+            mesJeux.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            jPanel4.add(mesJeux, java.awt.BorderLayout.PAGE_START);
+            jPanel4.add(mesJeux);
+           // jPanel4.add(mesJeuxScrollPane, java.awt.BorderLayout.CENTER);
+        
+        }
         
         
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
