@@ -4,14 +4,21 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import org.bson.BsonString;
 import org.bson.Document;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /*
@@ -49,7 +56,6 @@ public class Users {
     public Users(int id){
         idU=id;
         
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
         MongoCollection<Document> Admin = db.getCollection("Admin");
@@ -187,11 +193,41 @@ public class Users {
         
     }
     
+    public void updateAvis(String str, int idJeu){
+        MongoDatabase db = MongoDBConnection.getDb();
+        
+        MongoCollection<Document> avis = db.getCollection("Avis");
+        avis.updateOne(and(eq("idJeu", idJeu),eq("idUser", idU)), new Document("$set", new Document("avis", str)));
+    }
+    
+    public void createAvis(String str, int idJeu){
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCollection<Document> collection = db.getCollection("Avis");
+        
+        Document doc = new Document("idUser", idU);
+        doc.append("idJeu" , idJeu);
+        doc.append("avis" , str);
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+        
+        Date d = new Date();
+        Date dateS = new Date();
+        try {
+            dateS = dateFormat.parse(d.toString());
+        } catch (ParseException ex) {
+        }
+ 
+        
+        doc.append("dateCom" , dateS);
+
+        collection.insertOne(doc);
+    }
+    
     public void addJeuDislike(String jeu)
     {
         this.listeDislike.add(jeu);
                 
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;

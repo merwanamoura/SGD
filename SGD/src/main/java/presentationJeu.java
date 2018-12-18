@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,7 @@ import static javax.swing.text.html.CSS.Attribute.BORDER;
 import org.bson.Document;
 import java.util.Objects;
 import javax.swing.JButton;
+import javax.swing.ScrollPaneConstants;
 
 
 /*
@@ -58,6 +61,8 @@ public class presentationJeu extends javax.swing.JFrame {
         
         jeu = new Jeu(idJeu);
         us=new Users(idUser);
+        
+        
         
         setPresentation();
         description();
@@ -187,11 +192,50 @@ public class presentationJeu extends javax.swing.JFrame {
             
             JButton but = new JButton("Modifier");
             panel.add(but,BorderLayout.EAST);
+            
+            but.addActionListener(new ActionListener() 
+            { 
+                public void actionPerformed(ActionEvent e) 
+                { 
+                    if(but.getText().equals("Modifier"))
+                    {
+                        jt.setEnabled(true);
+                        but.setText("Commenter");
+                    }else{
+                        jt.setEnabled(false);
+                        but.setText("Modifier");
+                        String str = jt.getText();
+                        us.updateAvis(str,idJeu);
+                    }   
+                } 
+            } );
+            
+            
         }else{
-            JTextArea jt = new JTextArea("VOUS N'AVEZ PAS LAISSER DE COMMENTAIRE");
+            JLabel jb = new JLabel(us.getPseudo() + " : ");
+            panel.add(jb,BorderLayout.WEST);
+            
+            JTextArea jt = new JTextArea("Laisser un commentaire ..." );
             jt.setLineWrap(true);
-            jt.setEnabled(false);
             panel.add(jt,BorderLayout.CENTER);
+            
+            JButton but = new JButton("Commenter");
+            panel.add(but,BorderLayout.EAST);
+            
+            but.addActionListener(new ActionListener() 
+            { 
+                public void actionPerformed(ActionEvent e) 
+                { 
+                    jt.setEnabled(false);
+                    but.setText("Commenter");
+                    String str = jt.getText();
+                    us.createAvis(str,idJeu);
+                    setComment();
+                    
+                } 
+            } );
+            
+            
         }
         
         panelAvis.add(panel,BorderLayout.NORTH);
@@ -210,6 +254,9 @@ public class presentationJeu extends javax.swing.JFrame {
         
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(panel);
+        
+        
+      //  scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         while (it.hasNext()) 
         {
@@ -224,7 +271,9 @@ public class presentationJeu extends javax.swing.JFrame {
             jp.add(jt,BorderLayout.CENTER);
              
             
-            JLabel jl = new JLabel((String)(" " + doc.get("idUser")));
+            //int idU = (int) doc.get("idUser") ;
+            Users us = new Users( 0);
+            JLabel jl = new JLabel(us.getPseudo());
             jp.add(jl,BorderLayout.WEST);
             panel.add( jp);
  
