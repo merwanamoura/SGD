@@ -1,3 +1,35 @@
+
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.regex;
+import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javafx.scene.control.CheckBox;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.JRadioButton;
+import org.bson.BsonArray;
+import org.bson.BsonDocument;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,11 +42,397 @@
  */
 public class pageJeux extends javax.swing.JFrame {
 
+    MongoDatabase db;
+    CheckboxGroup cbEditeur;
+    CheckboxGroup bg;
+    
+    ArrayList<String> listEditeurs;
+    ArrayList<String> listCategorie;
+    ArrayList<String> listPrix;
     /**
+     * 
      * Creates new form pageJeux
      */
     public pageJeux() {
+        
         initComponents();
+        MongoDBConnection.connect();
+        db = MongoDBConnection.getDb();
+        cbEditeur = new CheckboxGroup();
+        bg = new CheckboxGroup();
+        
+        listEditeurs = new ArrayList<String>();
+        listCategorie = new ArrayList<String>();
+        listPrix = new ArrayList<String>();
+        
+        fillAll();
+        rechercheJeu();
+    }
+    
+    public void actionPerformedEditeur(ActionEvent event) {
+        
+        JCheckBox checkbox = (JCheckBox) event.getSource();
+        
+        for(int i=0;i<listEditeurs.size();i++) listEditeurs.remove(i);
+        
+        for(int i=0;i<LesEditeurs.getComponentCount();i++)
+        {
+            if(((JCheckBox)LesEditeurs.getComponent(i)).isSelected())
+            {
+                listEditeurs.add( ((JCheckBox)LesEditeurs.getComponent(i)).getText());
+            }
+        }
+
+        
+    }
+    
+    public void actionPerformedCategorie(ActionEvent event) {
+        
+        JCheckBox checkbox = (JCheckBox) event.getSource();
+        
+        for(int i=0;i<listCategorie.size();i++) listCategorie.remove(i);
+        
+        for(int i=0;i<lesCategories.getComponentCount();i++)
+        {
+            if(((JCheckBox)lesCategories.getComponent(i)).isSelected())
+            {
+                listCategorie.add( ((JCheckBox)lesCategories.getComponent(i)).getText());
+            }
+        }
+
+        
+    }
+    
+
+    public void actionPerformedPrix(ActionEvent event) {
+        
+        JRadioButton jrb = (JRadioButton) event.getSource();
+        
+        for(int i=0;i<listPrix.size();i++) listPrix.remove(i);
+        
+        for(int i=0;i<lesPrix.getComponentCount();i++)
+        {
+            if(((JRadioButton)lesPrix.getComponent(i)).isSelected())
+            {
+                listPrix.add( ((JRadioButton)lesPrix.getComponent(i)).getText());
+            }
+        }
+
+        
+    }
+    public void fillAll()
+    {
+        fillLesEditeurs();
+        fillLesCategories();
+        fillLesprix();
+        
+    }
+    
+    public void fillLesEditeurs()
+    {
+        
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+              
+        MongoCursor<String> c =  db.getCollection("jeux").distinct("nomEditeur", String.class).iterator();
+        
+        while (c.hasNext()) 
+        {
+            String nomEditeur = c.next();
+            JCheckBox checkbox = new JCheckBox(nomEditeur);
+    
+            checkbox.addActionListener(new ActionListener() 
+            { 
+                public void actionPerformed(ActionEvent e) 
+                { 
+                  actionPerformedEditeur(e);
+                  fillAll();
+                   rechercheJeu();
+                } 
+            } );
+            
+            LesEditeurs.add(checkbox);
+            LesEditeurs.setVisible(true);
+
+        } 
+       
+       
+    }
+    
+    public void fillLesCategories()
+    {
+
+        MongoCollection <Document> jeux = db.getCollection("jeux");
+              
+        MongoCursor<String> c =  db.getCollection("jeux").distinct("categorie", String.class).iterator();
+        
+        while (c.hasNext()) 
+        {
+            String categorie = c.next();
+            JCheckBox checkbox = new JCheckBox(categorie);
+            checkbox.addActionListener(new ActionListener() 
+            { 
+                public void actionPerformed(ActionEvent e) 
+                { 
+                  actionPerformedCategorie(e);
+                  fillAll();
+                   rechercheJeu();
+                } 
+            } );
+            
+            lesCategories.add(checkbox);
+            lesCategories.setVisible(true);
+
+        } 
+
+    }
+    
+    public void fillLesprix()
+    {
+        ButtonGroup bg = new ButtonGroup();
+        
+        JRadioButton b1 = new JRadioButton("0 à 20 EUR");
+        bg.add(b1);
+        b1.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+              fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesPrix.add(b1);
+        lesPrix.setVisible(true);
+        
+        
+        
+        JRadioButton b2 = new JRadioButton("20 à 50 EUR");
+        bg.add(b2);
+        b2.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+              fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesPrix.add(b2);
+        lesPrix.setVisible(true);
+        
+        
+        
+        JRadioButton b3 = new JRadioButton("50 à 100 EUR");
+        bg.add(b3);
+
+        b3.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+              fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesPrix.add(b3);
+        lesPrix.setVisible(true);
+        
+        
+        
+        JRadioButton b4 = new JRadioButton("Plus de 100 EUR");
+        bg.add(b4);
+        b4.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+              fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesPrix.add(b4);
+        lesPrix.setVisible(true);
+        
+        JRadioButton b5 = new JRadioButton("Tout prix");
+        bg.add(b5);
+        b5.addActionListener(new ActionListener() 
+        { 
+            public void actionPerformed(ActionEvent e) 
+            { 
+              actionPerformedPrix(e);
+              fillAll();
+               rechercheJeu();
+            } 
+        } );
+        lesPrix.add(b5);
+        lesPrix.setVisible(true);
+    }
+    
+    void rechercheJeu()
+    {
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+
+        
+        for(int i=0;i<listEditeurs.size();i++) listEditeurs.remove(i);
+        
+        for(int i=0;i<LesEditeurs.getComponentCount()-1;i++)
+        {
+            if(((JCheckBox)LesEditeurs.getComponent(i)).isSelected())
+            {
+                listEditeurs.add( ((JCheckBox)LesEditeurs.getComponent(i)).getText());
+            }
+        }
+        
+        for(int i=0;i<listCategorie.size();i++) listCategorie.remove(i);
+        listCategorie.clear();
+        for(int i=0;i<lesCategories.getComponentCount()-1;i++)
+        {
+            if(((JCheckBox)lesCategories.getComponent(i)).isSelected())
+            {
+                listCategorie.add( ((JCheckBox)lesCategories.getComponent(i)).getText());
+            }
+        }
+        
+        for(int i=0;i<listPrix.size();i++) listPrix.remove(i);
+        listPrix.clear();
+        for(int i=0;i<lesPrix.getComponentCount();i++)
+        {
+            if(((JRadioButton)lesPrix.getComponent(i)).isSelected())
+            {
+                listPrix.add( ((JRadioButton)lesPrix.getComponent(i)).getText());
+            }
+        }
+        
+    
+    	List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+     
+        BasicDBObject andQuery = new BasicDBObject();
+        BasicDBObject andQueryEditeur = new BasicDBObject();
+        BasicDBObject andQueryCategorie = new BasicDBObject();
+        BasicDBObject orQueryPrix = new BasicDBObject();
+        BasicDBObject andQueryRegex = new BasicDBObject();
+
+     
+        
+	if(listEditeurs.size() == 0 && listCategorie.size() ==0 && listPrix.size() == 0)
+        {
+         
+            String saisie = "";
+            
+            saisie = barrerecherche.getText();
+            DefaultListModel dlm = new DefaultListModel();
+
+            MongoCursor<Document> cursor = jeux.find(regex("nom",saisie)).iterator();
+
+             while (cursor.hasNext()) 
+            {
+                Document doc = cursor.next();
+                File f = new File((String) doc.get("image"));
+
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+                else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+            }
+
+            JList list = new JList(dlm);
+            list.setCellRenderer(new ListEntryCellRenderer());
+
+            jScrollPane2.add(list); 
+            jScrollPane2.setViewportView(list);   
+
+
+        }
+        else
+        {
+            
+        if(listEditeurs.size() != 0)
+        {
+           andQueryEditeur.put("nomEditeur", new BasicDBObject("$in",listEditeurs));       
+           obj.add(andQueryEditeur);
+        }
+	
+     
+        
+        if(listCategorie.size() != 0)
+        {
+             andQueryCategorie.put("categorie",  new BasicDBObject("$in",listCategorie));
+             obj.add(andQueryCategorie);
+        }
+       
+        
+        if(listPrix.size() !=0)
+        {
+            for(int i = 0 ; i < listPrix.size() ; i++)
+            {
+                if (listPrix.get(i).equals("0 à 20 EUR"))
+                {
+                    orQueryPrix.put("prix", new BasicDBObject("$gt", 0).append("$lt", 20));
+                    obj.add(orQueryPrix);                      
+                }
+                
+                  if (listPrix.get(i).equals("20 à 50 EUR"))
+                {
+                    orQueryPrix.put("prix", new BasicDBObject("$gt", 20).append("$lt", 50));
+                    obj.add(orQueryPrix);
+                }
+                  
+                   if (listPrix.get(i).equals("50 à 100 EUR"))
+                {
+                    orQueryPrix.put("prix", new BasicDBObject("$gt", 50).append("$lt", 100));
+                    obj.add(orQueryPrix);                      
+                }
+                
+                  if (listPrix.get(i).equals("Plus de 100 EUR"))
+                {
+                    orQueryPrix.put("prix", new BasicDBObject("$gt", 100));
+                    obj.add(orQueryPrix);
+                }
+                  
+                    if (listPrix.get(i).equals("Tout prix"))
+                {
+                    orQueryPrix.put("prix", new BasicDBObject("$gt", 0));
+                    obj.add(orQueryPrix);
+                }
+            }
+        }
+
+        
+
+            String saisie = "";
+            saisie = barrerecherche.getText();
+            if(!saisie.equals(""))
+            {
+                andQueryRegex.put("nom", new BasicDBObject("$regex", saisie));
+                obj.add(andQueryRegex);
+            }
+
+            andQuery.put("$and",obj);
+
+
+            System.out.println(andQuery.toString());
+
+            DefaultListModel dlm = new DefaultListModel();
+
+            MongoCursor<Document> cursor = jeux.find(andQuery).iterator();
+
+            while (cursor.hasNext()) 
+            {
+                Document doc = cursor.next();
+                File f = new File((String) doc.get("image"));
+
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+                else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+
+            } 
+            JList list = new JList(dlm);
+            list.setCellRenderer(new ListEntryCellRenderer());
+
+            jScrollPane2.add(list); 
+            jScrollPane2.setViewportView(list); 
+        
+        }
     }
 
     /**
@@ -42,7 +460,7 @@ public class pageJeux extends javax.swing.JFrame {
         filtreEditeur = new javax.swing.JPanel();
         labelEditeur = new javax.swing.JLabel();
         scrollEditeur = new javax.swing.JScrollPane();
-        lesEditeurs = new javax.swing.JPanel();
+        LesEditeurs = new javax.swing.JPanel();
         filtrePrix = new javax.swing.JPanel();
         labelPrix = new javax.swing.JLabel();
         scrollPrix = new javax.swing.JScrollPane();
@@ -78,8 +496,17 @@ public class pageJeux extends javax.swing.JFrame {
         backtoacceuil.setText("Acceuil");
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
-        barrerecherche.setText("Entrer votre recherche ...");
         barrerecherche.setPreferredSize(new java.awt.Dimension(300, 19));
+        barrerecherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barrerechercheActionPerformed(evt);
+            }
+        });
+        barrerecherche.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                barrerechercheKeyPressed(evt);
+            }
+        });
         jpanelrecherche.add(barrerecherche, java.awt.BorderLayout.CENTER);
 
         recherche.setText("Recherche");
@@ -109,8 +536,8 @@ public class pageJeux extends javax.swing.JFrame {
         labelEditeur.setPreferredSize(new java.awt.Dimension(51, 30));
         filtreEditeur.add(labelEditeur, java.awt.BorderLayout.NORTH);
 
-        lesEditeurs.setLayout(new java.awt.GridLayout(0, 1));
-        scrollEditeur.setViewportView(lesEditeurs);
+        LesEditeurs.setLayout(new java.awt.GridLayout(0, 1));
+        scrollEditeur.setViewportView(LesEditeurs);
 
         filtreEditeur.add(scrollEditeur, java.awt.BorderLayout.CENTER);
 
@@ -163,6 +590,15 @@ public class pageJeux extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void barrerechercheKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barrerechercheKeyPressed
+        rechercheJeu();
+    }//GEN-LAST:event_barrerechercheKeyPressed
+
+    private void barrerechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barrerechercheActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_barrerechercheActionPerformed
+
+   
     /**
      * @param args the command line arguments
      */
@@ -199,6 +635,7 @@ public class pageJeux extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel LesEditeurs;
     private javax.swing.JButton backtoacceuil;
     private javax.swing.JPanel barrehaut;
     private javax.swing.JTextField barrerecherche;
@@ -218,7 +655,6 @@ public class pageJeux extends javax.swing.JFrame {
     private javax.swing.JLabel labelPrix;
     private java.awt.Label labelfiltre;
     private javax.swing.JPanel lesCategories;
-    private javax.swing.JPanel lesEditeurs;
     private javax.swing.JPanel lesPrix;
     private javax.swing.JButton mesjeuxbutton;
     private javax.swing.JButton optsbuttons;
