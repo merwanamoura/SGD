@@ -62,8 +62,6 @@ public class presentationJeu extends javax.swing.JFrame {
         jeu = new Jeu(idJeu);
         us=new Users(idUser);
         
-        
-        
         setPresentation();
         description();
         afficheImg();
@@ -135,14 +133,10 @@ public class presentationJeu extends javax.swing.JFrame {
     
     public void afficheImg()
     {
-        String img = jeu.getImage();
-        System.out.println(img);
-        
+        String img = jeu.getImage();        
         JLabel label = new JLabel(new ImageIcon("imageJeux/default.png"));
-        
         panelImage.add(label, BorderLayout.CENTER);
-        
-        
+   
     }
     public void jeuSimilaire()
     {
@@ -163,9 +157,8 @@ public class presentationJeu extends javax.swing.JFrame {
             
                 if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
                 else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+    
             }
-            
-            
 
         } 
         JList list = new JList(dlm);
@@ -178,65 +171,64 @@ public class presentationJeu extends javax.swing.JFrame {
     }
     
     public void setComment(){
+        panelAvis.revalidate();  
+        this.repaint();
+        JLabel jb;
+        JTextArea jt;
+        JButton but;
         
         JPanel panel = new JPanel(new BorderLayout());
-        
-        if( us.hasComment(idJeu) ){
-            JLabel jb = new JLabel(us.getPseudo() + " : ");
+              
+        if( us.hasComment(idJeu) ){   
+            jb = new JLabel(us.getPseudo() + " : ");
             panel.add(jb,BorderLayout.WEST);
-            
-            JTextArea jt = new JTextArea(us.getAvis(this.idJeu) );
+
+            jt = new JTextArea(us.getAvis(this.idJeu) );
             jt.setLineWrap(true);
             jt.setEnabled(false);
             panel.add(jt,BorderLayout.CENTER);
             
-            JButton but = new JButton("Modifier");
+            but = new JButton("Modifier");
             panel.add(but,BorderLayout.EAST);
-            
-            but.addActionListener(new ActionListener() 
-            { 
-                public void actionPerformed(ActionEvent e) 
-                { 
-                    if(but.getText().equals("Modifier"))
-                    {
-                        jt.setEnabled(true);
-                        but.setText("Commenter");
-                    }else{
-                        jt.setEnabled(false);
-                        but.setText("Modifier");
-                        String str = jt.getText();
-                        us.updateAvis(str,idJeu);
-                    }   
-                } 
-            } );
-            
-            
-        }else{
-            JLabel jb = new JLabel(us.getPseudo() + " : ");
+        }
+        else
+        {
+            jb = new JLabel(us.getPseudo() + " : ");
             panel.add(jb,BorderLayout.WEST);
             
-            JTextArea jt = new JTextArea("Laisser un commentaire ..." );
+            jt = new JTextArea("Laisser un commentaire ..." );
             jt.setLineWrap(true);
             panel.add(jt,BorderLayout.CENTER);
             
-            JButton but = new JButton("Commenter");
-            panel.add(but,BorderLayout.EAST);
+            but = new JButton("Commenter");
+            panel.add(but,BorderLayout.EAST);  
             
-            but.addActionListener(new ActionListener() 
+        }
+        
+        but.addActionListener(new ActionListener() 
             { 
                 public void actionPerformed(ActionEvent e) 
                 { 
-                    jt.setEnabled(false);
-                    but.setText("Commenter");
-                    String str = jt.getText();
-                    us.createAvis(str,idJeu);
-                    setComment();
                     
+                    if( !us.hasComment(idJeu) ){
+                        jt.setEnabled(false);
+                        but.setText("Modifier");
+                        String str = jt.getText();
+                        us.createAvis(str,idJeu);
+                    }else{
+                        if(but.getText().equals("Modifier"))
+                        {
+                            jt.setEnabled(true);
+                            but.setText("Commenter");
+                        }else{
+                            jt.setEnabled(false);
+                            but.setText("Modifier");
+                            String str = jt.getText();
+                            us.updateAvis(str,idJeu);
+                        }
+                    }  
                 } 
             } );
-            
-            
-        }
         
         panelAvis.add(panel,BorderLayout.NORTH);
         
@@ -254,28 +246,27 @@ public class presentationJeu extends javax.swing.JFrame {
         
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(panel);
-        
-        
-      //  scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         while (it.hasNext()) 
         {
-            
             Document doc = it.next();
-            JPanel jp = new JPanel(new BorderLayout());
-        
-            JTextArea jt = new JTextArea((String) doc.get("avis"));
-            jt.setLineWrap(true);
-            jt.setEnabled(false);
-            jt.setBackground(Color.WHITE);
-            jp.add(jt,BorderLayout.CENTER);
-             
+            int idUtilisateur = (int) doc.get("idUser");
+            Users us = new Users(idUtilisateur);
             
-            //int idU = (int) doc.get("idUser") ;
-            Users us = new Users( 0);
-            JLabel jl = new JLabel(us.getPseudo());
-            jp.add(jl,BorderLayout.WEST);
-            panel.add( jp);
+            if(us.getIdU() != this.idUser){ 
+                JPanel jp = new JPanel(new BorderLayout());
+
+                JTextArea jt = new JTextArea((String) doc.get("avis"));
+                jt.setLineWrap(true);
+                jt.setEnabled(false);
+                jt.setBackground(Color.WHITE);
+                jp.add(jt,BorderLayout.CENTER);
+ 
+                JLabel jl = new JLabel(us.getPseudo());
+                jp.add(jl,BorderLayout.WEST);
+                panel.add(jp);
+            }
+            
  
         } 
         

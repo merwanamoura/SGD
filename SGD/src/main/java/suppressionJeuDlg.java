@@ -8,7 +8,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
 import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;

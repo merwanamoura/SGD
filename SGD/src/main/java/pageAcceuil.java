@@ -75,20 +75,18 @@ public class pageAcceuil extends javax.swing.JFrame {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-<<<<<<< HEAD
 
             Jeu jeu = new Jeu(doc);
             File f = new File(jeu.getImage());
 
             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
             else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
-=======
-            File f = new File((String) doc.get("image"));
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+            File f2 = new File((String) doc.get("image"));
+            
+            if(f2.exists() && !f2.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
             else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
-            
->>>>>>> origin/Merwan
+           
 
         } 
         

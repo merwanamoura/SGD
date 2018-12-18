@@ -46,6 +46,7 @@ public class Jeu {
     
     public Jeu(int id)
     {
+        MongoDBConnection.connect();
         this.idJeu=id;
         
         MongoCursor<Document> it;
