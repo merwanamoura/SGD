@@ -1,0 +1,1814 @@
+[
+  {
+    "idA": 0,
+    "name": {
+      "first": "Bernadine",
+      "last": "Whitehead"
+    },
+    "pseudo": "Bernadine3",
+    "passWord": "BernadineWHITEHEAD861",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 18",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 1,
+    "name": {
+      "first": "Pacheco",
+      "last": "Herman"
+    },
+    "pseudo": "Pacheco2",
+    "passWord": "PachecoHERMAN414",
+    "jeuLike": [
+      "Pokemon GO",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 2,
+    "name": {
+      "first": "Brooks",
+      "last": "Mueller"
+    },
+    "pseudo": "Brooks3",
+    "passWord": "BrooksMUELLER775",
+    "jeuLike": [
+      "Fifa 16",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 3,
+    "name": {
+      "first": "Valerie",
+      "last": "Glenn"
+    },
+    "pseudo": "Valerie7",
+    "passWord": "ValerieGLENN282",
+    "jeuLike": [
+      "Fifa 18",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 4,
+    "name": {
+      "first": "Jewell",
+      "last": "Zimmerman"
+    },
+    "pseudo": "Jewell1",
+    "passWord": "JewellZIMMERMAN873",
+    "jeuLike": [
+      "Fifa 19",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 5,
+    "name": {
+      "first": "Carla",
+      "last": "Maldonado"
+    },
+    "pseudo": "Carla4",
+    "passWord": "CarlaMALDONADO364",
+    "jeuLike": [
+      "Fifa 16",
+      "Pokemon GO",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 6,
+    "name": {
+      "first": "Rhoda",
+      "last": "Barry"
+    },
+    "pseudo": "Rhoda8",
+    "passWord": "RhodaBARRY171",
+    "jeuLike": [
+      "Fifa 18",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 7,
+    "name": {
+      "first": "Queen",
+      "last": "Richardson"
+    },
+    "pseudo": "Queen3",
+    "passWord": "QueenRICHARDSON219",
+    "jeuLike": [
+      "Pokemon GO",
+      "PES 2005",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 8,
+    "name": {
+      "first": "Rios",
+      "last": "Mejia"
+    },
+    "pseudo": "Rios10",
+    "passWord": "RiosMEJIA644",
+    "jeuLike": [
+      "Bully",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 9,
+    "name": {
+      "first": "Christian",
+      "last": "Mckinney"
+    },
+    "pseudo": "Christian7",
+    "passWord": "ChristianMCKINNEY293",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 10,
+    "name": {
+      "first": "Avis",
+      "last": "West"
+    },
+    "pseudo": "Avis3",
+    "passWord": "AvisWEST587",
+    "jeuLike": [
+      "Fifa 18",
+      "GTA V",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 11,
+    "name": {
+      "first": "Dee",
+      "last": "Combs"
+    },
+    "pseudo": "Dee8",
+    "passWord": "DeeCOMBS20",
+    "jeuLike": [
+      "Fifa 19",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 12,
+    "name": {
+      "first": "Katina",
+      "last": "Mcclure"
+    },
+    "pseudo": "Katina6",
+    "passWord": "KatinaMCCLURE815",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 18",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 13,
+    "name": {
+      "first": "Pratt",
+      "last": "Hernandez"
+    },
+    "pseudo": "Pratt3",
+    "passWord": "PrattHERNANDEZ816",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 19",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 14,
+    "name": {
+      "first": "Amparo",
+      "last": "Compton"
+    },
+    "pseudo": "Amparo8",
+    "passWord": "AmparoCOMPTON557",
+    "jeuLike": [
+      "GTA V",
+      "Bully",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 15,
+    "name": {
+      "first": "Phoebe",
+      "last": "Tate"
+    },
+    "pseudo": "Phoebe1",
+    "passWord": "PhoebeTATE155",
+    "jeuLike": [
+      "Bully",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 16,
+    "name": {
+      "first": "Leola",
+      "last": "Beasley"
+    },
+    "pseudo": "Leola9",
+    "passWord": "LeolaBEASLEY238",
+    "jeuLike": [
+      "Fifa 19",
+      "Fifa 16",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 17,
+    "name": {
+      "first": "Madeleine",
+      "last": "Vinson"
+    },
+    "pseudo": "Madeleine10",
+    "passWord": "MadeleineVINSON530",
+    "jeuLike": [
+      "Pokemon GO",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 18,
+    "name": {
+      "first": "Lilia",
+      "last": "Summers"
+    },
+    "pseudo": "Lilia1",
+    "passWord": "LiliaSUMMERS321",
+    "jeuLike": [
+      "GTA V",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 19,
+    "name": {
+      "first": "Cannon",
+      "last": "Flowers"
+    },
+    "pseudo": "Cannon6",
+    "passWord": "CannonFLOWERS592",
+    "jeuLike": [
+      "Pokemon GO",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 20,
+    "name": {
+      "first": "Parrish",
+      "last": "Powers"
+    },
+    "pseudo": "Parrish10",
+    "passWord": "ParrishPOWERS323",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 19",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 21,
+    "name": {
+      "first": "Fran",
+      "last": "Kane"
+    },
+    "pseudo": "Fran7",
+    "passWord": "FranKANE528",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 22,
+    "name": {
+      "first": "Araceli",
+      "last": "Williamson"
+    },
+    "pseudo": "Araceli10",
+    "passWord": "AraceliWILLIAMSON235",
+    "jeuLike": [
+      "Pokemon GO",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 23,
+    "name": {
+      "first": "Gill",
+      "last": "Blankenship"
+    },
+    "pseudo": "Gill8",
+    "passWord": "GillBLANKENSHIP702",
+    "jeuLike": [
+      "Fifa 19",
+      "Fifa 19",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 24,
+    "name": {
+      "first": "Russo",
+      "last": "Bates"
+    },
+    "pseudo": "Russo3",
+    "passWord": "RussoBATES407",
+    "jeuLike": [
+      "Fifa 19",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 25,
+    "name": {
+      "first": "Ebony",
+      "last": "Harrell"
+    },
+    "pseudo": "Ebony7",
+    "passWord": "EbonyHARRELL25",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 26,
+    "name": {
+      "first": "Jessica",
+      "last": "Marsh"
+    },
+    "pseudo": "Jessica3",
+    "passWord": "JessicaMARSH499",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 27,
+    "name": {
+      "first": "Rita",
+      "last": "Horton"
+    },
+    "pseudo": "Rita9",
+    "passWord": "RitaHORTON602",
+    "jeuLike": [
+      "Pokemon GO",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 28,
+    "name": {
+      "first": "Harmon",
+      "last": "Zamora"
+    },
+    "pseudo": "Harmon9",
+    "passWord": "HarmonZAMORA758",
+    "jeuLike": [
+      "Bully",
+      "PES 2005",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 29,
+    "name": {
+      "first": "Kendra",
+      "last": "Porter"
+    },
+    "pseudo": "Kendra4",
+    "passWord": "KendraPORTER632",
+    "jeuLike": [
+      "Bully",
+      "Fifa 16",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 30,
+    "name": {
+      "first": "Whitfield",
+      "last": "Carney"
+    },
+    "pseudo": "Whitfield2",
+    "passWord": "WhitfieldCARNEY139",
+    "jeuLike": [
+      "Bully",
+      "GTA V",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 31,
+    "name": {
+      "first": "Herminia",
+      "last": "Greer"
+    },
+    "pseudo": "Herminia7",
+    "passWord": "HerminiaGREER894",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 16",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 32,
+    "name": {
+      "first": "Shawna",
+      "last": "Peck"
+    },
+    "pseudo": "Shawna4",
+    "passWord": "ShawnaPECK735",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 16",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 33,
+    "name": {
+      "first": "Delia",
+      "last": "Pope"
+    },
+    "pseudo": "Delia2",
+    "passWord": "DeliaPOPE478",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 34,
+    "name": {
+      "first": "Margaret",
+      "last": "Castaneda"
+    },
+    "pseudo": "Margaret3",
+    "passWord": "MargaretCASTANEDA479",
+    "jeuLike": [
+      "Fifa 19",
+      "PES 2005",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 35,
+    "name": {
+      "first": "King",
+      "last": "Fields"
+    },
+    "pseudo": "King6",
+    "passWord": "KingFIELDS769",
+    "jeuLike": [
+      "PES 2005",
+      "GTA V",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 36,
+    "name": {
+      "first": "Cathy",
+      "last": "Roy"
+    },
+    "pseudo": "Cathy8",
+    "passWord": "CathyROY12",
+    "jeuLike": [
+      "Fifa 19",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 37,
+    "name": {
+      "first": "Alba",
+      "last": "Hubbard"
+    },
+    "pseudo": "Alba2",
+    "passWord": "AlbaHUBBARD656",
+    "jeuLike": [
+      "Fifa 18",
+      "PES 2005",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 38,
+    "name": {
+      "first": "Rogers",
+      "last": "Gregory"
+    },
+    "pseudo": "Rogers4",
+    "passWord": "RogersGREGORY198",
+    "jeuLike": [
+      "Fifa 16",
+      "GTA V",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 39,
+    "name": {
+      "first": "Judith",
+      "last": "Mcmahon"
+    },
+    "pseudo": "Judith4",
+    "passWord": "JudithMCMAHON147",
+    "jeuLike": [
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 40,
+    "name": {
+      "first": "Juana",
+      "last": "Valenzuela"
+    },
+    "pseudo": "Juana6",
+    "passWord": "JuanaVALENZUELA616",
+    "jeuLike": [
+      "GTA V",
+      "Bully",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 41,
+    "name": {
+      "first": "Chelsea",
+      "last": "Finley"
+    },
+    "pseudo": "Chelsea4",
+    "passWord": "ChelseaFINLEY474",
+    "jeuLike": [
+      "PES 2005",
+      "Fifa 19",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 42,
+    "name": {
+      "first": "Preston",
+      "last": "Shaffer"
+    },
+    "pseudo": "Preston7",
+    "passWord": "PrestonSHAFFER667",
+    "jeuLike": [
+      "Fifa 18",
+      "PES 2005",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 43,
+    "name": {
+      "first": "Bernard",
+      "last": "Browning"
+    },
+    "pseudo": "Bernard10",
+    "passWord": "BernardBROWNING560",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 18",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 44,
+    "name": {
+      "first": "Sylvia",
+      "last": "Vaughan"
+    },
+    "pseudo": "Sylvia4",
+    "passWord": "SylviaVAUGHAN614",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 45,
+    "name": {
+      "first": "Becker",
+      "last": "Velazquez"
+    },
+    "pseudo": "Becker2",
+    "passWord": "BeckerVELAZQUEZ577",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 46,
+    "name": {
+      "first": "Mueller",
+      "last": "Lamb"
+    },
+    "pseudo": "Mueller4",
+    "passWord": "MuellerLAMB870",
+    "jeuLike": [
+      "Bully",
+      "Fifa 19",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 47,
+    "name": {
+      "first": "Janelle",
+      "last": "Koch"
+    },
+    "pseudo": "Janelle6",
+    "passWord": "JanelleKOCH313",
+    "jeuLike": [
+      "PES 2005",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 48,
+    "name": {
+      "first": "Ferguson",
+      "last": "Booth"
+    },
+    "pseudo": "Ferguson9",
+    "passWord": "FergusonBOOTH764",
+    "jeuLike": [
+      "PES 2005",
+      "Fifa 19",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 49,
+    "name": {
+      "first": "Manning",
+      "last": "Gallagher"
+    },
+    "pseudo": "Manning7",
+    "passWord": "ManningGALLAGHER612",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 50,
+    "name": {
+      "first": "Emily",
+      "last": "Dillon"
+    },
+    "pseudo": "Emily7",
+    "passWord": "EmilyDILLON112",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 51,
+    "name": {
+      "first": "Mckinney",
+      "last": "Pace"
+    },
+    "pseudo": "Mckinney5",
+    "passWord": "MckinneyPACE786",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 19",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 52,
+    "name": {
+      "first": "Mathis",
+      "last": "Lancaster"
+    },
+    "pseudo": "Mathis9",
+    "passWord": "MathisLANCASTER525",
+    "jeuLike": [
+      "Fifa 18",
+      "Pokemon GO",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 53,
+    "name": {
+      "first": "Winnie",
+      "last": "Garrett"
+    },
+    "pseudo": "Winnie4",
+    "passWord": "WinnieGARRETT742",
+    "jeuLike": [
+      "PES 2005",
+      "Fifa 18",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 54,
+    "name": {
+      "first": "Sara",
+      "last": "Noble"
+    },
+    "pseudo": "Sara2",
+    "passWord": "SaraNOBLE733",
+    "jeuLike": [
+      "Fifa 18",
+      "Fifa 16",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 55,
+    "name": {
+      "first": "Maude",
+      "last": "Ruiz"
+    },
+    "pseudo": "Maude9",
+    "passWord": "MaudeRUIZ475",
+    "jeuLike": [
+      "Fifa 18",
+      "Pokemon GO",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 56,
+    "name": {
+      "first": "Powers",
+      "last": "Downs"
+    },
+    "pseudo": "Powers2",
+    "passWord": "PowersDOWNS568",
+    "jeuLike": [
+      "PES 2005",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 57,
+    "name": {
+      "first": "Charmaine",
+      "last": "Carter"
+    },
+    "pseudo": "Charmaine8",
+    "passWord": "CharmaineCARTER387",
+    "jeuLike": [
+      "PES 2005",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 58,
+    "name": {
+      "first": "White",
+      "last": "Hunter"
+    },
+    "pseudo": "White9",
+    "passWord": "WhiteHUNTER763",
+    "jeuLike": [
+      "Fifa 19",
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 59,
+    "name": {
+      "first": "Justine",
+      "last": "Oneal"
+    },
+    "pseudo": "Justine9",
+    "passWord": "JustineONEAL370",
+    "jeuLike": [
+      "PES 2005",
+      "PES 2005",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 60,
+    "name": {
+      "first": "Frieda",
+      "last": "Chaney"
+    },
+    "pseudo": "Frieda6",
+    "passWord": "FriedaCHANEY723",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 61,
+    "name": {
+      "first": "Daniels",
+      "last": "Stevenson"
+    },
+    "pseudo": "Daniels4",
+    "passWord": "DanielsSTEVENSON254",
+    "jeuLike": [
+      "Bully",
+      "Fifa 19",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 62,
+    "name": {
+      "first": "Sosa",
+      "last": "Young"
+    },
+    "pseudo": "Sosa4",
+    "passWord": "SosaYOUNG830",
+    "jeuLike": [
+      "Fifa 16",
+      "PES 2005",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 63,
+    "name": {
+      "first": "Wade",
+      "last": "Pratt"
+    },
+    "pseudo": "Wade5",
+    "passWord": "WadePRATT393",
+    "jeuLike": [
+      "Pokemon GO",
+      "Pokemon GO",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 64,
+    "name": {
+      "first": "Cooley",
+      "last": "Huff"
+    },
+    "pseudo": "Cooley5",
+    "passWord": "CooleyHUFF19",
+    "jeuLike": [
+      "Fifa 16",
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 65,
+    "name": {
+      "first": "Kirsten",
+      "last": "Carroll"
+    },
+    "pseudo": "Kirsten2",
+    "passWord": "KirstenCARROLL755",
+    "jeuLike": [
+      "PES 2005",
+      "Bully",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 66,
+    "name": {
+      "first": "Adkins",
+      "last": "Neal"
+    },
+    "pseudo": "Adkins3",
+    "passWord": "AdkinsNEAL637",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 67,
+    "name": {
+      "first": "Larsen",
+      "last": "Nixon"
+    },
+    "pseudo": "Larsen1",
+    "passWord": "LarsenNIXON756",
+    "jeuLike": [
+      "Fifa 18",
+      "PES 2005",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 68,
+    "name": {
+      "first": "Henson",
+      "last": "Lester"
+    },
+    "pseudo": "Henson9",
+    "passWord": "HensonLESTER328",
+    "jeuLike": [
+      "Bully",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 69,
+    "name": {
+      "first": "Jeanine",
+      "last": "Rosario"
+    },
+    "pseudo": "Jeanine2",
+    "passWord": "JeanineROSARIO131",
+    "jeuLike": [
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 70,
+    "name": {
+      "first": "Rosalind",
+      "last": "Schmidt"
+    },
+    "pseudo": "Rosalind10",
+    "passWord": "RosalindSCHMIDT878",
+    "jeuLike": [
+      "GTA V",
+      "Bully",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 71,
+    "name": {
+      "first": "Yvette",
+      "last": "Travis"
+    },
+    "pseudo": "Yvette6",
+    "passWord": "YvetteTRAVIS180",
+    "jeuLike": [
+      "Fifa 16",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 72,
+    "name": {
+      "first": "Dominique",
+      "last": "Turner"
+    },
+    "pseudo": "Dominique10",
+    "passWord": "DominiqueTURNER724",
+    "jeuLike": [
+      "GTA V",
+      "GTA V",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 73,
+    "name": {
+      "first": "Megan",
+      "last": "Williams"
+    },
+    "pseudo": "Megan7",
+    "passWord": "MeganWILLIAMS847",
+    "jeuLike": [
+      "PES 2005",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 74,
+    "name": {
+      "first": "Lenore",
+      "last": "Rosa"
+    },
+    "pseudo": "Lenore1",
+    "passWord": "LenoreROSA625",
+    "jeuLike": [
+      "Fifa 19",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 75,
+    "name": {
+      "first": "Gordon",
+      "last": "Lloyd"
+    },
+    "pseudo": "Gordon1",
+    "passWord": "GordonLLOYD847",
+    "jeuLike": [
+      "GTA V",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 76,
+    "name": {
+      "first": "Kate",
+      "last": "Thornton"
+    },
+    "pseudo": "Kate5",
+    "passWord": "KateTHORNTON530",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 77,
+    "name": {
+      "first": "Riddle",
+      "last": "Mann"
+    },
+    "pseudo": "Riddle5",
+    "passWord": "RiddleMANN155",
+    "jeuLike": [
+      "PES 2005",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 78,
+    "name": {
+      "first": "Dawson",
+      "last": "Schwartz"
+    },
+    "pseudo": "Dawson1",
+    "passWord": "DawsonSCHWARTZ653",
+    "jeuLike": [
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 79,
+    "name": {
+      "first": "Lowe",
+      "last": "Mcneil"
+    },
+    "pseudo": "Lowe2",
+    "passWord": "LoweMCNEIL520",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 18",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 80,
+    "name": {
+      "first": "Justice",
+      "last": "Frye"
+    },
+    "pseudo": "Justice6",
+    "passWord": "JusticeFRYE394",
+    "jeuLike": [
+      "PES 2005",
+      "Pokemon GO",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 81,
+    "name": {
+      "first": "Anita",
+      "last": "Alston"
+    },
+    "pseudo": "Anita4",
+    "passWord": "AnitaALSTON390",
+    "jeuLike": [
+      "PES 2005",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 82,
+    "name": {
+      "first": "Carolina",
+      "last": "Montoya"
+    },
+    "pseudo": "Carolina4",
+    "passWord": "CarolinaMONTOYA87",
+    "jeuLike": [
+      "Bully",
+      "Bully",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 83,
+    "name": {
+      "first": "Norma",
+      "last": "Montgomery"
+    },
+    "pseudo": "Norma3",
+    "passWord": "NormaMONTGOMERY511",
+    "jeuLike": [
+      "Pokemon GO",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 84,
+    "name": {
+      "first": "Sherrie",
+      "last": "Spencer"
+    },
+    "pseudo": "Sherrie4",
+    "passWord": "SherrieSPENCER726",
+    "jeuLike": [
+      "PES 2005",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 85,
+    "name": {
+      "first": "Beverly",
+      "last": "Mcgee"
+    },
+    "pseudo": "Beverly7",
+    "passWord": "BeverlyMCGEE758",
+    "jeuLike": [
+      "Pokemon GO",
+      "PES 2005",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 86,
+    "name": {
+      "first": "Bright",
+      "last": "Galloway"
+    },
+    "pseudo": "Bright9",
+    "passWord": "BrightGALLOWAY108",
+    "jeuLike": [
+      "Fifa 18",
+      "Bully",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 87,
+    "name": {
+      "first": "Zelma",
+      "last": "Humphrey"
+    },
+    "pseudo": "Zelma7",
+    "passWord": "ZelmaHUMPHREY410",
+    "jeuLike": [
+      "Fifa 18",
+      "Pokemon GO",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 88,
+    "name": {
+      "first": "Stafford",
+      "last": "Sparks"
+    },
+    "pseudo": "Stafford9",
+    "passWord": "StaffordSPARKS593",
+    "jeuLike": [
+      "Fifa 19",
+      "Bully",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 89,
+    "name": {
+      "first": "Peters",
+      "last": "Hurley"
+    },
+    "pseudo": "Peters8",
+    "passWord": "PetersHURLEY293",
+    "jeuLike": [
+      "Fifa 18",
+      "GTA V",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 90,
+    "name": {
+      "first": "Briana",
+      "last": "Sears"
+    },
+    "pseudo": "Briana10",
+    "passWord": "BrianaSEARS769",
+    "jeuLike": [
+      "Pokemon GO",
+      "PES 2005",
+      "GTA V"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 91,
+    "name": {
+      "first": "Carroll",
+      "last": "Manning"
+    },
+    "pseudo": "Carroll3",
+    "passWord": "CarrollMANNING355",
+    "jeuLike": [
+      "Pokemon GO",
+      "Fifa 18",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 92,
+    "name": {
+      "first": "Hatfield",
+      "last": "Ballard"
+    },
+    "pseudo": "Hatfield5",
+    "passWord": "HatfieldBALLARD124",
+    "jeuLike": [
+      "Bully",
+      "Fifa 19",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 93,
+    "name": {
+      "first": "Kari",
+      "last": "Dominguez"
+    },
+    "pseudo": "Kari8",
+    "passWord": "KariDOMINGUEZ321",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 94,
+    "name": {
+      "first": "Anna",
+      "last": "Reilly"
+    },
+    "pseudo": "Anna7",
+    "passWord": "AnnaREILLY150",
+    "jeuLike": [
+      "Fifa 16",
+      "Fifa 19"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 95,
+    "name": {
+      "first": "Bridges",
+      "last": "Rojas"
+    },
+    "pseudo": "Bridges3",
+    "passWord": "BridgesROJAS198",
+    "jeuLike": [
+      "Fifa 16",
+      "Bully",
+      "Pokemon GO"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 96,
+    "name": {
+      "first": "Prince",
+      "last": "Rice"
+    },
+    "pseudo": "Prince7",
+    "passWord": "PrinceRICE593",
+    "jeuLike": [
+      "GTA V",
+      "Fifa 16"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92"
+    ],
+    "admin": true
+  },
+  {
+    "idA": 97,
+    "name": {
+      "first": "Giles",
+      "last": "Nolan"
+    },
+    "pseudo": "Giles10",
+    "passWord": "GilesNOLAN158",
+    "jeuLike": [
+      "Fifa 18",
+      "GTA V",
+      "PES 2005"
+    ],
+    "jeuDislike": [
+      "Lapin Crétins",
+      "Dragon Ball Legends"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 98,
+    "name": {
+      "first": "Bernice",
+      "last": "Delaney"
+    },
+    "pseudo": "Bernice6",
+    "passWord": "BerniceDELANEY129",
+    "jeuLike": [
+      "Bully",
+      "Fifa 18",
+      "Fifa 18"
+    ],
+    "jeuDislike": [
+      "NBA 2K 92",
+      "NBA 2K 92"
+    ],
+    "admin": false
+  },
+  {
+    "idA": 99,
+    "name": {
+      "first": "Horn",
+      "last": "Cline"
+    },
+    "pseudo": "Horn8",
+    "passWord": "HornCLINE877",
+    "jeuLike": [
+      "Fifa 19",
+      "Fifa 18",
+      "Bully"
+    ],
+    "jeuDislike": [
+      "Dragon Ball Legends",
+      "NBA 2K 92"
+    ],
+    "admin": true
+  }
+]
