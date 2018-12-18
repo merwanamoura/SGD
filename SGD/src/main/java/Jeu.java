@@ -1,5 +1,10 @@
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.Objects;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,7 +43,44 @@ public class Jeu {
     public String getImage() {
         return image;
     }
+    
+    public Jeu(int id)
+    {
+        this.idJeu=id;
+        
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = MongoDBConnection.getDb().getCollection("jeux");
 
+        it = jeux.find(eq("idJeu" , id)).iterator();
+        
+        Document doc = it.next();
+
+        setNom((String) doc.get("nom"));
+        setNomEditeur((String) doc.get("nomEditeur"));
+        setCategorie((String) doc.get("categorie"));
+        setImage((String) doc.get("image"));
+        
+    }
+    
+    public Jeu(Document doc)
+    {
+        if(doc.get("idJeu") instanceof Integer)
+        {
+            setIdJeu((int)doc.get("idJeu"));
+        }
+        else 
+        {
+            double idJeu = (double)doc.get("idJeu");
+            setIdJeu((int)idJeu);
+        }
+        
+        setNom((String) doc.get("nom"));
+        setNomEditeur((String) doc.get("nomEditeur"));
+        setCategorie((String) doc.get("categorie"));
+        setImage((String) doc.get("image"));
+        
+    }
+    
     public void setIdJeu(int idJeu) {
         this.idJeu = idJeu;
     }

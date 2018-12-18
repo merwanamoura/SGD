@@ -50,6 +50,7 @@ class ListEntry
 
         ImageIcon imageIcon = new ImageIcon(entry.getIcon().getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT));
         label2.setIcon(imageIcon);
+        label2.setText("<html><p>"+ label2.getText() +"</p></html>");
         
         label2.setHorizontalTextPosition(JLabel.RIGHT);
   
