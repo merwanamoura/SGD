@@ -4,6 +4,7 @@
     "nom": "Fifa 19",
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
+    "prix": 49.59,
     "dateSortie": ISODate('2018-11-17T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -12,6 +13,7 @@
     "nom": "Fifa 18",
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
+    "prix": 59.99,
     "dateSortie": ISODate('2017-12-14T00:00:00.000Z'),
     "image": "../defaultImage.png"
 
@@ -21,6 +23,7 @@
     "nom": "NBA 2K 92",
     "nomEditeur": "2K Games",
     "categorie": "Sport",
+    "prix": 24.99,
     "dateSortie": ISODate('1992-12-11T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -29,6 +32,7 @@
     "nom": "Pokemon Go",
     "nomEditeur": "Nintendo",
     "categorie": "Aventure",
+    "prix": 34.99,
     "dateSortie": ISODate('2016-06-15T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -37,6 +41,7 @@
     "nom": "Tetris",
     "nomEditeur": "EA",
     "categorie": "Réflexion",
+    "prix":5.99,
     "dateSortie": ISODate('1994-08-29T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -45,6 +50,7 @@
     "nom": "Harry Potter and the Deathly Hallows ",
     "nomEditeur": "Microsoft",
     "categorie": "Aventure",
+    "prix": 29.99,
     "dateSortie": ISODate('2012-05-12T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -53,6 +59,7 @@
     "nom": "Fortnite : Sauver le monde",
     "nomEditeur": "Epic Games",
     "categorie": "Action",
+    "prix": 9.99,
     "dateSortie": ISODate('2017-10-17T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -61,6 +68,7 @@
     "nom": "PES 2005",
     "nomEditeur": "Konami",
     "categorie": "Sport",
+    "prix": 4.99,
     "dateSortie": ISODate('2004-11-05T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -69,6 +77,7 @@
     "nom": "God of War III",
     "nomEditeur": "Sony",
     "categorie": "Action",
+    "prix": 59.99,
     "dateSortie": ISODate('2016-04-22T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -77,6 +86,7 @@
     "nom": "Fifa 14",
     "nomEditeur": "2K Sports",
     "categorie": "Sport",
+    "prix": 29.99,
     "dateSortie": ISODate('2013-09-13T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -85,6 +95,7 @@
     "nom": "Dragon Ball Legends",
     "nomEditeur": "Bandai",
     "categorie": "Combat",
+    "prix": 23.99,
     "dateSortie": ISODate('2017-11-07T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -93,6 +104,7 @@
     "nom": "Bully ",
     "nomEditeur": "RockStar Games",
     "categorie": "Rôle",
+    "prix": 23.99,
     "dateSortie": ISODate('2006-06-16T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -101,6 +113,7 @@
     "nom": "GTA V",
     "nomEditeur": " RockStar North ",
     "categorie": "Rôle",
+    "prix": 69.99,
     "dateSortie": ISODate('2015-11-08T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -109,6 +122,7 @@
     "nom": "Lapins Crétins ",
     "nomEditeur": "Ubisoft",
     "categorie": "Aventure",
+    "prix": 19.99,
     "dateSortie": ISODate('2014-12-18T00:00:00.000Z'),
     "image": "../defaultImage.png"
   },
@@ -117,6 +131,7 @@
     "nom": "Fifa 16",
     "nomEditeur": "2K Sports",
     "categorie": "Sport",
+    "prix": 39.99,
     "dateSortie": ISODate('2016-11-13T00:00:00.000Z'),
     "image": "../defaultImage.png"
   }
