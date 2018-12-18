@@ -27,6 +27,7 @@ import javax.swing.JTextPane;
 import static javax.swing.text.html.CSS.Attribute.BORDER;
 import org.bson.Document;
 import java.util.Objects;
+import javax.swing.JButton;
 
 
 /*
@@ -152,10 +153,13 @@ public class presentationJeu extends javax.swing.JFrame {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            File f = new File((String) doc.get("image"));
+            if(!((String) doc.get("nom")).equals(jeu.getNom())){
+                File f = new File((String) doc.get("image"));
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+                else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+            }
+            
             
 
         } 
@@ -173,13 +177,16 @@ public class presentationJeu extends javax.swing.JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         
         if( us.hasComment(idJeu) ){
-            JLabel jb = new JLabel("Votre Commentaire : ");
+            JLabel jb = new JLabel(us.getPseudo() + " : ");
             panel.add(jb,BorderLayout.WEST);
             
-            JTextArea jt = new JTextArea(us.getAvis(this.idJeu));
+            JTextArea jt = new JTextArea(us.getAvis(this.idJeu) );
             jt.setLineWrap(true);
             jt.setEnabled(false);
             panel.add(jt,BorderLayout.CENTER);
+            
+            JButton but = new JButton("Modifier");
+            panel.add(but,BorderLayout.EAST);
         }else{
             JTextArea jt = new JTextArea("VOUS N'AVEZ PAS LAISSER DE COMMENTAIRE");
             jt.setLineWrap(true);

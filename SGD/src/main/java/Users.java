@@ -103,7 +103,7 @@ public class Users {
             Document doc = it.next();
             
             if( (double)doc.get("idJeu") == (double)idJeu  ){
-                str = (String) doc.get("synopsis");
+                str = ((String) doc.get("avis"));
             }
         }
         
