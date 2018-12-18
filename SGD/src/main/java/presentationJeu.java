@@ -26,6 +26,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import static javax.swing.text.html.CSS.Attribute.BORDER;
 import org.bson.Document;
+import java.util.Objects;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
