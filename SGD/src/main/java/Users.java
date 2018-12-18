@@ -65,11 +65,72 @@ public class Users {
                
     } 
     
+    public boolean hasComment(int idJeu){
+        boolean bol = false;
+        
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection("Avis");
+        
+        it = avis.find(eq("idUser" , this.idU)).iterator();
+        
+        while(it.hasNext()){
+            Document doc = it.next();
+            
+            if( (double)doc.get("idJeu") == (double)idJeu  ){
+                bol = true;
+            }
+        }
+ 
+        return bol;
+    }
+    
+    public String getAvis(int idJeu){
+        String str = "";
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection("Avis");
+        
+        it = avis.find(eq("idUser" , this.idU)).iterator();
+        
+        while(it.hasNext()){
+            Document doc = it.next();
+            
+            if( (double)doc.get("idJeu") == (double)idJeu  ){
+                str = (String) doc.get("synopsis");
+            }
+        }
+        
+        return str;
+    }
+    
     public boolean isFavori(String nomJeu)
     {
         boolean bol = false;
         for(int i = 0 ; i < listeJeuFavori.size(); i++){
             if(listeJeuFavori.get(i).equals(nomJeu)) bol = true;
+        }
+        return bol;     
+    }
+    
+    public boolean isLike(String nomJeu)
+    {
+        boolean bol = false;
+        for(int i = 0 ; i < listeLike.size(); i++){
+            if(listeLike.get(i).equals(nomJeu)) bol = true;
+        }
+        return bol;     
+    }
+    
+    public boolean isDislike(String nomJeu)
+    {
+        boolean bol = false;
+        for(int i = 0 ; i < listeDislike.size(); i++){
+            if(listeDislike.get(i).equals(nomJeu)) bol = true;
         }
         return bol;     
     }
