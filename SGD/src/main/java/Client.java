@@ -1,3 +1,6 @@
+
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,12 +13,14 @@
  */
 public class Client extends Users {
 
-    public Client() {
+    public Client(int idU, String nom, String pseudo, String passWord, List<String> listeJeuFavori, List<String> listeLike, List<String> listeDislike) {
+        super(idU, nom, pseudo, passWord, listeJeuFavori, listeLike, listeDislike);
     }
 
-    public Client(int idU, String nom, String pseudo, String passWord) {
-        super(idU, nom, pseudo, passWord);
+    public Client(int id) {
+        super(id);
     }
 
+    
     
 }

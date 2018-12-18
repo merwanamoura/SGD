@@ -38,14 +38,6 @@ public class Description {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.idJeu;
-        hash = 67 * hash + Objects.hashCode(this.synopsis);
-        return hash;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

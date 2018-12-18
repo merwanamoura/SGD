@@ -1,5 +1,13 @@
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.Objects;
+import org.bson.BsonString;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +32,8 @@ public class Avis {
         this.avis = avis;
         this.dateCom = dateCom;
     }
+    
+    
 
     public int getIdUser() {
         return idUser;

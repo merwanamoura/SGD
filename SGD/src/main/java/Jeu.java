@@ -125,10 +125,14 @@ public class Jeu {
     public void setCategorie(String Categorie) {
         this.Categorie = Categorie;
     }
-
-    @Override
-    public String toString() {
-        return "Jeu{" + "nom=" + nom + ", nomEditeur=" + nomEditeur + ", dateSortie=" + dateSortie + ", Categorie=" + Categorie + '}';
+    
+    public String toString(){
+       String str="nom jeu : " + this.nom;
+       
+       return str;
     }
+
+    
+
     
 }
