@@ -1,10 +1,14 @@
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -47,6 +51,19 @@ private JPanel mesDislikesPanel;
         
          MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
+        
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+        
+                  try (MongoCursor<Document> cursor = jeux.find(new Document().append("idA", idUser)).iterator()) {
+                      
+                      while (cursor.hasNext()){
+                          Document doc = cursor.next();
+                          
+                          System.out.println("Jeux : "+ (String)doc.get("nom"));
+                      }
+                  }
         
         // Affichage panneau mes jeux  
         if (admin) {
