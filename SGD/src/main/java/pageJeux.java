@@ -15,9 +15,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.CheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -65,6 +70,7 @@ public class pageJeux extends javax.swing.JFrame {
         listEditeurs = new ArrayList<String>();
         listCategorie = new ArrayList<String>();
         listPrix = new ArrayList<String>();
+        listDates = new ArrayList<String>();
         
         fillAll();
         rechercheJeu();
@@ -121,6 +127,24 @@ public class pageJeux extends javax.swing.JFrame {
 
         
     }
+    
+    public void actionPerformedDates(ActionEvent event) {
+        
+        JRadioButton jrb = (JRadioButton) event.getSource();
+        
+        for(int i=0;i<listDates.size();i++) listDates.remove(i);
+        
+        for(int i=0;i<lesDates.getComponentCount();i++)
+        {
+            if(((JRadioButton)lesDates.getComponent(i)).isSelected())
+            {
+                listDates.add( ((JRadioButton)lesDates.getComponent(i)).getText());
+            }
+        }
+
+        
+    }
+    
     public void fillAll()
     {
         fillLesEditeurs();
@@ -285,7 +309,7 @@ public class pageJeux extends javax.swing.JFrame {
         { 
             public void actionPerformed(ActionEvent e) 
             { 
-              actionPerformedPrix(e);
+              actionPerformedDates(e);
              // fillAll();
                rechercheJeu();
             } 
@@ -301,7 +325,7 @@ public class pageJeux extends javax.swing.JFrame {
         { 
             public void actionPerformed(ActionEvent e) 
             { 
-              actionPerformedPrix(e);
+              actionPerformedDates(e);
              // fillAll();
                rechercheJeu();
             } 
@@ -318,7 +342,7 @@ public class pageJeux extends javax.swing.JFrame {
         { 
             public void actionPerformed(ActionEvent e) 
             { 
-              actionPerformedPrix(e);
+              actionPerformedDates(e);
              // fillAll();
                rechercheJeu();
             } 
@@ -333,7 +357,7 @@ public class pageJeux extends javax.swing.JFrame {
         { 
             public void actionPerformed(ActionEvent e) 
             { 
-              actionPerformedPrix(e);
+              actionPerformedDates(e);
             //  fillAll();
                rechercheJeu();
             } 
@@ -343,7 +367,7 @@ public class pageJeux extends javax.swing.JFrame {
         
         
         
-        JRadioButton b4 = new JRadioButton("2010 - 2014");
+        JRadioButton b4 = new JRadioButton("2010 - 2018");
         bg.add(b4);
         b4.addActionListener(new ActionListener() 
         { 
@@ -357,7 +381,7 @@ public class pageJeux extends javax.swing.JFrame {
         lesDates.add(b4);
         lesDates.setVisible(true);
         
-        JRadioButton b41 = new JRadioButton("2014 - 2018");
+        JRadioButton b41 = new JRadioButton("Cette année");
         bg.add(b41);
         b41.addActionListener(new ActionListener() 
         { 
@@ -371,7 +395,7 @@ public class pageJeux extends javax.swing.JFrame {
         lesDates.add(b41);
         lesDates.setVisible(true);
         
-        JRadioButton b5 = new JRadioButton("Cette année");
+        JRadioButton b5 = new JRadioButton("Toutes les dates");
         bg.add(b5);
         b5.addActionListener(new ActionListener() 
         { 
@@ -424,6 +448,18 @@ public class pageJeux extends javax.swing.JFrame {
             }
         }
         
+        
+        for(int i=0;i<listDates.size();i++) listDates.remove(i);
+        listDates.clear();
+        for(int i=0;i<lesDates.getComponentCount();i++)
+        {
+            if(((JRadioButton)lesDates.getComponent(i)).isSelected())
+            {
+                listDates.add( ((JRadioButton)lesDates.getComponent(i)).getText());
+            }
+        }
+        
+        
     
     	List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
      
@@ -432,10 +468,10 @@ public class pageJeux extends javax.swing.JFrame {
         BasicDBObject andQueryCategorie = new BasicDBObject();
         BasicDBObject orQueryPrix = new BasicDBObject();
         BasicDBObject andQueryRegex = new BasicDBObject();
-
+        BasicDBObject andQueryDate = new BasicDBObject();
      
         
-	if(listEditeurs.size() == 0 && listCategorie.size() ==0 && listPrix.size() == 0)
+	if(listEditeurs.size() == 0 && listCategorie.size() ==0 && listPrix.size() == 0 && listDates.size() ==0)
         {
          
             String saisie = "";
@@ -516,6 +552,133 @@ public class pageJeux extends javax.swing.JFrame {
                 }
             }
         }
+        
+        
+        if(listDates.size() !=0)
+        {
+            for(int i = 0 ; i < listDates.size() ; i++)
+            {
+                if (listDates.get(i).equals("Avant 1990"))
+                {
+                    
+                    
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    try {
+                        dated = dateFormat.parse("31-12-1990"+"T23:59:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                    andQueryDate.put("dateSortie", new BasicDBObject("$lt", dated));
+                 
+                   
+                    obj.add(andQueryDate);                      
+                }
+                
+                  if (listDates.get(i).equals("1990 - 2000"))
+                {
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    Date datef = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-1990"+"T00:00:00");
+                        datef = dateFormat.parse("01-01-2000"+"T00:00:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
+                    obj.add(andQueryDate);
+                }
+                  
+                   if (listDates.get(i).equals("2000 - 2005"))
+                {
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    Date datef = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-2000"+"T00:00:00");
+                        datef = dateFormat.parse("01-01-2005"+"T00:00:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
+                    obj.add(andQueryDate);   
+                    
+                }
+                
+                  if (listDates.get(i).equals("2005 - 2010"))
+                {
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    Date datef = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-2005"+"T00:00:00");
+                        datef = dateFormat.parse("01-01-2010"+"T00:00:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
+                    obj.add(andQueryDate);    
+                    
+                }
+                  
+                    if (listDates.get(i).equals("2010 - 2018"))
+                {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    Date datef = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-2010"+"T00:00:00");
+                        datef = dateFormat.parse("31-12-2018"+"T23:59:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
+                    obj.add(andQueryDate);
+                }
+                    
+                    if (listDates.get(i).equals("Cette année"))
+                {
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    Date datef = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-2019"+"T00:01:00");
+                        datef = dateFormat.parse("31-12-2019"+"T23:59:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
+                    obj.add(andQueryDate);
+                  
+                }
+                         
+                    if (listDates.get(i).equals("Toutes les dates"))
+                {
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+                    Date dated = new Date();
+                    try {
+                        dated = dateFormat.parse("01-01-1200"+"T00:01:00");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    andQueryDate.put("dateSortie", new BasicDBObject("$gt", dated));
+                    obj.add(andQueryDate);
+                }
+            }
+        }
+        
+        
 
         
 
