@@ -44,6 +44,13 @@ public class MongoDBConnection {
         db = client.getDatabase("ma522501");
      
     }   
+    /*
+    
+    static void connect()
+    {
+        MongoClient client = new MongoClient("localhost",27017);
+        db = client.getDatabase("ma522501");
+    }*/
 
     public static MongoDatabase getDb() {
         return db;

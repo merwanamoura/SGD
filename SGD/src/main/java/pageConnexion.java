@@ -72,6 +72,7 @@ public class pageConnexion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 250));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(500, 50));
 
@@ -101,7 +102,6 @@ public class pageConnexion extends javax.swing.JFrame {
         jLabel1.setText("Pseudo ?");
         jPanel1.add(jLabel1);
 
-        pseudoField.setCaretColor(new java.awt.Color(0, 0, 0));
         pseudoField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         pseudoField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

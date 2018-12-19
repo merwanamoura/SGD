@@ -13,6 +13,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -56,13 +59,11 @@ public class presentationJeu extends javax.swing.JFrame {
         initComponents();
         this.setSize(800,600);
         
-        this.idUser = 0;
-        this.idJeu = 6;
-        
+        this.idUser = idU;
+        this.idJeu = idJ;
+       
         jeu = new Jeu(idJeu);
         us=new Users(idUser);
-        
-        
         
         setPresentation();
         description();
@@ -135,14 +136,10 @@ public class presentationJeu extends javax.swing.JFrame {
     
     public void afficheImg()
     {
-        String img = jeu.getImage();
-        System.out.println(img);
-        
+        String img = jeu.getImage();        
         JLabel label = new JLabel(new ImageIcon("imageJeux/default.png"));
-        
         panelImage.add(label, BorderLayout.CENTER);
-        
-        
+   
     }
     public void jeuSimilaire()
     {
@@ -163,80 +160,109 @@ public class presentationJeu extends javax.swing.JFrame {
             
                 if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
                 else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+    
             }
-            
-            
 
         } 
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
-     
+        
+        MouseListener mouseListener = new MouseAdapter() {
+            
+              public void mouseClicked(MouseEvent e) {
+                  
+                if (e.getClickCount() == 2)
+                {
+                        MongoDatabase db = MongoDBConnection.getDb();
+
+                        MongoCursor<Document> it;
+                        MongoCollection<Document> jeux = db.getCollection("jeux");
+                        String nameGame = list.getSelectedValue().toString(); 
+                        System.out.println(nameGame);
+                        it = jeux.find(eq("nom" , nameGame)).iterator();
+
+                        Document d = it.next();
+                        int idNewjeu = (int) d.get("idJeu");
+
+                        setVisible(false);
+                        dispose();
+
+                        presentationJeu pj = new presentationJeu(idNewjeu,idUser);
+                        pj.setVisible(true);
+                }
+              }
+                
+                
+        };
+        list.addMouseListener(mouseListener);
+        
         jScrollPane1.add(list); 
         jScrollPane1.setViewportView(list);
 
 
     }
+  
     
     public void setComment(){
+        JLabel jb;
+        JTextArea jt;
+        JButton but;
         
         JPanel panel = new JPanel(new BorderLayout());
-        
-        if( us.hasComment(idJeu) ){
-            JLabel jb = new JLabel(us.getPseudo() + " : ");
-            panel.add(jb,BorderLayout.WEST);
+              
+        if( us.hasComment(idJeu) ){   
+            jb = new JLabel(us.getPseudo() + " : ");
             
-            JTextArea jt = new JTextArea(us.getAvis(this.idJeu) );
+            jt = new JTextArea(us.getAvis(this.idJeu) );
             jt.setLineWrap(true);
             jt.setEnabled(false);
-            panel.add(jt,BorderLayout.CENTER);
             
-            JButton but = new JButton("Modifier");
-            panel.add(but,BorderLayout.EAST);
-            
-            but.addActionListener(new ActionListener() 
+            but = new JButton("Modifier");
+        }
+        else
+        {
+            jb = new JLabel(us.getPseudo() + " : ");
+ 
+            jt = new JTextArea("Laisser un commentaire ..." );
+            jt.setLineWrap(true);
+
+            but = new JButton("Commenter");
+        }
+        
+        panel.add(jb,BorderLayout.WEST);
+        panel.add(jt,BorderLayout.CENTER);
+        panel.add(but,BorderLayout.EAST);  
+        
+        but.addActionListener(new ActionListener() 
             { 
                 public void actionPerformed(ActionEvent e) 
                 { 
-                    if(but.getText().equals("Modifier"))
-                    {
-                        jt.setEnabled(true);
-                        but.setText("Commenter");
-                    }else{
+                    
+                    if( !us.hasComment(idJeu) ){
                         jt.setEnabled(false);
                         but.setText("Modifier");
                         String str = jt.getText();
-                        us.updateAvis(str,idJeu);
-                    }   
+                        us.createAvis(str,idJeu);
+                        panelAvis.removeAll();
+                        setAvis();
+                        setComment();
+                    }else{
+                        if(but.getText().equals("Modifier"))
+                        {
+                            jt.setEnabled(true);
+                            but.setText("Commenter");
+                        }else{
+                            jt.setEnabled(false);
+                            but.setText("Modifier");
+                            String str = jt.getText();
+                            us.updateAvis(str,idJeu);
+                            panelAvis.removeAll();
+                            setAvis();
+                            setComment();
+                        }
+                    }  
                 } 
             } );
-            
-            
-        }else{
-            JLabel jb = new JLabel(us.getPseudo() + " : ");
-            panel.add(jb,BorderLayout.WEST);
-            
-            JTextArea jt = new JTextArea("Laisser un commentaire ..." );
-            jt.setLineWrap(true);
-            panel.add(jt,BorderLayout.CENTER);
-            
-            JButton but = new JButton("Commenter");
-            panel.add(but,BorderLayout.EAST);
-            
-            but.addActionListener(new ActionListener() 
-            { 
-                public void actionPerformed(ActionEvent e) 
-                { 
-                    jt.setEnabled(false);
-                    but.setText("Commenter");
-                    String str = jt.getText();
-                    us.createAvis(str,idJeu);
-                    setComment();
-                    
-                } 
-            } );
-            
-            
-        }
         
         panelAvis.add(panel,BorderLayout.NORTH);
         
@@ -254,28 +280,25 @@ public class presentationJeu extends javax.swing.JFrame {
         
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(panel);
-        
-        
-      //  scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         while (it.hasNext()) 
         {
-            
             Document doc = it.next();
+            int idUtilisateur = (int) doc.get("idUser");
+            Users us = new Users(idUtilisateur);
+            
             JPanel jp = new JPanel(new BorderLayout());
-        
+
             JTextArea jt = new JTextArea((String) doc.get("avis"));
             jt.setLineWrap(true);
             jt.setEnabled(false);
             jt.setBackground(Color.WHITE);
             jp.add(jt,BorderLayout.CENTER);
-             
-            
-            //int idU = (int) doc.get("idUser") ;
-            Users us = new Users( 0);
+
             JLabel jl = new JLabel(us.getPseudo());
             jp.add(jl,BorderLayout.WEST);
-            panel.add( jp);
+            panel.add(jp);
+            
  
         } 
         

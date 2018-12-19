@@ -54,26 +54,27 @@ public class Users {
     }
 
     public Users(int id){
+        MongoDBConnection.connect();
         idU=id;
         
         MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
-        MongoCollection<Document> Admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
 
-        it = Admin.find(eq("idA" , id)).iterator();
+        it = user.find(eq("idA" , id)).iterator();
         
         Document doc = it.next();
 
         setNom((String) doc.get("name.last"));
         setPseudo((String) doc.get("pseudo"));
         setPassWord((String) doc.get("passWord")); 
-        setListeJeuFavori((List<String>) doc.get("jeuFavori"));
+        setListeJeuFavori((List<String>) doc.get("jeuxFavoris"));
         setListeLike((List<String>) doc.get("jeuLike"));
         setListeDislike((List<String>) doc.get("jeuDislike"));
                
     } 
     
-    public boolean hasComment(int idJeu){
+    public boolean hasComment(int id){
         boolean bol = false;
         
         MongoDBConnection.connect();
@@ -86,8 +87,8 @@ public class Users {
         
         while(it.hasNext()){
             Document doc = it.next();
-            
-            if( (double)doc.get("idJeu") == (double)idJeu  ){
+                        
+            if( (int)doc.get("idJeu") == id){
                 bol = true;
             }
         }
@@ -108,7 +109,7 @@ public class Users {
         while(it.hasNext()){
             Document doc = it.next();
             
-            if( (double)doc.get("idJeu") == (double)idJeu  ){
+            if( (int)doc.get("idJeu") == idJeu  ){
                 str = ((String) doc.get("avis"));
             }
         }
@@ -150,12 +151,12 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$push",  
-             new BasicDBObject("jeuFavori", new BsonString(jeu)))
+             new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
         );
     }
     
@@ -166,12 +167,12 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$pull",  
-             new BasicDBObject("jeuFavori", new BsonString(jeu)))
+             new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
         );
     }
     
@@ -183,9 +184,9 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$push",  
              new BasicDBObject("jeuLike", new BsonString(jeu)))
@@ -231,9 +232,9 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$push",  
              new BasicDBObject("jeuDislike", new BsonString(jeu)))
@@ -250,9 +251,9 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$pull",  
              new BasicDBObject("jeuLike", new BsonString(jeu)))
@@ -267,9 +268,9 @@ public class Users {
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> admin = db.getCollection("Admin");
+        MongoCollection<Document> user = db.getCollection("user");
         
-        Document updatedDocument = admin.findOneAndUpdate(
+        Document updatedDocument = user.findOneAndUpdate(
              Filters.eq("idA", this.idU),
              new Document("$pull",  
              new BasicDBObject("jeuDislike", new BsonString(jeu)))

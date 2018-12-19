@@ -77,6 +77,15 @@ public class pageAcceuil extends javax.swing.JFrame {
             Document doc = it.next();
 
 
+            Jeu jeu = new Jeu(doc);
+
+            File f2 = new File((String) doc.get("image"));
+            
+            if(f2.exists() && !f2.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+           
+
+
         } 
         
         JList list = new JList(dlm);
