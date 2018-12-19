@@ -142,8 +142,8 @@ private JPanel mesDislikesPanel;
                             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
                             else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
 
-                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("pathImage"))));
-                            else dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+                         //   if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("pathImage"))));
+                           // else dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
 
                       }
                       
@@ -202,8 +202,8 @@ private JPanel mesDislikesPanel;
                                                                           if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
                                                                           else dlmlikes.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
 
-                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
-                                                                          else dlmlikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+                             //                                             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                               //                                           else dlmlikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
 
                                                                     }
 
@@ -248,8 +248,8 @@ private JPanel mesDislikesPanel;
                                                                           if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
                                                                           else dlmdislikes.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
 
-                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
-                                                                          else dlmdislikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+                                                                       //   if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                                                                       //   else dlmdislikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
 
                                                                     }
 
