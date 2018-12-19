@@ -1,3 +1,41 @@
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.eq;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import static javax.swing.text.html.CSS.Attribute.BORDER;
+import org.bson.Document;
+import java.util.Objects;
+import javax.swing.JButton;
+import javax.swing.ScrollPaneConstants;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,14 +48,269 @@
  */
 public class presentationJeu extends javax.swing.JFrame {
 
+    Jeu jeu;
+    Users us;
+    static int idJeu;
+    static int idUser;
     /**
      * Creates new form presentationJeu
      */
-    public presentationJeu() {
+    public presentationJeu(int idJ, int idU) {
         initComponents();
+        this.setSize(800,600);
+        
+        this.idUser = idU;
+        this.idJeu = idJ;
+       
+        jeu = new Jeu(idJeu);
+        us=new Users(idUser);
+        
+        setPresentation();
+        description();
+        afficheImg();
+        setAvis();
+        jeuSimilaire();
+        setLike();
+        setDislike();
+        setFavori();
+        setComment();
     }
+    
+    
+    
+    public void setFavori(){
+        List<String> listeFavori = us.getListeJeuFavori();
 
-    /**
+        for(int i = 0; i< listeFavori.size() ; i++){
+            
+            if(listeFavori.get(i).equals(jeu.getNom())) {
+                buttonFavori.setBackground(Color.yellow);
+            }  
+        }
+    }
+    
+    public void setDislike(){
+        List<String> listeJeuDislike = us.getListeDislike();
+
+        for(int i = 0; i< listeJeuDislike.size() ; i++){
+            
+            if(listeJeuDislike.get(i).equals(jeu.getNom())) {
+                buttonDislike.setBackground(Color.red);
+            } 
+        }
+    }
+    
+    public void setLike(){
+        List<String> listeJeuLike = us.getListeLike();
+
+        for(int i = 0; i< listeJeuLike.size() ; i++){
+            
+            if(listeJeuLike.get(i).equals(jeu.getNom())) {
+                buttonLike.setBackground(Color.green);
+            }  
+        }
+    }
+    
+    public void setPresentation(){
+        labelNomJeu.setText(labelNomJeu.getText() + " " + jeu.getNom());
+    }
+    
+    public void description()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        
+        MongoCursor<Document> it;
+        MongoCollection<Document> desc = db.getCollection("description");
+
+        it = desc.find(eq("idJeu" , this.idJeu)).iterator();
+        
+        Document doc = it.next();
+        
+        JTextArea jt = new JTextArea((String) doc.get("synopsis"));
+        jt.setLineWrap(true);
+        jt.setEnabled(false);
+        panelDesc.add(jt,BorderLayout.CENTER);
+
+    }
+    
+    public void afficheImg()
+    {
+        String img = jeu.getImage();        
+        JLabel label = new JLabel(new ImageIcon("imageJeux/default.png"));
+        panelImage.add(label, BorderLayout.CENTER);
+   
+    }
+    public void jeuSimilaire()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        DefaultListModel dlm = new DefaultListModel();
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+
+        it = jeux.find(eq("categorie" , jeu.getCategorie())).iterator();
+        
+        
+        while (it.hasNext()) 
+        {
+            Document doc = it.next();
+            if(!((String) doc.get("nom")).equals(jeu.getNom())){
+                File f = new File((String) doc.get("image"));
+            
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
+                else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+    
+            }
+
+        } 
+        JList list = new JList(dlm);
+        list.setCellRenderer(new ListEntryCellRenderer());
+        
+        MouseListener mouseListener = new MouseAdapter() {
+            
+              public void mouseClicked(MouseEvent e) {
+                  
+                if (e.getClickCount() == 2)
+                {
+                        MongoDatabase db = MongoDBConnection.getDb();
+
+                        MongoCursor<Document> it;
+                        MongoCollection<Document> jeux = db.getCollection("jeux");
+                        String nameGame = list.getSelectedValue().toString(); 
+                        System.out.println(nameGame);
+                        it = jeux.find(eq("nom" , nameGame)).iterator();
+
+                        Document d = it.next();
+                        int idNewjeu = (int) d.get("idJeu");
+
+                        setVisible(false);
+                        dispose();
+
+                        presentationJeu pj = new presentationJeu(idNewjeu,idUser);
+                        pj.setVisible(true);
+                }
+              }
+                
+                
+        };
+        list.addMouseListener(mouseListener);
+        
+        jScrollPane1.add(list); 
+        jScrollPane1.setViewportView(list);
+
+
+    }
+  
+    
+    public void setComment(){
+        JLabel jb;
+        JTextArea jt;
+        JButton but;
+        
+        JPanel panel = new JPanel(new BorderLayout());
+              
+        if( us.hasComment(idJeu) ){   
+            jb = new JLabel(us.getPseudo() + " : ");
+            
+            jt = new JTextArea(us.getAvis(this.idJeu) );
+            jt.setLineWrap(true);
+            jt.setEnabled(false);
+            
+            but = new JButton("Modifier");
+        }
+        else
+        {
+            jb = new JLabel(us.getPseudo() + " : ");
+ 
+            jt = new JTextArea("Laisser un commentaire ..." );
+            jt.setLineWrap(true);
+
+            but = new JButton("Commenter");
+        }
+        
+        panel.add(jb,BorderLayout.WEST);
+        panel.add(jt,BorderLayout.CENTER);
+        panel.add(but,BorderLayout.EAST);  
+        
+        but.addActionListener(new ActionListener() 
+            { 
+                public void actionPerformed(ActionEvent e) 
+                { 
+                    
+                    if( !us.hasComment(idJeu) ){
+                        jt.setEnabled(false);
+                        but.setText("Modifier");
+                        String str = jt.getText();
+                        us.createAvis(str,idJeu);
+                        panelAvis.removeAll();
+                        setAvis();
+                        setComment();
+                    }else{
+                        if(but.getText().equals("Modifier"))
+                        {
+                            jt.setEnabled(true);
+                            but.setText("Commenter");
+                        }else{
+                            jt.setEnabled(false);
+                            but.setText("Modifier");
+                            String str = jt.getText();
+                            us.updateAvis(str,idJeu);
+                            panelAvis.removeAll();
+                            setAvis();
+                            setComment();
+                        }
+                    }  
+                } 
+            } );
+        
+        panelAvis.add(panel,BorderLayout.NORTH);
+        
+    }
+    
+    
+    public void setAvis()
+    {
+        MongoDBConnection.connect();
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection("Avis");
+
+        it = avis.find(eq("idJeu" , this.idJeu)).iterator();  
+        
+        JPanel panel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(panel);
+
+        while (it.hasNext()) 
+        {
+            Document doc = it.next();
+            int idUtilisateur = (int) doc.get("idUser");
+            Users us = new Users(idUtilisateur);
+            
+            JPanel jp = new JPanel(new BorderLayout());
+
+            JTextArea jt = new JTextArea((String) doc.get("avis"));
+            jt.setLineWrap(true);
+            jt.setEnabled(false);
+            jt.setBackground(Color.WHITE);
+            jp.add(jt,BorderLayout.CENTER);
+
+            JLabel jl = new JLabel(us.getPseudo());
+            jp.add(jl,BorderLayout.WEST);
+            panel.add(jp);
+            
+ 
+        } 
+        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(Box.createVerticalGlue());
+
+        panelAvis.add(scrollPane,BorderLayout.CENTER);
+        
+        
+    }   
+
+    /**false
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -35,12 +328,10 @@ public class presentationJeu extends javax.swing.JFrame {
         panelLikeDislike = new javax.swing.JPanel();
         buttonLike = new javax.swing.JButton();
         buttonDislike = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        buttonFavori = new javax.swing.JButton();
+        panelDesc = new javax.swing.JPanel();
         labelDescription = new javax.swing.JLabel();
-        textFieldDescription = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        textFieldComment = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        panelAvis = new javax.swing.JPanel();
         panelJeuSimilaire = new javax.swing.JPanel();
         labelJeuSimilaire = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -60,17 +351,7 @@ public class presentationJeu extends javax.swing.JFrame {
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout panelImageLayout = new javax.swing.GroupLayout(panelImage);
-        panelImage.setLayout(panelImageLayout);
-        panelImageLayout.setHorizontalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
-        );
-        panelImageLayout.setVerticalGroup(
-            panelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 187, Short.MAX_VALUE)
-        );
-
+        panelImage.setLayout(new java.awt.BorderLayout());
         jPanel4.add(panelImage, java.awt.BorderLayout.CENTER);
 
         panelLikeDislike.setPreferredSize(new java.awt.Dimension(272, 40));
@@ -78,37 +359,46 @@ public class presentationJeu extends javax.swing.JFrame {
 
         buttonLike.setText("Like");
         buttonLike.setPreferredSize(new java.awt.Dimension(94, 20));
+        buttonLike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLikeActionPerformed(evt);
+            }
+        });
         panelLikeDislike.add(buttonLike, java.awt.BorderLayout.WEST);
 
         buttonDislike.setText("Dislike");
+        buttonDislike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDislikeActionPerformed(evt);
+            }
+        });
         panelLikeDislike.add(buttonDislike, java.awt.BorderLayout.EAST);
+
+        buttonFavori.setText("favori");
+        buttonFavori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonFavoriActionPerformed(evt);
+            }
+        });
+        panelLikeDislike.add(buttonFavori, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(panelLikeDislike, java.awt.BorderLayout.SOUTH);
 
         jPanel1.add(jPanel4);
 
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        panelDesc.setLayout(new java.awt.BorderLayout());
 
         labelDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelDescription.setText("Description du jeu :");
         labelDescription.setPreferredSize(new java.awt.Dimension(138, 35));
-        jPanel3.add(labelDescription, java.awt.BorderLayout.NORTH);
+        panelDesc.add(labelDescription, java.awt.BorderLayout.NORTH);
 
-        textFieldDescription.setEnabled(false);
-        jPanel3.add(textFieldDescription, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jPanel3);
+        jPanel1.add(panelDesc);
 
         panelJeu.add(jPanel1);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        textFieldComment.setText("Laissez un commentaire ...");
-        textFieldComment.setPreferredSize(new java.awt.Dimension(170, 25));
-        jPanel2.add(textFieldComment, java.awt.BorderLayout.NORTH);
-        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
-
-        panelJeu.add(jPanel2);
+        panelAvis.setLayout(new java.awt.BorderLayout());
+        panelJeu.add(panelAvis);
 
         corps.add(panelJeu, java.awt.BorderLayout.CENTER);
 
@@ -126,6 +416,66 @@ public class presentationJeu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLikeActionPerformed
+        // TODO add your handling code here:
+        String nomJeu = this.jeu.getNom();
+        
+        //pour le like
+        if(us.isLike(jeu.getNom()))
+        {
+            buttonLike.setBackground(Color.white);
+            this.us.removeJeuLike(nomJeu);
+        }
+        else
+        {
+            buttonLike.setBackground(Color.green);
+            this.us.addJeuLike(nomJeu);
+        }
+        
+        //pour le dislike
+        if(us.isDislike(jeu.getNom()))
+        {
+            buttonDislike.setBackground(Color.white);
+            this.us.removeJeuDislike(nomJeu);
+        }        
+        
+       
+        
+    }//GEN-LAST:event_buttonLikeActionPerformed
+
+    private void buttonDislikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDislikeActionPerformed
+        // TODO add your handling code here:
+        String nomJeu = this.jeu.getNom();
+        
+        //pour le dislike
+        if(us.isDislike(jeu.getNom()))
+        {
+            buttonDislike.setBackground(Color.white);
+            this.us.removeJeuDislike(nomJeu);
+        }else{
+            buttonDislike.setBackground(Color.red);
+            this.us.addJeuDislike(nomJeu);
+        }
+          
+        //pour le like
+        if(us.isLike(jeu.getNom()))
+        {
+            buttonLike.setBackground(Color.white);
+            this.us.removeJeuLike(nomJeu);
+        }
+    }//GEN-LAST:event_buttonDislikeActionPerformed
+
+    private void buttonFavoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFavoriActionPerformed
+        // TODO add your handling code here:
+        if(us.isFavori(jeu.getNom())){
+            buttonFavori.setBackground(Color.white);
+            us.removeFavori(jeu.getNom());
+        }else{
+            buttonFavori.setBackground(Color.yellow);
+            us.addFavori(jeu.getNom());
+        }
+    }//GEN-LAST:event_buttonFavoriActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,29 +507,27 @@ public class presentationJeu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new presentationJeu().setVisible(true);
+                new presentationJeu(idJeu,idUser).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDislike;
+    private javax.swing.JButton buttonFavori;
     private javax.swing.JButton buttonLike;
     private javax.swing.JPanel corps;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelJeuSimilaire;
     private javax.swing.JLabel labelNomJeu;
+    private javax.swing.JPanel panelAvis;
+    private javax.swing.JPanel panelDesc;
     private javax.swing.JPanel panelImage;
     private javax.swing.JPanel panelJeu;
     private javax.swing.JPanel panelJeuSimilaire;
     private javax.swing.JPanel panelLikeDislike;
-    private javax.swing.JTextField textFieldComment;
-    private javax.swing.JTextField textFieldDescription;
     // End of variables declaration//GEN-END:variables
 }

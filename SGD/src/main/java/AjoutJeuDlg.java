@@ -322,7 +322,6 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
        
         nomJeu = jeuText.getText();
         Editeur = editeurText.getText();
-     //   dateSortie = dateText.getText();
      
         dateSortie = Jour.getSelectedItem().toString() + "-" + mois.getSelectedItem().toString() + "-" + annee.getSelectedItem().toString();
         categorie = categorieText.getText();
@@ -336,8 +335,6 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             pathImage = "imageJeu/default.png";
         }
 
-     
-        
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
         

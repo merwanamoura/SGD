@@ -70,6 +70,7 @@ public class creationCompte extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 400));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setFont(new java.awt.Font("GFS Artemisia", 1, 14)); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(600, 50));
