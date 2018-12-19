@@ -13,6 +13,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -56,9 +59,9 @@ public class presentationJeu extends javax.swing.JFrame {
         initComponents();
         this.setSize(800,600);
         
-        this.idUser = 0;
-        this.idJeu = 6;
-        
+        this.idUser = idU;
+        this.idJeu = idJ;
+       
         jeu = new Jeu(idJeu);
         us=new Users(idUser);
         
@@ -163,16 +166,44 @@ public class presentationJeu extends javax.swing.JFrame {
         } 
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
-     
+        
+        MouseListener mouseListener = new MouseAdapter() {
+            
+              public void mouseClicked(MouseEvent e) {
+                  
+                if (e.getClickCount() == 2)
+                {
+                        MongoDatabase db = MongoDBConnection.getDb();
+
+                        MongoCursor<Document> it;
+                        MongoCollection<Document> jeux = db.getCollection("jeux");
+                        String nameGame = list.getSelectedValue().toString(); 
+                        System.out.println(nameGame);
+                        it = jeux.find(eq("nom" , nameGame)).iterator();
+
+                        Document d = it.next();
+                        int idNewjeu = (int) d.get("idJeu");
+
+                        setVisible(false);
+                        dispose();
+
+                        presentationJeu pj = new presentationJeu(idNewjeu,idUser);
+                        pj.setVisible(true);
+                }
+              }
+                
+                
+        };
+        list.addMouseListener(mouseListener);
+        
         jScrollPane1.add(list); 
         jScrollPane1.setViewportView(list);
 
 
     }
+  
     
     public void setComment(){
-        panelAvis.revalidate();  
-        this.repaint();
         JLabel jb;
         JTextArea jt;
         JButton but;
@@ -212,6 +243,9 @@ public class presentationJeu extends javax.swing.JFrame {
                         but.setText("Modifier");
                         String str = jt.getText();
                         us.createAvis(str,idJeu);
+                        panelAvis.removeAll();
+                        setAvis();
+                        setComment();
                     }else{
                         if(but.getText().equals("Modifier"))
                         {
@@ -222,6 +256,9 @@ public class presentationJeu extends javax.swing.JFrame {
                             but.setText("Modifier");
                             String str = jt.getText();
                             us.updateAvis(str,idJeu);
+                            panelAvis.removeAll();
+                            setAvis();
+                            setComment();
                         }
                     }  
                 } 
@@ -250,19 +287,17 @@ public class presentationJeu extends javax.swing.JFrame {
             int idUtilisateur = (int) doc.get("idUser");
             Users us = new Users(idUtilisateur);
             
-            if(us.getIdU() != this.idUser){ 
-                JPanel jp = new JPanel(new BorderLayout());
+            JPanel jp = new JPanel(new BorderLayout());
 
-                JTextArea jt = new JTextArea((String) doc.get("avis"));
-                jt.setLineWrap(true);
-                jt.setEnabled(false);
-                jt.setBackground(Color.WHITE);
-                jp.add(jt,BorderLayout.CENTER);
- 
-                JLabel jl = new JLabel(us.getPseudo());
-                jp.add(jl,BorderLayout.WEST);
-                panel.add(jp);
-            }
+            JTextArea jt = new JTextArea((String) doc.get("avis"));
+            jt.setLineWrap(true);
+            jt.setEnabled(false);
+            jt.setBackground(Color.WHITE);
+            jp.add(jt,BorderLayout.CENTER);
+
+            JLabel jl = new JLabel(us.getPseudo());
+            jp.add(jl,BorderLayout.WEST);
+            panel.add(jp);
             
  
         } 
