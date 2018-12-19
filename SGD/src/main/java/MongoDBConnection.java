@@ -37,11 +37,11 @@ public class MongoDBConnection {
     static void connect()
     {
         char[] pass = new char[10];
-        String s = "ma522501";
+        String s = "ai265149";
         pass = s.toCharArray();
-        MongoCredential credential = MongoCredential.createCredential("ma522501","ma522501",pass);
+        MongoCredential credential = MongoCredential.createCredential("ai265149","ai265149",pass);
         MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
-        db = client.getDatabase("ma522501");
+        db = client.getDatabase("ai265149");
      
     }   
     /*
