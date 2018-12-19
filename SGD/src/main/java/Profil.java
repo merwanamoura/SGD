@@ -4,8 +4,12 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import org.bson.Document;
@@ -53,25 +57,105 @@ private JPanel mesDislikesPanel;
         MongoDatabase db = MongoDBConnection.getDb();
         
         DefaultListModel dlm = new DefaultListModel();
-        MongoCursor<Document> it;
+        DefaultListModel dlmfav = new DefaultListModel();
+        DefaultListModel dlmlikes = new DefaultListModel();        
+        DefaultListModel dlmdislikes = new DefaultListModel();
+
         MongoCollection<Document> jeux = db.getCollection("jeux");
+        MongoCollection<Document> jeuxFavoris =db.getCollection("Users");
         
-                  try (MongoCursor<Document> cursor = jeux.find(new Document().append("idA", idUser)).iterator()) {
+        // Mes Favoris 
+          try (MongoCursor<Document> cursor = jeuxFavoris.find(new Document().append("idA", idUser)).iterator()) {
                       
                       while (cursor.hasNext()){
+                          
                           Document doc = cursor.next();
                           
-                          System.out.println("Jeux : "+ (String)doc.get("nom"));
+                          pseudoLabel.setText(""+doc.get("pseudo"));
+                          // TODO modifier
+                          Document nomPrenom  = (Document)doc.get("name");
+                          nameLabel.setText(""+nomPrenom.get("first")+" "+nomPrenom.get("last"));
+
+                          ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuxFavoris");
+                          
+                          for (String jf : listeJeux ){
+                          System.out.println("Jeux favoris: "+ jf);
+                          
+                     try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
+                      
+                      while (cursorfav.hasNext()){
+                          
+                          Document docfav = cursorfav.next();
+                          
+                          
+                           File f = new File((String) docfav.get("image"));
+    
+
+                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
+                            else dlmfav.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                            else dlmfav.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+
                       }
+                      
+                       JList list = new JList(dlmfav);
+                        list.setCellRenderer(new ListEntryCellRenderer());
+
+                        jScrollPane1.add(list); 
+                        jScrollPane1.setViewportView(list);
+                      
                   }
+                          
+                          
+                   
+                          }
+                        
+                      }
+                   
+                  }
+                     
+         
         
         // Affichage panneau mes jeux  
         if (admin) {
+            
             
             mesJeux.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
             mesJeux.setText("Mes Jeux");
             jPanel4.add(mesJeux, java.awt.BorderLayout.PAGE_START);
             jPanel4.add(mesJeuxScrollPane, java.awt.BorderLayout.CENTER);
+            
+                     // Mes Jeux
+                     
+                     try (MongoCursor<Document> cursor = jeux.find(new Document().append("idA", idUser)).iterator()) {
+                      
+                      while (cursor.hasNext()){
+                          
+                          Document doc = cursor.next();
+                          
+                      //    System.out.println("Jeux : "+ (String)doc.get("nom"));
+                          
+                           File f = new File((String) doc.get("image"));
+            
+
+                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+                            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("pathImage"))));
+                            else dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+
+                      }
+                      
+                       JList list = new JList(dlm);
+                        list.setCellRenderer(new ListEntryCellRenderer());
+
+                        mesJeuxScrollPane.add(list); 
+                        mesJeuxScrollPane.setViewportView(list);
+                      
+                  }
+                    
+                     
 
         }
         else {
@@ -91,6 +175,102 @@ private JPanel mesDislikesPanel;
              
             jPanel4.add(mesLikesPanel);
             jPanel4.add(mesDislikesPanel);
+            
+            
+                    // Mes Likes
+          try (MongoCursor<Document> cursor = jeuxFavoris.find(new Document().append("idA", idUser)).iterator()) {
+                      
+                                        while (cursor.hasNext()){
+
+                                            Document doc = cursor.next();
+
+                                            ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuLike");
+
+                                            for (String jf : listeJeux ){
+                                            System.out.println("Jeux like: "+ jf);
+
+                                                try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
+
+                                                                    while (cursorfav.hasNext()){
+
+                                                                        Document docfav = cursorfav.next();
+
+
+                                                                         File f = new File((String) docfav.get("image"));
+
+
+                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
+                                                                          else dlmlikes.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                                                                          else dlmlikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+
+                                                                    }
+
+                                                                     JList list = new JList(dlmlikes);
+                                                                      list.setCellRenderer(new ListEntryCellRenderer());
+
+                                                                      mesLikesScrollPane.add(list); 
+                                                                      mesLikesScrollPane.setViewportView(list);
+
+                                                }
+
+
+
+                                            }
+
+                                        }
+                   
+                  }
+          
+        // Mes Dislikes
+          try (MongoCursor<Document> cursor = jeuxFavoris.find(new Document().append("idA", idUser)).iterator()) {
+                      
+                                        while (cursor.hasNext()){
+
+                                            Document doc = cursor.next();
+
+                                            ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuDislike");
+
+                                            for (String jf : listeJeux ){
+                                            System.out.println("Jeux dislike: "+ jf);
+
+                                                try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
+
+                                                                    while (cursorfav.hasNext()){
+
+                                                                        Document docfav = cursorfav.next();
+
+
+                                                                         File f = new File((String) docfav.get("image"));
+
+
+                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
+                                                                          else dlmdislikes.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
+
+                                                                          if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                                                                          else dlmdislikes.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+
+                                                                    }
+
+                                                                     JList list = new JList(dlmdislikes);
+                                                                      list.setCellRenderer(new ListEntryCellRenderer());
+
+                                                                      mesDislikesScrollPane.add(list); 
+                                                                      mesDislikesScrollPane.setViewportView(list);
+
+                                                }
+
+
+
+                                            }
+
+                                        }
+                   
+                  }
+            
+            
+            
              
         }
         
@@ -129,15 +309,11 @@ private JPanel mesDislikesPanel;
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Pseudo :");
         jPanel1.add(jLabel1);
-
-        pseudoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(pseudoLabel);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Nom & Prénom :");
         jPanel1.add(jLabel3);
-
-        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(nameLabel);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
@@ -192,7 +368,7 @@ private JPanel mesDislikesPanel;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new Profil(true,1).setVisible(true);
+                new Profil(false,22).setVisible(true);
             
             }
         });

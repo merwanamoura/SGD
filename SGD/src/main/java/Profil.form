@@ -50,9 +50,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="pseudoLabel">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -61,9 +58,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="nameLabel">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>

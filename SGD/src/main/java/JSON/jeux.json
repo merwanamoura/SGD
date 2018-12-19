@@ -33,7 +33,7 @@
   },
   {
     "idJeu": 3,
-    "nom": "Pokemon Go",
+    "nom": "Pokemon GO",
     "nomEditeur": "Nintendo",
     "categorie": "Aventure",
     "prix": 34.99,
@@ -117,7 +117,7 @@
   },
   {
     "idJeu": 11,
-    "nom": "Bully ",
+    "nom": "Bully",
     "nomEditeur": "RockStar Games",
     "categorie": "Rôle",
     "prix": 23.99,
