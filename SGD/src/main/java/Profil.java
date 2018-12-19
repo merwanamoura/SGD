@@ -79,7 +79,7 @@ private JPanel mesDislikesPanel;
                           ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuxFavoris");
                           
                           for (String jf : listeJeux ){
-                          System.out.println("Jeux favoris: "+ jf);
+                       //   System.out.println("Jeux favoris: "+ jf);
                           
                      try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
                       
@@ -187,7 +187,7 @@ private JPanel mesDislikesPanel;
                                             ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuLike");
 
                                             for (String jf : listeJeux ){
-                                            System.out.println("Jeux like: "+ jf);
+                                            //System.out.println("Jeux like: "+ jf);
 
                                                 try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
 
