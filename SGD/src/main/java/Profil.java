@@ -79,7 +79,7 @@ private JPanel mesDislikesPanel;
                           ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuxFavoris");
                           
                           for (String jf : listeJeux ){
-                       //   System.out.println("Jeux favoris: "+ jf);
+                          System.out.println("Jeux favoris: "+ jf);
                           
                      try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
                       
@@ -94,8 +94,8 @@ private JPanel mesDislikesPanel;
                             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
                             else dlmfav.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
 
-                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
-                            else dlmfav.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
+                           // if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
+                           // else dlmfav.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon("imageJeux/default.png")));
 
                       }
                       
@@ -187,7 +187,7 @@ private JPanel mesDislikesPanel;
                                             ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuLike");
 
                                             for (String jf : listeJeux ){
-                                            //System.out.println("Jeux like: "+ jf);
+                                            System.out.println("Jeux like: "+ jf);
 
                                                 try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
 
@@ -233,6 +233,7 @@ private JPanel mesDislikesPanel;
                                             ArrayList<String> listeJeux = (ArrayList<String>)doc.get("jeuDislike");
 
                                             for (String jf : listeJeux ){
+                                                
                                             System.out.println("Jeux dislike: "+ jf);
 
                                                 try (MongoCursor<Document> cursorfav = jeux.find(new Document().append("nom", jf)).iterator()) {
@@ -368,7 +369,7 @@ private JPanel mesDislikesPanel;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new Profil(false,22).setVisible(true);
+                new Profil(false,1).setVisible(true);
             
             }
         });
