@@ -5,6 +5,8 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -26,7 +28,7 @@ import org.bson.Document;
  */
 public class pageConnexion extends javax.swing.JFrame {
 
-     private boolean adminChecked;
+    private boolean adminChecked;
     private pageAcceuil pa;
 
     /**
@@ -34,8 +36,8 @@ public class pageConnexion extends javax.swing.JFrame {
      */
     public pageConnexion() {
         initComponents();
+        MongoDBConnection.connect();
         // Exclusion de sélection
-        adminChecked=false;
         noAdmin.setSelected(true);
        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -72,7 +74,6 @@ public class pageConnexion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 250));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(500, 50));
 
@@ -106,11 +107,6 @@ public class pageConnexion extends javax.swing.JFrame {
         pseudoField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pseudoFieldMouseClicked(evt);
-            }
-        });
-        pseudoField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pseudoFieldActionPerformed(evt);
             }
         });
         jPanel1.add(pseudoField);
@@ -164,10 +160,6 @@ public class pageConnexion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void pseudoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pseudoFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pseudoFieldActionPerformed
-
     private void pseudoFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pseudoFieldMouseClicked
         // TODO add your handling code here:
         pseudoField.setText("");
@@ -190,6 +182,10 @@ public class pageConnexion extends javax.swing.JFrame {
         String pseudo = pseudoField.getText();
         String pw = pwField.getText();
         
+        if(yesAdmin.isSelected()) adminChecked = true;
+        else adminChecked = false;
+        
+        
         if (pseudo.length() == 0 || pw.length() ==0 ){
             
             JOptionPane.showMessageDialog(this,
@@ -198,43 +194,21 @@ public class pageConnexion extends javax.swing.JFrame {
             JOptionPane.WARNING_MESSAGE);
             
         }
-        
         else {
+            MongoDatabase db = MongoDBConnection.getDb();
+            MongoCollection<Document> user = db.getCollection("user");;
             
-            char [ ] pass = new char[10];
-            String s="ai265149"; pass = s.toCharArray();
-            MongoCredential credential = MongoCredential.createCredential("ai265149", "ai265149", pass);
-            MongoClient client = new MongoClient(new ServerAddress("mongo", 27017), Arrays.asList(credential));
-            MongoDatabase db = client.getDatabase("ai265149");
-            
-            MongoCollection<Document> collection;
-            
-            // cas admin 
-            if (adminChecked){
-                 collection = db.getCollection("admins");
-            }
-            // cas client 
-            else{
-                collection = db.getCollection("clients");
-            }
-            
-            try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo).append("passWord", pw)).iterator()) {
-            
-            if (cursor.hasNext())  
+            MongoCursor<Document> it;
+            it = user.find(and(eq("pseudo" , pseudo), eq("passWord" , pw), eq("admin" , adminChecked))).iterator();
+
+            if (it.hasNext())  
             {
                 System.out.println("Connexion réussie");
-
-                // Cas d'un administrateur 
-                if (adminChecked){
-                    pa = new pageAcceuil();
-                }
+                Document doc = it.next();
+                int id = (int) doc.get("idA");
                 
-                // Cas d'un client 
-                else {
-                    pa = new pageAcceuil();
-                }
-                
-                pa.show();
+                pageAcceuil pa = new pageAcceuil(id,adminChecked);
+                pa.setVisible(true);
                 this.dispose();
 
             }
@@ -251,7 +225,7 @@ public class pageConnexion extends javax.swing.JFrame {
                 System.out.println("Echec de connexion ");
             }
           
-            }
+            
 
             
         }

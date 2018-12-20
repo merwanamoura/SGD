@@ -1,4 +1,5 @@
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -7,7 +8,9 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.bson.Document;
@@ -70,7 +73,6 @@ public class creationCompte extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 400));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setFont(new java.awt.Font("GFS Artemisia", 1, 14)); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(600, 50));
@@ -119,12 +121,6 @@ public class creationCompte extends javax.swing.JFrame {
 
         jLabel5.setText("Retapez le mot de passe");
         jPanel4.add(jLabel5);
-
-        pwdField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdField2ActionPerformed(evt);
-            }
-        });
         jPanel4.add(pwdField2);
 
         cancelButton.setText("Annuler");
@@ -147,10 +143,6 @@ public class creationCompte extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void pwdField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdField2ActionPerformed
 
     private void createAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccountButtonActionPerformed
         // TODO add your handling code here:
@@ -181,49 +173,53 @@ public class creationCompte extends javax.swing.JFrame {
                 }
                 
                 else {
-                    
-                    
-                               // vérification de l'unicité du compte 
-                             collection = db.getCollection("clients");
-                             try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo)).iterator()) {
-                                 
-                                 // le pseudo existe déjà 
-                                 if (cursor.hasNext())  
-                                   {
-                                        JOptionPane.showMessageDialog(this,
-                                        "Un client possède déjà ce pseudo. \n Merci d'en rentrer un autre.",
-                                        "Pseudo existe déjà",
-                                        JOptionPane.ERROR_MESSAGE);
-                                   }
-                                 
-                                 // le pseudo n'existe pas -> création de compte 
-                                 else {
-                                     
-                                      System.out.println("Le pseudo n'existe pas encore");
-                                      
-                                      Document doc = new Document("idU",(int)collection.count())
-                                                     .append("name", new Document("first",prenom).append("last", nom))
-                                                     .append("pseudo",pseudo)
-                                                     .append("passWord",pwd);
-                                      
-                                     
-                                            collection.insertOne(doc);
-                                            
-                                      JOptionPane.showMessageDialog(this,
-                                        "Parfait "+pseudo+"  ! \n  Votre compte a été créé avec succès.",
-                                        "Compte créé",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                                      
-                                      // Libération espace mémoire des  frames 
-                                      previousFrame.dispose();
-                                      this.dispose();
-                                      
-                                      pageAcceuil pa= new pageAcceuil();
-                                      pa.show();
-                                      
-                                 }
-                                 
-                             }
+
+                        // vérification de l'unicité du compte 
+                      collection = db.getCollection("user");
+                      try (MongoCursor<Document> cursor = collection.find(new Document().append("pseudo", pseudo)).iterator()) {
+
+                          // le pseudo existe déjà 
+                          if (cursor.hasNext())  
+                            {
+                                 JOptionPane.showMessageDialog(this,
+                                 "Un client possède déjà ce pseudo. \n Merci d'en rentrer un autre.",
+                                 "Pseudo existe déjà",
+                                 JOptionPane.ERROR_MESSAGE);
+                            }
+
+                          // le pseudo n'existe pas -> création de compte 
+                          else {
+
+                               System.out.println("Le pseudo n'existe pas encore");
+                               
+                               List<BasicDBObject> list = new ArrayList<>();
+                               Document doc = new Document("idA",(int)collection.count())
+                                              .append("name", new Document("first",prenom).append("last", nom))
+                                              .append("pseudo",pseudo)
+                                              .append("passWord",pwd)
+                                              .append("jeuLike",list)
+                                              .append("jeuxFavoris",list)
+                                              .append("jeuDislike",list)
+                                              .append("admin",false);
+
+
+                                     collection.insertOne(doc);
+
+                               JOptionPane.showMessageDialog(this,
+                                 "Parfait "+pseudo+"  ! \n  Votre compte a été créé avec succès.",
+                                 "Compte créé",
+                                 JOptionPane.INFORMATION_MESSAGE);
+
+                               // Libération espace mémoire des  frames 
+                               previousFrame.dispose();
+                               this.dispose();
+
+                               pageAcceuil pa= new pageAcceuil((int)collection.count(),false);
+                               pa.show();
+
+                          }
+
+                      }
                 }
         
         
@@ -240,38 +236,7 @@ public class creationCompte extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-   // public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-     /*   try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(creationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(creationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(creationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(creationCompte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        */
-        //</editor-fold>
-
-        /* Create and display the form */
-      /*  java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new creationCompte().setVisible(true);
-            }
-        });
-    }*/
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
