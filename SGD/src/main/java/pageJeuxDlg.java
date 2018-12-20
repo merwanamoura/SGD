@@ -1,39 +1,31 @@
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
-import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.CheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
-import org.bson.BsonArray;
-import org.bson.BsonDocument;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -43,30 +35,36 @@ import org.bson.conversions.Bson;
 
 /**
  *
- * @author at560075
+ * @author hc047736
  */
-public class pageJeux extends javax.swing.JFrame {
+public class pageJeuxDlg extends javax.swing.JDialog {
 
     MongoDatabase db;
     CheckboxGroup cbEditeur;
     CheckboxGroup bg;
+    JFrame previousFrame;
+    int idUser;
     
     ArrayList<String> listEditeurs;
     ArrayList<String> listCategorie;
     ArrayList<String> listPrix;
     ArrayList<String> listDates;
     /**
-     * 
-     * Creates new form pageJeux
+     * Creates new form pageJeuxDlg
      */
-    public pageJeux() {
-        
+    public pageJeuxDlg(java.awt.Frame parent, boolean modal,int idU) {
+        super(parent, modal);
         initComponents();
+        
+        idUser = idU;
+        
         MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
         cbEditeur = new CheckboxGroup();
         bg = new CheckboxGroup();
         
+        
+        previousFrame = (JFrame) parent;
         listEditeurs = new ArrayList<String>();
         listCategorie = new ArrayList<String>();
         listPrix = new ArrayList<String>();
@@ -75,6 +73,9 @@ public class pageJeux extends javax.swing.JFrame {
         fillAll();
         rechercheJeu();
     }
+    
+   
+ 
     
     public void actionPerformedEditeur(ActionEvent event) {
         
@@ -494,6 +495,15 @@ public class pageJeux extends javax.swing.JFrame {
             JList list = new JList(dlm);
             list.setCellRenderer(new ListEntryCellRenderer());
 
+            list.addMouseListener(new MouseAdapter() 
+            {
+                public void mouseClicked(MouseEvent evt) 
+                {
+                    jeuClicked(evt);
+                    System.out.println("test");
+                }
+             });
+             
             jScrollPane2.add(list); 
             jScrollPane2.setViewportView(list);   
 
@@ -568,7 +578,7 @@ public class pageJeux extends javax.swing.JFrame {
                     try {
                         dated = dateFormat.parse("31-12-1990"+"T23:59:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                     
@@ -588,7 +598,7 @@ public class pageJeux extends javax.swing.JFrame {
                         dated = dateFormat.parse("01-01-1990"+"T00:00:00");
                         datef = dateFormat.parse("01-01-2000"+"T00:00:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                     
@@ -606,7 +616,7 @@ public class pageJeux extends javax.swing.JFrame {
                         dated = dateFormat.parse("01-01-2000"+"T00:00:00");
                         datef = dateFormat.parse("01-01-2005"+"T00:00:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
                     obj.add(andQueryDate);   
@@ -623,7 +633,7 @@ public class pageJeux extends javax.swing.JFrame {
                         dated = dateFormat.parse("01-01-2005"+"T00:00:00");
                         datef = dateFormat.parse("01-01-2010"+"T00:00:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
                     obj.add(andQueryDate);    
@@ -639,7 +649,7 @@ public class pageJeux extends javax.swing.JFrame {
                         dated = dateFormat.parse("01-01-2010"+"T00:00:00");
                         datef = dateFormat.parse("31-12-2018"+"T23:59:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
                     obj.add(andQueryDate);
@@ -655,7 +665,7 @@ public class pageJeux extends javax.swing.JFrame {
                         dated = dateFormat.parse("01-01-2019"+"T00:01:00");
                         datef = dateFormat.parse("31-12-2019"+"T23:59:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     andQueryDate.put("dateSortie", new BasicDBObject("$gte", dated).append("$lt", datef));
                     obj.add(andQueryDate);
@@ -670,12 +680,14 @@ public class pageJeux extends javax.swing.JFrame {
                     try {
                         dated = dateFormat.parse("01-01-1200"+"T00:01:00");
                     } catch (ParseException ex) {
-                        Logger.getLogger(pageJeux.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(pageJeuxDlg.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     andQueryDate.put("dateSortie", new BasicDBObject("$gt", dated));
                     obj.add(andQueryDate);
                 }
             }
+            
+            
         }
         
         
@@ -711,11 +723,44 @@ public class pageJeux extends javax.swing.JFrame {
             } 
             JList list = new JList(dlm);
             list.setCellRenderer(new ListEntryCellRenderer());
+            
+              
+            list.addMouseListener(new MouseAdapter() 
+            {
+                public void mouseClicked(MouseEvent evt) 
+                {
+                    jeuClicked(evt);
+                    System.out.println("test");
+                }
+             });
+
 
             jScrollPane2.add(list); 
             jScrollPane2.setViewportView(list); 
-        
+       
         }
+    }
+    
+    public void jeuClicked(MouseEvent evt) {
+       
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+    
+            String nomJeu = list.getSelectedValue().toString();
+          
+            
+            MongoCursor<Document> it;
+            MongoCollection<Document> jeux = db.getCollection("jeux");
+                  
+            it = jeux.find(eq("nom",nomJeu)).iterator();
+            
+            int idJ = (int) it.next().get("idJeu");
+            
+            presentationJeuDlg pj = new presentationJeuDlg(previousFrame,true,idJ,0);
+            pj.setVisible(true);
+            
+            
+        } 
     }
 
     /**
@@ -757,7 +802,7 @@ public class pageJeux extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         barrehaut.setName("barrehaut"); // NOI18N
         barrehaut.setLayout(new java.awt.BorderLayout());
@@ -767,8 +812,13 @@ public class pageJeux extends javax.swing.JFrame {
 
         jpanelrecherche.setLayout(new java.awt.BorderLayout());
 
-        backtoacceuil.setText("Acceuil");
+        backtoacceuil.setText("RETOUR");
         backtoacceuil.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        backtoacceuil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backtoacceuilActionPerformed(evt);
+            }
+        });
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
         barrerecherche.setPreferredSize(new java.awt.Dimension(260, 19));
@@ -859,7 +909,6 @@ public class pageJeux extends javax.swing.JFrame {
         label1.setPreferredSize(new java.awt.Dimension(106, 30));
         label1.setText("Date de sortie");
         datePanel.add(label1, java.awt.BorderLayout.PAGE_START);
-        label1.getAccessibleContext().setAccessibleName("Date de sortie");
 
         lesDates.setLayout(new java.awt.GridLayout(0, 1));
         scrollDate.setViewportView(lesDates);
@@ -887,15 +936,21 @@ public class pageJeux extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void barrerechercheKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barrerechercheKeyPressed
-        rechercheJeu();
-    }//GEN-LAST:event_barrerechercheKeyPressed
+    private void backtoacceuilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtoacceuilActionPerformed
+
+        this.dispose();
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backtoacceuilActionPerformed
 
     private void barrerechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barrerechercheActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_barrerechercheActionPerformed
 
-   
+    private void barrerechercheKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barrerechercheKeyPressed
+        rechercheJeu();
+    }//GEN-LAST:event_barrerechercheKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -913,20 +968,27 @@ public class pageJeux extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(pageJeux.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pageJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(pageJeux.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pageJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(pageJeux.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pageJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(pageJeux.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(pageJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new pageJeux().setVisible(true);
+                pageJeuxDlg dialog = new pageJeuxDlg(new javax.swing.JFrame(), true,0);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
