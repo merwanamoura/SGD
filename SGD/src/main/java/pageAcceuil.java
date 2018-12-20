@@ -5,9 +5,12 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Accumulators.sum;
 import com.mongodb.client.model.Aggregates;
+import static com.mongodb.client.model.Aggregates.limit;
 import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import static java.util.Arrays.asList;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.ScrollPaneConstants;
 import org.bson.Document;
 
@@ -46,20 +50,48 @@ public class pageAcceuil extends javax.swing.JFrame {
     
 
     boolean isAdmin;
+    int idUser;
+    JFrame TmpJframe;
+    MongoDatabase db;
     /**
      * Creates new form pageAcceuil
      */
-    public pageAcceuil()
+    public pageAcceuil(int idU,boolean admin)
     {
         initComponents();
-        isAdmin = true;
+        isAdmin = admin;
+        idUser = idU;
         MongoDBConnection.connect();
-        MongoDatabase db = MongoDBConnection.getDb();
+        db = MongoDBConnection.getDb();
         fillJlistRecent(db);
         fillJlistPopular(db);
         fillJlistComments(db);
         ajoutSuppressionButton();
 
+    }
+    
+    public void jeuClicked(MouseEvent evt) {
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+            
+            String[] parts;
+            parts = list.getSelectedValue().toString().split("\\(");
+            String part1 = parts[0]; 
+            
+            MongoCursor<Document> it;
+            MongoCollection<Document> jeux = db.getCollection("jeux");
+            
+            part1=part1.substring(0, part1.length()-1);
+
+            
+            it = jeux.find(eq("nom",part1)).iterator();
+            int idJ = (int) it.next().get("idJeu");
+            
+            presentationJeuDlg pj = new presentationJeuDlg(this,true,idJ,idUser);
+            pj.setVisible(true);
+            
+            
+        } 
     }
    
     public void mapReduce(MongoDatabase db)
@@ -81,21 +113,30 @@ public class pageAcceuil extends javax.swing.JFrame {
         {
             Document doc = it.next();
 
-            Jeu jeu = new Jeu(doc);
-            File f = new File(jeu.getImage());
 
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
-            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
+            Jeu jeu = new Jeu(doc);
+
+            File f2 = new File(jeu.getImage());
             
-            File f2 = new File((String) doc.get("image"));
-            
-            if(f2.exists() && !f2.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+            String label = jeu.getNom() +" ("+jeu.getAnneeSortie()+")";
+
+            if(f2.exists() && !f2.isDirectory())dlm.addElement(new ListEntry(label, new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(label, new ImageIcon("imageJeux/default.png")));
            
+
 
         } 
         
         JList list = new JList(dlm);
+        //list.addMouseListener(new MouseAdapter() { mouseClicked });
+        list.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent evt) 
+            {
+                jeuClicked(evt);
+            }
+         });
+        
         list.setCellRenderer(new ListEntryCellRenderer());
      
         jScrollPane1.add(list); 
@@ -110,7 +151,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         MongoCursor<Document> it;
         MongoCollection<Document> jeux = db.getCollection("jeux");
 
-        it = jeux.aggregate( Arrays.asList(   Aggregates.lookup("Note","idJeu", "idJeu", "joinJeuxNote") ,  Aggregates.sort( eq("joinJeuxNote.nbLikes",-1) ) ) ).iterator();
+        it = jeux.aggregate( Arrays.asList(   Aggregates.lookup("Note","idJeu", "idJeu", "joinJeuxNote") ,  Aggregates.sort( eq("joinJeuxNote.nbLikes",-1) ),limit(10) ) ).iterator();
         
         
         
@@ -120,8 +161,10 @@ public class pageAcceuil extends javax.swing.JFrame {
             Jeu jeu = new Jeu(doc);
             File f = new File(jeu.getImage());
 
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
-            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
+            String label =" "+jeu.getNom()+ "("+jeu.getNbLikes()+")";
+            
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(label, new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(label, new ImageIcon("imageJeux/default.png")));
 
         } 
         
@@ -142,7 +185,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         MongoCollection<Document> jeux = db.getCollection("jeux");
 
         it = jeux.aggregate( Arrays.asList( Aggregates.unwind("$idJeu"),  Aggregates.lookup("Avis","idJeu", "idJeu", "joinJeuxAvis") ,  Aggregates.unwind("$joinJeuxAvis"),
-                Aggregates.group(eq("_id","$idJeu"),sum("total",1)) , Aggregates.sort(eq("total",-1)) )) .iterator();
+                Aggregates.group(eq("_id","$idJeu"),sum("total",1)) , Aggregates.sort(eq("total",-1)),limit(10) )) .iterator();
         
 
         while (it.hasNext()) 
@@ -250,6 +293,11 @@ public class pageAcceuil extends javax.swing.JFrame {
         fonctionnalitepanel.add(jPanel1);
 
         ajoutButton.setText("Ajout Jeu");
+        ajoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajoutButtonActionPerformed(evt);
+            }
+        });
         fonctionnalitepanel.add(ajoutButton);
 
         SuppressionButton.setText("Suppression");
@@ -273,6 +321,11 @@ public class pageAcceuil extends javax.swing.JFrame {
         jpanelrecherche.add(backtoacceuil, java.awt.BorderLayout.WEST);
 
         recherche.setText("Recherche");
+        recherche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercheActionPerformed(evt);
+            }
+        });
         jpanelrecherche.add(recherche, java.awt.BorderLayout.EAST);
 
         barrehaut.add(jpanelrecherche, java.awt.BorderLayout.WEST);
@@ -534,6 +587,8 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     private void SuppressionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppressionButtonActionPerformed
 
+        suppressionJeuDlg sjd = new suppressionJeuDlg(this,true);
+        sjd.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_SuppressionButtonActionPerformed
 
@@ -541,42 +596,27 @@ public class pageAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(pageAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(pageAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(pageAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(pageAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new pageAcceuil().setVisible(true);
-               
-            }
-        });
-        
-    }
+    private void rechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheActionPerformed
+
+    pageJeuxDlg pJ = new pageJeuxDlg(this,true,idUser);
+    
+    pJ.show();
+    
+    
+  
+    
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rechercheActionPerformed
+
+    private void ajoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajoutButtonActionPerformed
+
+        AjoutJeuDlg  adj = new AjoutJeuDlg(this,true);
+        adj.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ajoutButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SuppressionButton;
