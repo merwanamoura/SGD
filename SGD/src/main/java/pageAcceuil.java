@@ -83,7 +83,7 @@ public class pageAcceuil extends javax.swing.JFrame {
             
             part1=part1.substring(0, part1.length()-1);
 
-            
+            System.out.println(part1);
             it = jeux.find(eq("nom",part1)).iterator();
             int idJ = (int) it.next().get("idJeu");
             
@@ -156,7 +156,7 @@ public class pageAcceuil extends javax.swing.JFrame {
             Jeu jeu = new Jeu(doc);
             File f = new File(jeu.getImage());
 
-            String label =" "+jeu.getNom()+ "("+jeu.getNbLikes()+")";
+            String label =jeu.getNom()+ " ("+jeu.getNbLikes()+")";
             
             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(label, new ImageIcon(jeu.getImage())));
             else dlm.addElement(new ListEntry(label, new ImageIcon("imageJeux/default.png")));
@@ -164,6 +164,15 @@ public class pageAcceuil extends javax.swing.JFrame {
         } 
         
         JList list = new JList(dlm);
+        list.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent evt) 
+            {
+                jeuClicked(evt);
+            }
+         });
+        
+        
         list.setCellRenderer(new ListEntryCellRenderer());
      
         jScrollPane2.add(list); 
