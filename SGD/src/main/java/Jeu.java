@@ -2,7 +2,10 @@
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import org.bson.Document;
 
@@ -24,6 +27,8 @@ public class Jeu {
   private long dateSortie;
   private String Categorie;
   private String image;
+  private int nbLikes;
+  private int nbDislikes;
 
    
 
@@ -34,6 +39,8 @@ public class Jeu {
         this.dateSortie = dateSortie;
         this.Categorie = Categorie;
         this.image = image;
+        this.nbLikes = 0;
+        this.nbDislikes = 0;
     }
 
     public void setImage(String image) {
@@ -60,7 +67,14 @@ public class Jeu {
         setNomEditeur((String) doc.get("nomEditeur"));
         setCategorie((String) doc.get("categorie"));
         setImage((String) doc.get("image"));
-        
+    }
+
+    public void setNbLikes(int nbLikes) {
+        this.nbLikes = nbLikes;
+    }
+
+    public void setNbDislikes(int nbDislikes) {
+        this.nbDislikes = nbDislikes;
     }
     
     public Jeu(Document doc)
@@ -79,7 +93,7 @@ public class Jeu {
         setNomEditeur((String) doc.get("nomEditeur"));
         setCategorie((String) doc.get("categorie"));
         setImage((String) doc.get("image"));
-        
+  
     }
     
     public void setIdJeu(int idJeu) {
@@ -102,13 +116,49 @@ public class Jeu {
     }
 
     public long getDateSortie() {
+        
         return dateSortie;
     }
+    
+    public String getAnneeSortie() 
+    {
+        int annee =2000;
+        MongoCursor<Document> it;
+        MongoCollection<Document> jeux = MongoDBConnection.getDb().getCollection("jeux");
 
+        it = jeux.find(eq("idJeu" , idJeu)).iterator();
+        Document doc = it.next();
+        
+        SimpleDateFormat fy = new SimpleDateFormat("yyyy");
+        Date date = (Date)(doc.get("dateSortie"));
+                
+        return fy.format(date);
+    }
+    
     public String getCategorie() {
         return Categorie;
     }
+    
+    public int getNbLikes() 
+    {
+        
+        MongoCursor<Document> it;
+        MongoCollection<Document> note = MongoDBConnection.getDb().getCollection("Note");
 
+        it = note.find(eq("idJeu" , this.idJeu)).iterator();
+        
+        Document doc = it.next();
+
+        setNbLikes((int) doc.get("nbLikes"));
+        
+        return nbLikes;
+    }
+    
+   
+
+    public int getNbDislikes() {
+        return nbDislikes;
+    }
     
 
     public void setNom(String nom) {

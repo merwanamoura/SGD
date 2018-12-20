@@ -47,6 +47,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
      Date dateS;
      String categorie;
      String pathImage;
+     String descriptionJeu ;
      File f;
     /**
      * Creates new form AjoutJeuDlg
@@ -137,10 +138,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             doc.append("dateSortie",dateS);
             doc.append("categorie",categorie); 
             doc.append("image", pathImage);
+            doc.append("description", descriptionJeu);
             jeux.insertOne(doc); 
             test = true;
         
-      
+       /* champs description a ajouter */
     }
 
     /**
@@ -162,6 +164,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         annulerButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         jeuText = new javax.swing.JTextField();
@@ -172,6 +175,8 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         mois = new javax.swing.JComboBox<>();
         annee = new javax.swing.JComboBox<>();
         importButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descriptionText = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -180,6 +185,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         topPanel.setPreferredSize(new java.awt.Dimension(469, 80));
 
+        titre.setBackground(new java.awt.Color(138, 138, 138));
         titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titre.setText("VEUILLEZ AJOUTER VOTRE JEU");
         titre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -188,7 +194,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE)
+            .addComponent(titre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +207,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
-        leftPanel.setLayout(new java.awt.GridLayout(6, 1));
+        leftPanel.setLayout(new java.awt.GridLayout(7, 1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nom du jeu");
@@ -223,6 +229,10 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         jLabel1.setText("Image");
         leftPanel.add(jLabel1);
 
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Description");
+        leftPanel.add(jLabel6);
+
         annulerButton.setText("Annuler");
         annulerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,7 +243,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
         jPanel2.add(leftPanel);
 
-        rightPanel.setLayout(new java.awt.GridLayout(6, 1));
+        rightPanel.setLayout(new java.awt.GridLayout(7, 1));
 
         jeuText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,6 +290,12 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         });
         rightPanel.add(importButton);
 
+        descriptionText.setColumns(20);
+        descriptionText.setRows(5);
+        jScrollPane1.setViewportView(descriptionText);
+
+        rightPanel.add(jScrollPane1);
+
         jButton2.setText("Valider");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,11 +312,11 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         pack();
@@ -319,7 +335,8 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     }//GEN-LAST:event_jeuTextActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       
+
+        descriptionJeu = descriptionText.getText();
         nomJeu = jeuText.getText();
         Editeur = editeurText.getText();
      
@@ -349,7 +366,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         }
         
              
-         if ( (!nomJeu.equals("")) && (!editeurText.equals("")) && (!categorieText.equals(""))  )
+         if ( (!nomJeu.equals("")) && (!editeurText.equals("")) && (!categorieText.equals("")) && (!descriptionJeu.equals("")) )
         
         {       
             ajouterJeu();         
@@ -454,6 +471,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JButton annulerButton;
     private javax.swing.JTextField categorieText;
     private javax.swing.JPanel datePAnel;
+    private javax.swing.JTextArea descriptionText;
     private javax.swing.JTextField editeurText;
     private javax.swing.JButton importButton;
     private javax.swing.JButton jButton2;
@@ -462,8 +480,10 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jeuText;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JComboBox<String> mois;

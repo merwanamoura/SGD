@@ -120,9 +120,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="pwdField2">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pwdField2ActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancelButton">
           <Properties>
