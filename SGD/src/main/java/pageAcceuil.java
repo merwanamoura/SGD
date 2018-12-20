@@ -62,9 +62,14 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     }
    
+    public void mapReduce(MongoDatabase db)
+    {
+        MongoCollection<Document> jeux = db.getCollection("jeux");
+    }
     /* MÉTHODE POUR REMPLIR LA JLIST DES JEUX RECENTS*/
     public void fillJlistRecent(MongoDatabase db)
     {
+        
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
         MongoCollection<Document> jeux = db.getCollection("jeux");
