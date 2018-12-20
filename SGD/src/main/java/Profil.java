@@ -369,7 +369,7 @@ private JPanel mesDislikesPanel;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 
-                new Profil(false,1).setVisible(true);
+                new Profil(true,97).setVisible(true);
             
             }
         });
