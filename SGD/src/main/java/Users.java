@@ -42,7 +42,8 @@ public class Users {
     private List<String> listeJeuFavori;
     private List<String> listeLike;
     private List<String> listeDislike;
-
+    
+    
     public Users(int idU, String nom, String pseudo, String passWord, List<String> listeJeuFavori, List<String> listeLike, List<String> listeDislike) {
         this.idU = idU;
         this.nom = nom;
@@ -54,7 +55,6 @@ public class Users {
     }
 
     public Users(int id){
-        MongoDBConnection.connect();
         idU=id;
         
         MongoDatabase db = MongoDBConnection.getDb();
@@ -77,18 +77,17 @@ public class Users {
     public boolean hasComment(int id){
         boolean bol = false;
         
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> avis = db.getCollection("Avis");
+        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
         
-        it = avis.find(eq("idUser" , this.idU)).iterator();
+        it = avis.find(eq(Avis.idUserCollection , this.idU)).iterator();
         
         while(it.hasNext()){
             Document doc = it.next();
                         
-            if( (int)doc.get("idJeu") == id){
+            if( (int)doc.get(Avis.idJeuCollection ) == id){
                 bol = true;
             }
         }
@@ -98,19 +97,18 @@ public class Users {
     
     public String getAvis(int idJeu){
         String str = "";
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
-        MongoCollection<Document> avis = db.getCollection("Avis");
+        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
         
-        it = avis.find(eq("idUser" , this.idU)).iterator();
+        it = avis.find(eq(Avis.idUserCollection  , this.idU)).iterator();
         
         while(it.hasNext()){
             Document doc = it.next();
             
-            if( (int)doc.get("idJeu") == idJeu  ){
-                str = ((String) doc.get("avis"));
+            if( (int)doc.get(Avis.idJeuCollection ) == idJeu  ){
+                str = ((String) doc.get(Avis.avisCollection ));
             }
         }
         
@@ -147,7 +145,6 @@ public class Users {
     public void addFavori(String jeu){
         this.listeJeuFavori.add(jeu);
         
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -163,7 +160,6 @@ public class Users {
     public void removeFavori(String jeu){
         this.listeJeuFavori.remove(jeu);
                                 
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -180,7 +176,6 @@ public class Users {
     {
         this.listeLike.add(jeu);
         
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -197,18 +192,18 @@ public class Users {
     public void updateAvis(String str, int idJeu){
         MongoDatabase db = MongoDBConnection.getDb();
         
-        MongoCollection<Document> avis = db.getCollection("Avis");
-        avis.updateOne(and(eq("idJeu", idJeu),eq("idUser", idU)), new Document("$set", new Document("avis", str)));
+        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+        avis.updateOne(and(eq(Avis.idJeuCollection , idJeu),eq(Avis.idUserCollection , idU)), new Document("$set", new Document(Avis.avisCollection , str)));
     }
     
     public void createAvis(String str, int idJeu){
         
         MongoDatabase db = MongoDBConnection.getDb();
-        MongoCollection<Document> collection = db.getCollection("Avis");
+        MongoCollection<Document> collection = db.getCollection(Avis.nomCollection);
         
-        Document doc = new Document("idUser", idU);
-        doc.append("idJeu" , idJeu);
-        doc.append("avis" , str);
+        Document doc = new Document(Avis.idUserCollection , idU);
+        doc.append(Avis.idJeuCollection  , idJeu);
+        doc.append(Avis.avisCollection  , str);
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
         
@@ -220,7 +215,7 @@ public class Users {
         }
  
         
-        doc.append("dateCom" , dateS);
+        doc.append(Avis.dateCollection , dateS);
 
         collection.insertOne(doc);
     }
@@ -247,7 +242,6 @@ public class Users {
     {
         this.listeLike.remove(jeu);
                                 
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -264,7 +258,6 @@ public class Users {
     {
         this.listeDislike.remove(jeu);
                         
-        MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;

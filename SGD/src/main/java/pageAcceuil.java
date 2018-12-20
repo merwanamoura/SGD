@@ -83,7 +83,7 @@ public class pageAcceuil extends javax.swing.JFrame {
             
             part1=part1.substring(0, part1.length()-1);
 
-            
+            System.out.println(part1);
             it = jeux.find(eq("nom",part1)).iterator();
             int idJ = (int) it.next().get("idJeu");
             
@@ -156,7 +156,7 @@ public class pageAcceuil extends javax.swing.JFrame {
             Jeu jeu = new Jeu(doc);
             File f = new File(jeu.getImage());
 
-            String label =" "+jeu.getNom()+ "("+jeu.getNbLikes()+")";
+            String label =jeu.getNom()+ " ("+jeu.getNbLikes()+")";
             
             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(label, new ImageIcon(jeu.getImage())));
             else dlm.addElement(new ListEntry(label, new ImageIcon("imageJeux/default.png")));
@@ -164,6 +164,15 @@ public class pageAcceuil extends javax.swing.JFrame {
         } 
         
         JList list = new JList(dlm);
+        list.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent evt) 
+            {
+                jeuClicked(evt);
+            }
+         });
+        
+        
         list.setCellRenderer(new ListEntryCellRenderer());
      
         jScrollPane2.add(list); 
@@ -178,29 +187,50 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         MongoCursor<Document> it,it2;
         MongoCollection<Document> jeux = db.getCollection("jeux");
-
+        MongoCollection<Document> avis = db.getCollection("Avis");
+        
         it = jeux.aggregate( Arrays.asList( Aggregates.unwind("$idJeu"),  Aggregates.lookup("Avis","idJeu", "idJeu", "joinJeuxAvis") ,  Aggregates.unwind("$joinJeuxAvis"),
                 Aggregates.group(eq("_id","$idJeu"),sum("total",1)) , Aggregates.sort(eq("total",-1)),limit(10) )) .iterator();
         
 
+        
+        
         while (it.hasNext()) 
         {
             Document doc = it.next();
           
             Document idJ = (Document) doc.get("_id");
-  
+            
+           
 
             Jeu jeu = new Jeu((int) idJ.get("_id"));
             
+            it2 = avis.find(eq("idJeu",jeu.getIdJeu())).iterator();
+            int cpt = 0;
+            while (it2.hasNext()) 
+            {
+                it2.next();
+                cpt++;
+            }
+
             File f = new File(jeu.getImage());
             
+            String label = jeu.getNom()+" ("+cpt+")";
 
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
-            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(label, new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(label, new ImageIcon("imageJeux/default.png")));
 
         } 
         
         JList list = new JList(dlm);
+        
+        list.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent evt) 
+            {
+                jeuClicked(evt);
+            }
+         });
         list.setCellRenderer(new ListEntryCellRenderer());
      
         jScrollPane3.add(list); 
@@ -441,7 +471,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         panelTop1.add(jPanel6);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Jeux populaire");
+        jLabel2.setText("Jeux populaires");
         panelTop1.add(jLabel2);
 
         nouveaujeupanel1.add(panelTop1, java.awt.BorderLayout.PAGE_START);
