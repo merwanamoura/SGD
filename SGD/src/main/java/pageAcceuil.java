@@ -9,6 +9,8 @@ import static com.mongodb.client.model.Aggregates.limit;
 import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -67,6 +69,9 @@ public class pageAcceuil extends javax.swing.JFrame {
         fillJlistPopular(db);
         fillJlistComments(db);
         ajoutSuppressionButton();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
     }
     
@@ -588,6 +593,10 @@ public class pageAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_SuppressionButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        Profil pageP = new Profil(isAdmin,idUser);
+        pageP.setVisible(true);
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -606,7 +615,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     private void ajoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajoutButtonActionPerformed
 
-        AjoutJeuDlg  adj = new AjoutJeuDlg(this,true);
+        AjoutJeuDlg  adj = new AjoutJeuDlg(this,true,idUser);
         adj.setVisible(true);
 
         // TODO add your handling code here:

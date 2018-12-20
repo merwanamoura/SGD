@@ -2,12 +2,16 @@
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -33,12 +37,41 @@ private JScrollPane mesJeuxScrollPane;
 private JScrollPane mesLikesScrollPane; 
 private JScrollPane mesDislikesScrollPane; 
 private JPanel mesLikesPanel;
-private JPanel mesDislikesPanel;
+private JPanel mesDislikesPanel ;
+MongoDatabase db;
+JFrame previousFrame;
+int idUser;
 
     /**
      * Creates new form Profil
      */
+
+    public void jeuClicked(MouseEvent evt) {
+       
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+    
+            String nomJeu = list.getSelectedValue().toString();
+          
+            
+            MongoCursor<Document> it;
+            MongoCollection<Document> jeux = db.getCollection("jeux");
+                  
+            it = jeux.find(eq("nom",nomJeu)).iterator();
+            
+            int idJ = (int) it.next().get("idJeu");
+            
+            presentationJeuDlg pj = new presentationJeuDlg(previousFrame,true,idJ,idUser);
+            pj.setVisible(true);
+            
+            
+        } 
+    }
     public Profil(boolean admin, int idUser) {
+        
+        MongoDBConnection.connect();
+        db = MongoDBConnection.getDb();
+        
         
          mesJeux= new JLabel ("Mes Jeux");
          mesLikes= new JLabel ("Mes Likes");
@@ -62,7 +95,7 @@ private JPanel mesDislikesPanel;
         DefaultListModel dlmdislikes = new DefaultListModel();
 
         MongoCollection<Document> jeux = db.getCollection("jeux");
-        MongoCollection<Document> jeuxFavoris =db.getCollection("Users");
+        MongoCollection<Document> jeuxFavoris =db.getCollection("user");
         
         // Mes Favoris 
           try (MongoCursor<Document> cursor = jeuxFavoris.find(new Document().append("idA", idUser)).iterator()) {
@@ -102,6 +135,16 @@ private JPanel mesDislikesPanel;
                        JList list = new JList(dlmfav);
                         list.setCellRenderer(new ListEntryCellRenderer());
 
+                        list.addMouseListener(new MouseAdapter() 
+                        {
+                            public void mouseClicked(MouseEvent evt) 
+                            {
+                                jeuClicked(evt);
+                                System.out.println("test");
+                            }
+                         });
+                        
+                        
                         jScrollPane1.add(list); 
                         jScrollPane1.setViewportView(list);
                       
@@ -134,7 +177,7 @@ private JPanel mesDislikesPanel;
                           
                           Document doc = cursor.next();
                           
-                      //    System.out.println("Jeux : "+ (String)doc.get("nom"));
+                          System.out.println("Mon Jeu : "+ (String)doc.get("nom"));
                           
                            File f = new File((String) doc.get("image"));
             
@@ -149,7 +192,17 @@ private JPanel mesDislikesPanel;
                       
                        JList list = new JList(dlm);
                         list.setCellRenderer(new ListEntryCellRenderer());
-
+                        
+                        list.addMouseListener(new MouseAdapter() 
+                        {
+                            public void mouseClicked(MouseEvent evt) 
+                            {
+                                jeuClicked(evt);
+                                System.out.println("test");
+                            }
+                         });
+                        
+                        
                         mesJeuxScrollPane.add(list); 
                         mesJeuxScrollPane.setViewportView(list);
                       
@@ -209,7 +262,17 @@ private JPanel mesDislikesPanel;
 
                                                                      JList list = new JList(dlmlikes);
                                                                       list.setCellRenderer(new ListEntryCellRenderer());
+                                                                      
+                                                                      list.addMouseListener(new MouseAdapter() 
+                                                                    {
+                                                                        public void mouseClicked(MouseEvent evt) 
+                                                                        {
+                                                                            jeuClicked(evt);
+                                                                            System.out.println("test");
+                                                                        }
+                                                                     });
 
+                                                                      
                                                                       mesLikesScrollPane.add(list); 
                                                                       mesLikesScrollPane.setViewportView(list);
 
@@ -256,6 +319,16 @@ private JPanel mesDislikesPanel;
 
                                                                      JList list = new JList(dlmdislikes);
                                                                       list.setCellRenderer(new ListEntryCellRenderer());
+                                                                      
+                                                                      list.addMouseListener(new MouseAdapter() 
+                                                                        {
+                                                                            public void mouseClicked(MouseEvent evt) 
+                                                                            {
+                                                                                jeuClicked(evt);
+                                                                                System.out.println("test");
+                                                                            }
+                                                                         });
+                                                                     
 
                                                                       mesDislikesScrollPane.add(list); 
                                                                       mesDislikesScrollPane.setViewportView(list);

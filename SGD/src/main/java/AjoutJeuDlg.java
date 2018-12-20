@@ -22,6 +22,8 @@ import static com.mongodb.client.model.Aggregates.group;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.set;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,16 +50,21 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
      String categorie;
      String pathImage;
      String descriptionJeu ;
+     int idUser;
      File f;
     /**
      * Creates new form AjoutJeuDlg
      */
-    public AjoutJeuDlg(java.awt.Frame parent, boolean modal) {
+    public AjoutJeuDlg(java.awt.Frame parent, boolean modal , int idUser) {
         super(parent, modal);
         initComponents();
         fillDate();
+        this.idUser = idUser;
         MongoDBConnection.connect();
         db=MongoDBConnection.getDb();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     public void fillDate()
@@ -139,6 +146,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             doc.append("categorie",categorie); 
             doc.append("image", pathImage);
             doc.append("description", descriptionJeu);
+            doc.append("idA", idUser);
             jeux.insertOne(doc); 
             test = true;
         
@@ -425,35 +433,12 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
 
     /**
      * @param args the command line arguments
-     */
+     *//*
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AjoutJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AjoutJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AjoutJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AjoutJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
+   
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AjoutJeuDlg dialog = new AjoutJeuDlg(new javax.swing.JFrame(), true);
+                AjoutJeuDlg dialog = new AjoutJeuDlg(new javax.swing.JFrame(), true,4);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -463,7 +448,7 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Jour;
