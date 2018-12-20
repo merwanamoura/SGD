@@ -33,6 +33,18 @@ public class creationCompte extends javax.swing.JFrame {
     public creationCompte(JFrame connectFrame) {
         initComponents();
         
+            this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (JOptionPane.showConfirmDialog(this, 
+                    "Are you sure you want to close this window?", "Close Window?", 
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                    System.exit(0);
+                }
+            }
+        });
+
             MongoDBConnection.connect();
            db = MongoDBConnection.getDb();            
         
@@ -70,7 +82,6 @@ public class creationCompte extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 400));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         jPanel2.setFont(new java.awt.Font("GFS Artemisia", 1, 14)); // NOI18N
         jPanel2.setPreferredSize(new java.awt.Dimension(600, 50));
@@ -228,6 +239,7 @@ public class creationCompte extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_createAccountButtonActionPerformed
+
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
