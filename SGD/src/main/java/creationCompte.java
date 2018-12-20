@@ -37,19 +37,7 @@ public class creationCompte extends javax.swing.JFrame {
         
         initComponents();
         
-            this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (JOptionPane.showConfirmDialog(this, 
-                    "Are you sure you want to close this window?", "Close Window?", 
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-                    System.exit(0);
-                }
-            }
-        });
-
-            MongoDBConnection.connect();
+           MongoDBConnection.connect();
            db = MongoDBConnection.getDb();            
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -237,6 +225,7 @@ public class creationCompte extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_createAccountButtonActionPerformed
+
 
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
