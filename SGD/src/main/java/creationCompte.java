@@ -34,7 +34,7 @@ public class creationCompte extends javax.swing.JFrame {
      * Creates new form creationCompte
      */
     public creationCompte(JFrame connectFrame) {
-        //ok
+        
         initComponents();
         
             this.addWindowListener(new java.awt.event.WindowAdapter() {
