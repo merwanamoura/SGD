@@ -5,7 +5,7 @@
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
     "dateSortie": ISODate('2018-11-17T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/fifa19.jpeg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -15,7 +15,7 @@
     "nomEditeur": "EA Sports",
     "categorie": "Sport",
     "dateSortie": ISODate('2017-12-14T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/fifa18.jpg",
     "prix" : 29.99,
     "idA" : 1  
   },
@@ -25,7 +25,7 @@
     "nomEditeur": "2K Games",
     "categorie": "Sport",
     "dateSortie": ISODate('1992-12-11T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image":"imageJeux/2k92.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -35,7 +35,7 @@
     "nomEditeur": "Nintendo",
     "categorie": "Aventure",
     "dateSortie": ISODate('2016-06-15T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/poke.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -55,7 +55,7 @@
     "nomEditeur": "Microsoft",
     "categorie": "Aventure",
     "dateSortie": ISODate('2012-05-12T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/tetris.jpeg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -65,7 +65,7 @@
     "nomEditeur": "Epic Games",
     "categorie": "Action",
     "dateSortie": ISODate('2017-10-17T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/fortnite.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -75,7 +75,7 @@
     "nomEditeur": "Konami",
     "categorie": "Sport",
     "dateSortie": ISODate('2004-11-05T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/pes2005.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -85,7 +85,7 @@
     "nomEditeur": "Sony",
     "categorie": "Action",
     "dateSortie": ISODate('2016-04-22T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image":"imageJeux/gow3.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -115,7 +115,7 @@
     "nomEditeur": "RockStar Games",
     "categorie": "Rôle",
     "dateSortie": ISODate('2006-06-16T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/fifa14.jpeg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -125,7 +125,7 @@
     "nomEditeur": " RockStar North",
     "categorie": "Rôle",
     "dateSortie": ISODate('2015-11-08T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/gta5.jpg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -135,7 +135,7 @@
     "nomEditeur": "Ubisoft",
     "categorie": "Aventure",
     "dateSortie": ISODate('2014-12-18T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/lapin.jpeg",
     "prix" : 29.99,
     "idA" : 1
   },
@@ -145,7 +145,7 @@
     "nomEditeur": "2K Sports",
     "categorie": "Sport",
     "dateSortie": ISODate('2016-11-13T00:00:00.000Z'),
-    "image": "../defaultImage.png",
+    "image": "imageJeux/fifa16.jpeg",
     "prix" : 29.99,
     "idA" : 1
   }

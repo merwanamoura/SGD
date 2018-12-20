@@ -365,7 +365,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Jeux populaire"/>
+                    <Property name="text" type="java.lang.String" value="Jeux populaires"/>
                   </Properties>
                 </Component>
               </SubComponents>
