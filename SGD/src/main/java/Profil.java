@@ -39,7 +39,7 @@ private JPanel mesDislikesPanel;
      * Creates new form Profil
      */
     public Profil(boolean admin, int idUser) {
-        
+
          mesJeux= new JLabel ("Mes Jeux");
          mesLikes= new JLabel ("Mes Likes");
          mesDislikes= new JLabel ("Mes Dislikes");
