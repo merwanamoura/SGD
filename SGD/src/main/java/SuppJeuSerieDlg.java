@@ -46,7 +46,6 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         initComponents();
         db = MongoDBConnection.getDb();;
         this.nomSerie = nomSerie;
-        System.out.println("wtf");
         fillListeJeux();
 
     }
@@ -66,11 +65,6 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         
         ArrayList<Integer> listeJeux = (ArrayList<Integer>)doc.get("tabJeux");
         
-        for (int i = 0 ; i < listeJeux.size() ; i++)
-        {
-            System.out.println(listeJeux.get(i));
-        
-        }
    
         List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
         BasicDBObject andQueryIdJeu = new BasicDBObject();
@@ -80,7 +74,6 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         andQuery.put("$and",obj);
         cursor = jeux.find(andQuery).iterator();
        
-         System.out.println(andQuery.toString());
         
         while (cursor.hasNext()) 
         {

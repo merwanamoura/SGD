@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -40,6 +42,9 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
         initComponents();
         db = MongoDBConnection.getDb();
         fillListGames();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         
         
     }

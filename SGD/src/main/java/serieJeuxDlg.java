@@ -68,7 +68,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            System.out.println(it.toString());
             File f = new File((String) doc.get("image"));
             
             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
@@ -156,7 +155,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
                         MongoCursor<Document> it;
                         MongoCollection<Document> jeux = db.getCollection("jeux");
                         String nameGame = list.getSelectedValue().toString(); 
-                        System.out.println(nameGame);
                         it = jeux.find(eq("nom" , nameGame)).iterator();
 
                         Document d = it.next();
@@ -211,7 +209,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
 
       labelNomJeu.setText(nomSerieJeu);
       nomSerie = nomSerieJeu;
-      System.out.println(nomSerie);
     }
     
     public void jeuClicked(MouseEvent evt) {
