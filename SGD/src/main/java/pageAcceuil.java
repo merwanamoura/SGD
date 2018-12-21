@@ -635,7 +635,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Profil pageP = new Profil(isAdmin,idUser);
+        ProfilDlg pageP = new ProfilDlg(this,true,isAdmin,idUser);
         pageP.setVisible(true);
         
 

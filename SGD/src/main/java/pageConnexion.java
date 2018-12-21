@@ -1,4 +1,9 @@
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -48,6 +53,9 @@ public class pageConnexion extends javax.swing.JFrame {
         group.add(noAdmin);
 
     }
+    
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.

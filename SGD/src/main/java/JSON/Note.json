@@ -1,91 +1,76 @@
 [
   {
     "idJeu": 0,
-    "val": 13.1795,
     "nbLikes": 8,
     "nbDislikes": 24
   },
   {
     "idJeu": 1,
-    "val": 15.0767,
     "nbLikes": 85,
     "nbDislikes": 6
   },
   {
     "idJeu": 2,
-    "val": 9.1818,
     "nbLikes": 70,
     "nbDislikes": 17
   },
   {
     "idJeu": 3,
-    "val": 9.0616,
     "nbLikes": 6,
     "nbDislikes": 40
   },
   {
     "idJeu": 4,
-    "val": 14.6181,
     "nbLikes": 56,
     "nbDislikes": 16
   },
   {
     "idJeu": 5,
-    "val": 15.685,
     "nbLikes": 82,
     "nbDislikes": 20
   },
   {
     "idJeu": 6,
-    "val": 17.8387,
     "nbLikes": 75,
     "nbDislikes": 29
   },
   {
     "idJeu": 7,
-    "val": 10.0028,
     "nbLikes": 77,
     "nbDislikes": 12
   },
   {
     "idJeu": 8,
-    "val": 5.0432,
     "nbLikes": 44,
     "nbDislikes": 33
   },
   {
     "idJeu": 9,
-    "val": 8.3573,
     "nbLikes": 22,
     "nbDislikes": 27
   },
   {
     "idJeu": 10,
-    "val": 8.0572,
     "nbLikes": 0,
     "nbDislikes": 19
   },
   {
     "idJeu": 11,
-    "val": 5.1899,
     "nbLikes": 95,
     "nbDislikes": 22
   },
   {
     "idJeu": 12,
-    "val": 8.0667,
     "nbLikes": 9,
     "nbDislikes": 17
   },
   {
     "idJeu": 13,
-    "val": 17.5296,
     "nbLikes": 90,
     "nbDislikes": 3
   },
   {
     "idJeu": 14,
-    "val": 11.4492,
     "nbLikes": 28,
     "nbDislikes": 22
   }

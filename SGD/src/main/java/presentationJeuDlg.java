@@ -1,4 +1,12 @@
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -17,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -74,9 +83,49 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         setDislike();
         setFavori();
         setComment();
+        setCote();
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    }
+    
+    public String map(int nb){
+        String map = "function() {\n" +
+"if(this.idJeu == "+ nb +") emit(this.idJeu, this.nbLikes - this.nbDislikes);\n" +
+"};";
+        return map;
+    }
+    
+    public String reduce(){
+        String reduce = "function(key, value) {\n" +
+        "    return Array.sum(value);\n" +
+        "};";
+        return reduce;
+    }
+    
+    public void mapReduce(int idJeu){
+        
+        char[] pass = new char[10];
+        String s = "ma522501";
+        pass = s.toCharArray();
+        MongoCredential credential = MongoCredential.createCredential("ma522501","ma522501",pass);
+        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
+        
+	DB db;
+        db = client.getDB("ma522501");
+	DBCollection note = db.getCollection("Note");
+
+	MapReduceCommand cmd = new MapReduceCommand(note, map(idJeu), reduce(), null, MapReduceCommand.OutputType.INLINE,null);
+	MapReduceOutput out = note.mapReduce(cmd);
+
+	for (DBObject o : out.results()) {  
+            labelCote.setText("Cote : "+ o.get("value"));     
+	}
+
+    }
+    
+    public void setCote(){
+        mapReduce(this.idJeu);
     }
     
     
@@ -343,6 +392,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         buttonFavori = new javax.swing.JButton();
         panelDesc = new javax.swing.JPanel();
         labelDescription = new javax.swing.JLabel();
+        labelCote = new javax.swing.JLabel();
         panelAvis = new javax.swing.JPanel();
         panelJeuSimilaire = new javax.swing.JPanel();
         labelJeuSimilaire = new javax.swing.JLabel();
@@ -402,6 +452,11 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         labelDescription.setPreferredSize(new java.awt.Dimension(138, 35));
         panelDesc.add(labelDescription, java.awt.BorderLayout.NORTH);
 
+        labelCote.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelCote.setText("Cote :");
+        labelCote.setPreferredSize(new java.awt.Dimension(51, 25));
+        panelDesc.add(labelCote, java.awt.BorderLayout.SOUTH);
+
         jPanel1.add(panelDesc);
 
         panelJeu.add(jPanel1);
@@ -434,17 +489,20 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     private void buttonLikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLikeActionPerformed
         // TODO add your handling code here:
         String nomJeu = this.jeu.getNom();
+        Note no = new Note(idJeu);
 
         //pour le like
         if(us.isLike(jeu.getNom()))
         {
             buttonLike.setBackground(Color.white);
             this.us.removeJeuLike(nomJeu);
+            no.removeLike();
         }
         else
         {
             buttonLike.setBackground(Color.green);
             this.us.addJeuLike(nomJeu);
+            no.addLike();
         }
 
         //pour le dislike
@@ -452,22 +510,25 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         {
             buttonDislike.setBackground(Color.white);
             this.us.removeJeuDislike(nomJeu);
+            no.removeDislike();
         }
-
+        setCote();
     }//GEN-LAST:event_buttonLikeActionPerformed
 
     private void buttonDislikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDislikeActionPerformed
         // TODO add your handling code here:
         String nomJeu = this.jeu.getNom();
-
+        Note no = new Note(idJeu);
         //pour le dislike
         if(us.isDislike(jeu.getNom()))
         {
             buttonDislike.setBackground(Color.white);
             this.us.removeJeuDislike(nomJeu);
+            no.removeDislike();
         }else{
             buttonDislike.setBackground(Color.red);
             this.us.addJeuDislike(nomJeu);
+            no.addDislike();
         }
 
         //pour le like
@@ -475,7 +536,9 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         {
             buttonLike.setBackground(Color.white);
             this.us.removeJeuLike(nomJeu);
+            no.removeLike();
         }
+        setCote();
     }//GEN-LAST:event_buttonDislikeActionPerformed
 
     private void buttonFavoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFavoriActionPerformed
@@ -499,6 +562,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelCote;
     private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelJeuSimilaire;
     private javax.swing.JLabel labelNomJeu;

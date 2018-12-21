@@ -1,3 +1,15 @@
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import java.util.List;
+import org.bson.BsonString;
+import org.bson.Document;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,15 +23,55 @@
 public class Note {
     
     private int idJeu;
-    private int val;
     private int nbLikes;
     private int nbDislikes;
 
-      public Note(int idJeu, int val, int nbLikes, int nbDislikes) {
-        this.idJeu = idJeu;
-        this.val = val;
-        this.nbLikes = nbLikes;
-        this.nbDislikes = nbDislikes;
+    public Note(int idJeu){
+        this.idJeu=idJeu;
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> user = db.getCollection("Note");
+
+        it = user.find(eq("idJeu" , idJeu)).iterator();
+        
+        Document doc = it.next();
+
+        setIdJeu((int) doc.get("idJeu"));
+        setNbLikes((int) doc.get("nbLikes"));
+        setNbDislikes((int) doc.get("nbDislikes"));
+    }
+    
+    public void addLike(){
+
+        MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCollection<Document> avis = db.getCollection("Note");
+        avis.updateOne(eq("idJeu" , idJeu), new Document("$set", new Document("nbLikes" , getNbLikes() + 1)));
+        
+    }
+    
+    public void removeLike(){
+                
+       MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCollection<Document> avis = db.getCollection("Note");
+        avis.updateOne(eq("idJeu" , idJeu), new Document("$set", new Document("nbLikes" , getNbLikes() - 1)));
+    }
+    
+    public void addDislike(){
+                
+        MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCollection<Document> avis = db.getCollection("Note");
+        avis.updateOne(eq("idJeu" , idJeu), new Document("$set", new Document("nbDislikes" , getNbDislikes() + 1)));
+    }
+    
+    public void removeDislike(){                
+        MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCollection<Document> avis = db.getCollection("Note");
+        avis.updateOne(eq("idJeu" , idJeu), new Document("$set", new Document("nbDislikes" , getNbDislikes() - 1)));
     }
       
     public void setIdJeu(int idJeu) {
@@ -28,10 +80,6 @@ public class Note {
 
     public int getIdJeu() {
         return idJeu;
-    }
-    
-    public int getVal() {
-        return val;
     }
 
     public int getNbLikes() {
@@ -42,10 +90,6 @@ public class Note {
         return nbDislikes;
     }
 
-    public void setVal(int val) {
-        this.val = val;
-    }
-
     public void setNbLikes(int nbLikes) {
         this.nbLikes = nbLikes;
     }
@@ -53,46 +97,5 @@ public class Note {
     public void setNbDislikes(int nbDislikes) {
         this.nbDislikes = nbDislikes;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + this.val;
-        hash = 83 * hash + this.nbLikes;
-        hash = 83 * hash + this.nbDislikes;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Note other = (Note) obj;
-        if (this.val != other.val) {
-            return false;
-        }
-        if (this.nbLikes != other.nbLikes) {
-            return false;
-        }
-        if (this.nbDislikes != other.nbDislikes) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" + "val=" + val + ", nbLikes=" + nbLikes + ", nbDislikes=" + nbDislikes + '}';
-    }
-    
-    
-
-    
+ 
 }
