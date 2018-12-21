@@ -76,12 +76,27 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
         BasicDBObject andQueryIdJeu = new BasicDBObject();
         BasicDBObject andQuery = new BasicDBObject();     
+        BasicDBObject andQueryText = new BasicDBObject(); 
         andQueryIdJeu.put("idJeu", new BasicDBObject("$nin",listeJeux));  
         obj.add(andQueryIdJeu);
         andQuery.put("$and",obj);
+        
+        String testSaisie = saisie.getText();
+        
+        if(!testSaisie.equals(""))
+        {
+                    
+            andQueryText.put("nom" , new BasicDBObject("$regex",testSaisie));
+            obj.add(andQueryText);
+            andQuery.put("$and",obj);
+
+        }
+        
+        
+        
         cursor = jeux.find(andQuery).iterator();
        
-         System.out.println(andQuery.toString());
+        System.out.println(andQuery.toString());
         
         while (cursor.hasNext()) 
         {
@@ -155,7 +170,7 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         leftRecherchePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         rightRecherchePanel = new javax.swing.JPanel();
-        nomJeuText = new javax.swing.JTextField();
+        saisie = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -274,14 +289,14 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
 
         recherchePanel.add(leftRecherchePanel, java.awt.BorderLayout.WEST);
 
-        nomJeuText.addActionListener(new java.awt.event.ActionListener() {
+        saisie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomJeuTextActionPerformed(evt);
+                saisieActionPerformed(evt);
             }
         });
-        nomJeuText.addKeyListener(new java.awt.event.KeyAdapter() {
+        saisie.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                nomJeuTextKeyPressed(evt);
+                saisieKeyPressed(evt);
             }
         });
 
@@ -291,14 +306,14 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
             rightRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightRecherchePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nomJeuText, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saisie, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(121, Short.MAX_VALUE))
         );
         rightRecherchePanelLayout.setVerticalGroup(
             rightRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightRecherchePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nomJeuText)
+                .addComponent(saisie)
                 .addContainerGap())
         );
 
@@ -334,17 +349,17 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_supprimerButtonActionPerformed
 
-    private void nomJeuTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomJeuTextActionPerformed
+    private void saisieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saisieActionPerformed
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomJeuTextActionPerformed
+    }//GEN-LAST:event_saisieActionPerformed
 
-    private void nomJeuTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomJeuTextKeyPressed
+    private void saisieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_saisieKeyPressed
 
-     
+        fillListeJeux();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomJeuTextKeyPressed
+    }//GEN-LAST:event_saisieKeyPressed
 
     /**
      * @param args the command line arguments
@@ -399,10 +414,10 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     private javax.swing.JPanel leftSpacePanel;
     private javax.swing.JPanel listeJeuPanel;
     private javax.swing.JPanel midPanel;
-    private javax.swing.JTextField nomJeuText;
     private javax.swing.JPanel recherchePanel;
     private javax.swing.JPanel rightRecherchePanel;
     private javax.swing.JPanel rightSpacePanel;
+    private javax.swing.JTextField saisie;
     private javax.swing.JScrollPane scrollListeJeux;
     private javax.swing.JButton supprimerButton;
     private javax.swing.JPanel topPanel;

@@ -151,11 +151,6 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         midPanel = new javax.swing.JPanel();
         listeJeuPanel = new javax.swing.JPanel();
         scrollListeJeux = new javax.swing.JScrollPane();
-        recherchePanel = new javax.swing.JPanel();
-        leftRecherchePanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        rightRecherchePanel = new javax.swing.JPanel();
-        nomJeuText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -247,64 +242,10 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         );
         listeJeuPanelLayout.setVerticalGroup(
             listeJeuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollListeJeux, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+            .addComponent(scrollListeJeux, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
         );
 
         midPanel.add(listeJeuPanel, java.awt.BorderLayout.CENTER);
-
-        recherchePanel.setPreferredSize(new java.awt.Dimension(553, 60));
-        recherchePanel.setLayout(new java.awt.BorderLayout());
-
-        leftRecherchePanel.setPreferredSize(new java.awt.Dimension(160, 60));
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Entrez le nom du jeu :");
-        jLabel2.setMinimumSize(new java.awt.Dimension(170, 15));
-
-        javax.swing.GroupLayout leftRecherchePanelLayout = new javax.swing.GroupLayout(leftRecherchePanel);
-        leftRecherchePanel.setLayout(leftRecherchePanelLayout);
-        leftRecherchePanelLayout.setHorizontalGroup(
-            leftRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-        );
-        leftRecherchePanelLayout.setVerticalGroup(
-            leftRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-        );
-
-        recherchePanel.add(leftRecherchePanel, java.awt.BorderLayout.WEST);
-
-        nomJeuText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomJeuTextActionPerformed(evt);
-            }
-        });
-        nomJeuText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                nomJeuTextKeyPressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout rightRecherchePanelLayout = new javax.swing.GroupLayout(rightRecherchePanel);
-        rightRecherchePanel.setLayout(rightRecherchePanelLayout);
-        rightRecherchePanelLayout.setHorizontalGroup(
-            rightRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightRecherchePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nomJeuText, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
-        );
-        rightRecherchePanelLayout.setVerticalGroup(
-            rightRecherchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightRecherchePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nomJeuText)
-                .addContainerGap())
-        );
-
-        recherchePanel.add(rightRecherchePanel, java.awt.BorderLayout.CENTER);
-
-        midPanel.add(recherchePanel, java.awt.BorderLayout.NORTH);
 
         general.add(midPanel, java.awt.BorderLayout.CENTER);
 
@@ -318,9 +259,7 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(general, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(general, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -333,18 +272,6 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
         
         // TODO add your handling code here:
     }//GEN-LAST:event_supprimerButtonActionPerformed
-
-    private void nomJeuTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomJeuTextActionPerformed
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomJeuTextActionPerformed
-
-    private void nomJeuTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomJeuTextKeyPressed
-
-     
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomJeuTextKeyPressed
 
     /**
      * @param args the command line arguments
@@ -394,14 +321,9 @@ public class SuppJeuSerieDlg extends javax.swing.JDialog {
     private javax.swing.JPanel buttonPannel;
     private javax.swing.JPanel general;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel leftRecherchePanel;
     private javax.swing.JPanel leftSpacePanel;
     private javax.swing.JPanel listeJeuPanel;
     private javax.swing.JPanel midPanel;
-    private javax.swing.JTextField nomJeuText;
-    private javax.swing.JPanel recherchePanel;
-    private javax.swing.JPanel rightRecherchePanel;
     private javax.swing.JPanel rightSpacePanel;
     private javax.swing.JScrollPane scrollListeJeux;
     private javax.swing.JButton supprimerButton;

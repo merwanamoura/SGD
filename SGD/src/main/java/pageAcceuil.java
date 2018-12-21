@@ -230,6 +230,7 @@ public class pageAcceuil extends javax.swing.JFrame {
         barrehaut = new javax.swing.JPanel();
         fonctionnalitepanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         ajoutButton = new javax.swing.JButton();
         SuppressionButton = new javax.swing.JButton();
         jpanelrecherche = new javax.swing.JPanel();
@@ -274,15 +275,22 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(164, 30));
 
+        jButton2.setText("Séries de Jeux");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 164, Short.MAX_VALUE)
+            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
         fonctionnalitepanel.add(jPanel1);
@@ -327,7 +335,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         jButton1.setText("Profil");
         jButton1.setMinimumSize(new java.awt.Dimension(60, 25));
-        jButton1.setPreferredSize(new java.awt.Dimension(60, 25));
+        jButton1.setPreferredSize(new java.awt.Dimension(30, 25));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -588,14 +596,20 @@ public class pageAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_SuppressionButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void rechercheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercheActionPerformed
 
+        
+        
     pageJeuxDlg pJ = new pageJeuxDlg(this,true,idUser);
+    this.setVisible(false);
     
-    pJ.show();
+    pJ.setVisible(true);
+    this.setVisible(true);
     
     
   
@@ -612,6 +626,17 @@ public class pageAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ajoutButtonActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    serieJeuxDlg SJD = new serieJeuxDlg(this,true,idUser,isAdmin);
+    this.setVisible(false);
+    SJD.setVisible(true);
+    this.setVisible(true);
+    
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SuppressionButton;
@@ -621,6 +646,7 @@ public class pageAcceuil extends javax.swing.JFrame {
     private javax.swing.JPanel corps;
     private javax.swing.JPanel fonctionnalitepanel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
