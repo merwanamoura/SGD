@@ -6,6 +6,8 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 import java.awt.CheckboxGroup;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -57,8 +59,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
         initComponents();
         
         idUser = idU;
-        
-        MongoDBConnection.connect();
+
         db = MongoDBConnection.getDb();
         cbEditeur = new CheckboxGroup();
         bg = new CheckboxGroup();
@@ -72,6 +73,9 @@ public class pageJeuxDlg extends javax.swing.JDialog {
         
         fillAll();
         rechercheJeu();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
    
@@ -487,7 +491,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
                 Document doc = cursor.next();
                 File f = new File((String) doc.get("image"));
 
-                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
                 else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
 
             }
@@ -500,7 +504,6 @@ public class pageJeuxDlg extends javax.swing.JDialog {
                 public void mouseClicked(MouseEvent evt) 
                 {
                     jeuClicked(evt);
-                    System.out.println("test");
                 }
              });
              
@@ -705,7 +708,6 @@ public class pageJeuxDlg extends javax.swing.JDialog {
             andQuery.put("$and",obj);
 
 
-            System.out.println(andQuery.toString());
 
             DefaultListModel dlm = new DefaultListModel();
 
@@ -716,7 +718,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
                 Document doc = cursor.next();
                 File f = new File((String) doc.get("image"));
 
-                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
                 else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
 
 
@@ -730,7 +732,6 @@ public class pageJeuxDlg extends javax.swing.JDialog {
                 public void mouseClicked(MouseEvent evt) 
                 {
                     jeuClicked(evt);
-                    System.out.println("test");
                 }
              });
 

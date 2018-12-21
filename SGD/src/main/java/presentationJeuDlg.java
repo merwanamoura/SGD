@@ -5,6 +5,12 @@ import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import java.awt.BorderLayout;
 import java.awt.Color;
+
+import java.awt.Image;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -50,7 +56,6 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         
         previousFrame=(JFrame) parent;
         
-        MongoDBConnection.connect();
         
         this.setSize(800,600);
         
@@ -69,6 +74,9 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         setDislike();
         setFavori();
         setComment();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     
@@ -111,7 +119,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     
     public void description()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -131,13 +139,24 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     public void afficheImg()
     {
         String img = jeu.getImage();        
-        JLabel label = new JLabel(new ImageIcon("imageJeux/default.png"));
+        
+
+        File f = new File(jeu.getImage());
+         
+        if(f.exists() && !f.isDirectory())img = jeu.getImage();    
+        else img="imageJeux/default.png";
+        JLabel label = new JLabel();
+        ImageIcon ic = new ImageIcon(img);
+        ImageIcon imageIcon = new ImageIcon(ic.getImage().getScaledInstance(250,250, Image.SCALE_DEFAULT));
+       
+        label.setIcon(imageIcon);
+        
         panelImage.add(label, BorderLayout.CENTER);
    
     }
     public void jeuSimilaire()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
@@ -265,7 +284,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     
     public void setAvis()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
         MongoCollection<Document> avis = db.getCollection("Avis");

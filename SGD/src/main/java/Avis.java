@@ -25,6 +25,12 @@ public class Avis {
     private int idJeu; 
     private String avis;
     private long dateCom;
+    
+    public static String nomCollection = "Avis";
+    public static String idUserCollection = "idUser";
+    public static String idJeuCollection = "idJeu";
+    public static String avisCollection = "avis";
+    public static String dateCollection = "dateCollection";
 
     public Avis(int idUser, int idJeu, String avis, long dateCom) {
         this.idUser = idUser;
