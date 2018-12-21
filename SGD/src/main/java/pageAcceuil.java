@@ -1,5 +1,9 @@
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -36,6 +40,7 @@ import static java.util.Arrays.asList;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.ScrollPaneConstants;
+import static jdk.nashorn.internal.objects.NativeArray.map;
 import org.bson.Document;
 
 
@@ -74,6 +79,8 @@ public class pageAcceuil extends javax.swing.JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
     }
+    
+    
     
     public void jeuClicked(MouseEvent evt) {
         JList list = (JList)evt.getSource();
