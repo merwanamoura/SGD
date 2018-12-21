@@ -53,7 +53,6 @@ private JPanel mesDislikesPanel;
         
         initComponents();
         
-         MongoDBConnection.connect();
         MongoDatabase db = MongoDBConnection.getDb();
         
         DefaultListModel dlm = new DefaultListModel();

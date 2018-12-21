@@ -42,7 +42,7 @@ public class serieJeuxDlg extends javax.swing.JDialog {
        
         super(parent, modal);      
         initComponents();
-        MongoDBConnection.connect();
+
         db = MongoDBConnection.getDb();
         idUser = idUser;
         isAdmin = isAdmin;

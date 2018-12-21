@@ -51,7 +51,6 @@ public class presentationJeuDlg extends javax.swing.JDialog {
         
         previousFrame=(JFrame) parent;
         
-        MongoDBConnection.connect();
         
         this.setSize(800,600);
         
@@ -112,7 +111,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     
     public void description()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         
         MongoCursor<Document> it;
@@ -149,7 +148,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     }
     public void jeuSimilaire()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
@@ -277,7 +276,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     
     public void setAvis()
     {
-        MongoDBConnection.connect();
+
         MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
         MongoCollection<Document> avis = db.getCollection("Avis");

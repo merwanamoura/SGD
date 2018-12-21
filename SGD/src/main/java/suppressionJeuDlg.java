@@ -38,7 +38,6 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
     public suppressionJeuDlg(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
         fillListGames();
         

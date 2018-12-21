@@ -61,7 +61,6 @@ public class pageAcceuil extends javax.swing.JFrame {
         initComponents();
         isAdmin = admin;
         idUser = idU;
-        MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
         fillJlistRecent(db);
         fillJlistPopular(db);

@@ -44,7 +44,6 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     public AjouterJeuSerieDlg(java.awt.Frame parent, boolean modal,String nomSerie) {
         super(parent, modal);
         initComponents();
-        MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
         this.nomSerie = nomSerie;
         System.out.println("wtf");

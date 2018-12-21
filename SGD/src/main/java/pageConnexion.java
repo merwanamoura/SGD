@@ -36,7 +36,7 @@ public class pageConnexion extends javax.swing.JFrame {
      */
     public pageConnexion() {
         initComponents();
-        MongoDBConnection.connect();
+
         // Exclusion de sélection
         noAdmin.setSelected(true);
        

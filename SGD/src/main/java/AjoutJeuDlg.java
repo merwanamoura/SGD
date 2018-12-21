@@ -56,7 +56,6 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         fillDate();
-        MongoDBConnection.connect();
         db=MongoDBConnection.getDb();
     }
     

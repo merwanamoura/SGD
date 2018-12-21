@@ -57,8 +57,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
         initComponents();
         
         idUser = idU;
-        
-        MongoDBConnection.connect();
+
         db = MongoDBConnection.getDb();
         cbEditeur = new CheckboxGroup();
         bg = new CheckboxGroup();
