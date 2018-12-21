@@ -103,7 +103,7 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
             Document dac = cursor.next();
             File f = new File((String) dac.get("image"));
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon((String) dac.get("pathImage"))));
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon((String) dac.get("image"))));
             else dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon("imageJeux/default.png")));
         }
         

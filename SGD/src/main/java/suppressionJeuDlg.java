@@ -61,7 +61,7 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
             Document doc = it.next();
             File f = new File((String) doc.get("image"));
             
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nomJeu"), new ImageIcon((String) doc.get("pathImage"))));
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
             else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
             
 

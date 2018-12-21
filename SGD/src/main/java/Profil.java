@@ -91,7 +91,7 @@ private JPanel mesDislikesPanel;
                            File f = new File((String) docfav.get("image"));
     
 
-                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nomJeu"), new ImageIcon((String) docfav.get("pathImage"))));
+                            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("image"))));
                             else dlmfav.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon("imageJeux/default.png")));
 
                            // if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) docfav.get("nom"), new ImageIcon((String) docfav.get("pathImage"))));
