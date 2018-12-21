@@ -1,4 +1,10 @@
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
@@ -11,8 +17,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
+import static javax.management.Query.value;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import org.bson.BSONObject;
 import org.bson.Document;
 
 /*
@@ -46,6 +54,55 @@ public class pageConnexion extends javax.swing.JFrame {
         ButtonGroup group = new ButtonGroup();
         group.add(yesAdmin);
         group.add(noAdmin);
+
+        mapReduce();
+    }
+    
+    public String map(){
+        String map = "function() {\n" +
+            "    var category;\n" +
+            "\n" +
+            "    if ( this.nbLikes >= 80 ) category = 'Game Stars';\n" +
+            "    else{\n" +
+            "        if ( this.nbDislikes >= 30 ) category = \"Garbage Game\";\n" +
+            "        else category = \"Normal Game\";\n" +
+            "    }\n" +
+            "\n" +
+            "    emit(category, {name: this.name});\n" +
+            "};";
+        return map;
+    }
+    
+    public String reduce(){
+        String reduce = "function(key, values) {\n" +
+        "    var sum = 0;\n" +
+        "    values.forEach(function(doc) { sum += 1; });\n" +
+        "    return {nb : sum};\n" +
+        "};";
+        return reduce;
+    }
+    
+    public void mapReduce(){
+        
+        char[] pass = new char[10];
+        String s = "ma522501";
+        pass = s.toCharArray();
+        MongoCredential credential = MongoCredential.createCredential("ma522501","ma522501",pass);
+        MongoClient client = new MongoClient(new ServerAddress("mongo",27017),Arrays.asList(credential));
+        
+	DB db;
+        db = client.getDB("ma522501");
+	DBCollection note = db.getCollection("Note");
+
+	MapReduceCommand cmd = new MapReduceCommand(note, map(), reduce(), null, MapReduceCommand.OutputType.INLINE,null);
+	MapReduceOutput out = note.mapReduce(cmd);
+
+	for (DBObject o : out.results()) {
+             
+                int nb= Integer.parseInt(o.get("value").toString().substring(9,o.get("value").toString().length()-4 ));
+                System.out.println("----->" + nb);
+                
+	}
 
     }
 
