@@ -56,6 +56,7 @@ public class Users {
 
     public Users(int id){
         idU=id;
+        MongoDBConnection.connect(); 
         
         MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;

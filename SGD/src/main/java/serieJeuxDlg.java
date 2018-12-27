@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -44,23 +45,20 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         initComponents();
 
         db = MongoDBConnection.getDb();
-        idUser = idUser;
-        isAdmin = isAdmin;
-        this.setSize(800,600);
-        fillLesSeries();
-        previousFrame = (JFrame) parent;
+        this.idUser = idUser;
+        this.setSize(800,600); 
+        this.previousFrame = (JFrame) parent;
         this.isAdmin = isAdmin;
         affichageButton();
+        fillLesSeries();
     }
     
     public void fillLesSeries()
     {
-        MongoCollection<Document> SJ = db.getCollection("seriesJeux");
+        MongoCollection<Document> SJ = db.getCollection("SerieJeux");
          
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
-    
-        
 
         it = SJ.find().iterator();
         
@@ -68,10 +66,8 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         while (it.hasNext()) 
         {
             Document doc = it.next();
-            File f = new File((String) doc.get("image"));
-            
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
+                        
+            dlm.addElement(new ListEntry((String) doc.get("nomSerie"), new ImageIcon("imageJeux/default.png")));
             
 
         } 
@@ -79,13 +75,20 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());
      
-        list.addMouseListener(new MouseAdapter() 
-        {
-            public void mouseClicked(MouseEvent evt) 
-            {
-                jeuClicked(evt);
-            }
-         });
+        MouseListener mouseListener = new MouseAdapter() {
+            
+              public void mouseClicked(MouseEvent e) {
+                  
+                if (e.getClickCount() == 2)
+                {
+                    String nameSerie = list.getSelectedValue().toString(); 
+                    refresh(nameSerie);
+                }
+              }
+                
+                
+        };
+        list.addMouseListener(mouseListener);
         
         scrollLesSeries.add(list); 
         scrollLesSeries.setViewportView(list);
@@ -95,7 +98,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
     public void fillListeJeux(String nomSerie)
     {
         
-       // if(jeuxSeriePanel.getComponentCount()>0)jeuxSeriePanel.remove(0);
         for(int i=0;i<jeuxSeriePanel.getComponentCount();i++)
         {
             if(jeuxSeriePanel.getComponent(i).getClass().toString().equals("class javax.swing.JList") )
@@ -104,40 +106,21 @@ public class serieJeuxDlg extends javax.swing.JDialog {
             }
             
         }
-        MongoCollection<Document> SJ = db.getCollection("seriesJeux");       
-        DefaultListModel dlm = new DefaultListModel();
-        MongoCursor<Document> it;
-    
         
+        SerieJeux serie = new SerieJeux(nomSerie);
 
-        it = SJ.find(eq("nom",nomSerie)).iterator();
-        Document doc = it.next();
-       
-        ArrayList<Double> listeJeux = (ArrayList<Double>)doc.get("tabJeux");
-         MongoCollection<Document> jeux = db.getCollection("jeux");
-         
-         
-        for (Object idJeu : listeJeux )
-        {
-            int id;
-            if( idJeu instanceof Double )
-            {
-                id = ((Double)idJeu).intValue();
-            }
-            else 
-            {
-                id = (int) idJeu;
-            }
-            it = jeux.find(eq("idJeu" , (int)id)).iterator();
+        DefaultListModel dlm = new DefaultListModel();
+        List<Integer> listeJeux = serie.getIdsJeux();
+        
+        for(int i = 0 ; i < listeJeux.size() ; i++){
+            Jeu jeu = new Jeu(listeJeux.get(i));
+            
+            File f = new File(jeu.getImage());
 
-            doc = it.next();
-     
-            File f = new File((String) doc.get("image"));
-
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon((String) doc.get("image"))));
-            else dlm.addElement(new ListEntry((String) doc.get("nom"), new ImageIcon("imageJeux/default.png")));
-
+            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
+            else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
         }
+         
         
         JList list = new JList(dlm);
         list.setCellRenderer(new ListEntryCellRenderer());       
@@ -155,12 +138,14 @@ public class serieJeuxDlg extends javax.swing.JDialog {
                         MongoCursor<Document> it;
                         MongoCollection<Document> jeux = db.getCollection("jeux");
                         String nameGame = list.getSelectedValue().toString(); 
+                        
                         it = jeux.find(eq("nom" , nameGame)).iterator();
 
                         Document d = it.next();
                         int idNewjeu = (int) d.get("idJeu");
 
-                       
+                        setVisible(false);
+                        dispose();
 
                         presentationJeuDlg pj = new presentationJeuDlg(previousFrame,true,idNewjeu,idUser);
                         pj.setVisible(true);
@@ -186,40 +171,21 @@ public class serieJeuxDlg extends javax.swing.JDialog {
     
     public void refresh(String nomSerieJeu)
     {      
+        SerieJeux serie = new SerieJeux(nomSerieJeu);
 
-
-        
-        MongoCursor<Document> it;
-        MongoCollection<Document> jeux = db.getCollection("seriesJeux");
-
-        it = jeux.find(eq("nom",nomSerieJeu)).iterator();
-        Document doc = it.next();
-    //    int idJ = (int) doc.get("idJeu");
-
-       String description = (String) doc.get("description");
-
+        String description = serie.getNomSerie();
         descriptionText.setText(description);
 
-      String img = (String) doc.get("image");      
-      JLabel label2 = new JLabel(new ImageIcon("imageJeux/default.png"));
-      panelImage.add(label2);
-      panelImage.repaint();panelImage.revalidate();
+        JLabel label2 = new JLabel(new ImageIcon("imageJeux/default.png"));
+        panelImage.add(label2);
+        panelImage.repaint();panelImage.revalidate();
 
-      fillListeJeux(nomSerieJeu);
+        fillListeJeux(nomSerieJeu);
 
-      labelNomJeu.setText(nomSerieJeu);
-      nomSerie = nomSerieJeu;
+        labelNomJeu.setText(nomSerieJeu);
+        nomSerie = nomSerieJeu;
     }
     
-    public void jeuClicked(MouseEvent evt) {
-       
-        JList list = (JList)evt.getSource();
-        String nomSerieJeu = list.getSelectedValue().toString();
-        if (evt.getClickCount() == 2) {
-    
-            refresh(nomSerieJeu);
-        } 
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -348,7 +314,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
 
     private void ajouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterButtonActionPerformed
 
-      
         AjouterJeuSerieDlg adj = new AjouterJeuSerieDlg(previousFrame,true,nomSerie);
         adj.setVisible(true);
         refresh(nomSerie);
@@ -361,47 +326,6 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         refresh(nomSerie);
     }//GEN-LAST:event_supprimerButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(serieJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(serieJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(serieJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(serieJeuxDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                serieJeuxDlg dialog = new serieJeuxDlg(new javax.swing.JFrame(), true,0,true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajouterButton;

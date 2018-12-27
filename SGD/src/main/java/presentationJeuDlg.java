@@ -104,7 +104,7 @@ public class presentationJeuDlg extends javax.swing.JDialog {
     }
     
     public void mapReduce(int idJeu){
-        
+        /*
         char[] pass = new char[10];
         String s = "ma522501";
         pass = s.toCharArray();
@@ -114,7 +114,11 @@ public class presentationJeuDlg extends javax.swing.JDialog {
 	DB db;
         db = client.getDB("ma522501");
 	DBCollection note = db.getCollection("Note");
-
+*/
+        MongoClient client = new MongoClient("localhost");
+        DB db = client.getDB("ma522501");
+        DBCollection note = db.getCollection("Note");
+        
 	MapReduceCommand cmd = new MapReduceCommand(note, map(idJeu), reduce(), null, MapReduceCommand.OutputType.INLINE,null);
 	MapReduceOutput out = note.mapReduce(cmd);
 

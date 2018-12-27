@@ -1,5 +1,11 @@
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,37 +21,49 @@ public class SerieJeux {
     
     private int idSerie;
     private String nomSerie;
-    private ArrayList<Integer> idsJeux;
+    private List<Integer> idsJeux;
+    
+    public SerieJeux(String nom){
+        this.nomSerie = nom;
+        MongoDBConnection.connect(); 
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> user = db.getCollection("SerieJeux");
 
-    public void setIdSerie(int idSerie) {
-        this.idSerie = idSerie;
-    }
+        it = user.find(eq("nomSerie" , nom)).iterator();
+        
+        Document doc = it.next();
 
-    public void setNomSerie(String nomSerie) {
-        this.nomSerie = nomSerie;
-    }
-
-    public void setIdsJeux(ArrayList<Integer> idsJeux) {
-        this.idsJeux = idsJeux;
+        setIdSerie((int)doc.get("idSerie"));
+        setIdsJeux((List<Integer>) doc.get("idsJeux"));
     }
 
     public int getIdSerie() {
         return idSerie;
     }
 
+    public void setIdSerie(int idSerie) {
+        this.idSerie = idSerie;
+    }
+
     public String getNomSerie() {
         return nomSerie;
     }
 
-    public ArrayList<Integer> getIdsJeux() {
+    public void setNomSerie(String nomSerie) {
+        this.nomSerie = nomSerie;
+    }
+
+    public List<Integer> getIdsJeux() {
         return idsJeux;
     }
 
-    public SerieJeux(int idSerie, String nomSerie, ArrayList<Integer> idsJeux) {
-        this.idSerie = idSerie;
-        this.nomSerie = nomSerie;
+    public void setIdsJeux(List<Integer> idsJeux) {
         this.idsJeux = idsJeux;
     }
+
+    
  
 
     

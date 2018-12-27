@@ -36,6 +36,7 @@ public class creationCompte extends javax.swing.JFrame {
     public creationCompte(JFrame connectFrame) {
         
         initComponents();
+        MongoDBConnection.connect();
 
         db = MongoDBConnection.getDb();            
         

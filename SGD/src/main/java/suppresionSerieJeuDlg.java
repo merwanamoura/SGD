@@ -44,15 +44,15 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
  public void fillListeJeux()
     {
         
-    MongoCollection<Document> SJ = db.getCollection("seriesJeux");       
+    MongoCollection<Document> SJ = db.getCollection("SerieJeux");       
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
     
         
-        it = SJ.find(eq("nom",nomSerie)).iterator();
+        it = SJ.find(eq("nomSerie",nomSerie)).iterator();
         Document doc = it.next();
       
-        ArrayList<Double> listeJeux = (ArrayList<Double>)doc.get("tabJeux");
+        ArrayList<Double> listeJeux = (ArrayList<Double>)doc.get("idsJeux");
         MongoCollection<Document> jeux = db.getCollection("jeux");
          
          
@@ -90,12 +90,12 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
     {
         if(list.getSelectedValue() != null)
         {
-        MongoCollection<Document> SJ = db.getCollection("seriesJeux");  
+        MongoCollection<Document> SJ = db.getCollection("SerieJeux");  
         MongoCollection<Document> jeux = db.getCollection("jeux");
         String nameGame = list.getSelectedValue().toString(); 
         MongoCursor<Document> cursor;
         
-        cursor = SJ.find(eq("nom",nomSerie)).iterator();
+        cursor = SJ.find(eq("nomSerie",nomSerie)).iterator();
         Document doc = cursor.next();
         
         MongoCursor<Document> at = jeux.find(eq("nom",nameGame)).iterator();
@@ -104,7 +104,7 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
         int idJeu = (int)jeu.get("idJeu");
        
         Document updatedDocument = SJ.findOneAndUpdate(
-             Filters.eq("nom", nomSerie),
+             Filters.eq("nomSerie", nomSerie),
              new Document("$pull",  
              new BasicDBObject("tabJeux", (idJeu)))
         );
@@ -324,47 +324,6 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_nomJeuTextKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(suppresionSerieJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(suppresionSerieJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(suppresionSerieJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(suppresionSerieJeuDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                suppresionSerieJeuDlg dialog = new suppresionSerieJeuDlg(new javax.swing.JFrame(), true,"wollah");
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel botPanel;

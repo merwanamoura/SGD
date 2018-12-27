@@ -44,6 +44,7 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     public AjouterJeuSerieDlg(java.awt.Frame parent, boolean modal,String nomSerie) {
         super(parent, modal);
         initComponents();
+        MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
         this.nomSerie = nomSerie;
 
@@ -56,19 +57,20 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         
         
         MongoCollection<Document> jeux = db.getCollection("jeux");    
-        MongoCollection<Document> SJ = db.getCollection("seriesJeux");       
+        MongoCollection<Document> sj = db.getCollection("SerieJeux");       
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
         MongoCursor<Document> cursor;
+        System.out.println("---->" + nomSerie);
+        it = sj.find(eq("nomSerie",nomSerie)).iterator();
         
-        it = SJ.find(eq("nom",nomSerie)).iterator();
         Document doc = it.next();
         
-        ArrayList<Integer> listeJeux = (ArrayList<Integer>)doc.get("tabJeux");
+        ArrayList<Integer> listeJeux = (ArrayList<Integer>)doc.get("idsJeux");
         
 
    
-        List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
+        ArrayList<BasicDBObject> obj = new ArrayList<BasicDBObject>();
         BasicDBObject andQueryIdJeu = new BasicDBObject();
         BasicDBObject andQuery = new BasicDBObject();     
         BasicDBObject andQueryText = new BasicDBObject(); 
@@ -86,13 +88,9 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
             andQuery.put("$and",obj);
 
         }
-        
-        
-        
+      
         cursor = jeux.find(andQuery).iterator();
        
-
-        
         while (cursor.hasNext()) 
         {
             Document dac = cursor.next();
@@ -356,48 +354,6 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_saisieKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AjouterJeuSerieDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AjouterJeuSerieDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AjouterJeuSerieDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AjouterJeuSerieDlg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AjouterJeuSerieDlg dialog = new AjouterJeuSerieDlg(new javax.swing.JFrame(), true,"Le Vampire");
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel botPanel;
