@@ -228,29 +228,32 @@ public class Users {
     }
     
     public void createAvis(String str, int idJeu){
+        Avis av = new Avis(this.idU,idJeu);
+        if(!av.exist()){
+            try{
+                MongoDatabase db = MongoDBConnection.getDb();
+                MongoCollection<Document> collection = db.getCollection(Avis.nomCollection);
+
+                Document doc = new Document(Avis.idUserCollection , idU);
+                doc.append(Avis.idJeuCollection  , idJeu);
+                doc.append(Avis.avisCollection  , str);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+
+                Date d = new Date();
+                Date dateS = new Date();
+                try {
+                    dateS = dateFormat.parse(d.toString());
+                } catch (ParseException ex) {
+                }
+
+
+                doc.append(Avis.dateCollection , dateS);
+
+                collection.insertOne(doc);
+            }catch(IllegalArgumentException e){}
+        }
         
-        try{
-            MongoDatabase db = MongoDBConnection.getDb();
-            MongoCollection<Document> collection = db.getCollection(Avis.nomCollection);
-
-            Document doc = new Document(Avis.idUserCollection , idU);
-            doc.append(Avis.idJeuCollection  , idJeu);
-            doc.append(Avis.avisCollection  , str);
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
-
-            Date d = new Date();
-            Date dateS = new Date();
-            try {
-                dateS = dateFormat.parse(d.toString());
-            } catch (ParseException ex) {
-            }
-
-
-            doc.append(Avis.dateCollection , dateS);
-
-            collection.insertOne(doc);
-        }catch(IllegalArgumentException e){}
         
         
     }

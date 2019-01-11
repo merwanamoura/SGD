@@ -4,7 +4,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import java.util.List;
 import java.util.Objects;
 import org.bson.BsonString;
 import org.bson.Document;
@@ -37,6 +39,38 @@ public class Avis {
         this.idJeu = idJeu;
         this.avis = avis;
         this.dateCom = dateCom;
+    }
+    
+    public Avis(int idUser, int idJeu){
+        this.idUser = idUser;
+        this.idJeu = idJeu;
+        MongoDBConnection.connect(); 
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> user = db.getCollection("Avis");
+
+        it = user.find(and(eq("idUser" , idUser),eq("idJeu" , idJeu))).iterator();
+        
+        Document doc = it.next();
+
+        setAvis((String) doc.get("avis"));
+    }
+    
+    public boolean exist() 
+    {
+        boolean bol = false;
+        MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+
+        it = avis.find(and(eq(Avis.idUserCollection , this.idUser),eq(Avis.idJeuCollection , this.idJeu))).iterator();
+        
+        while(it.hasNext()){
+            bol = true;
+        }
+        return bol;
     }
 
     public int getIdUser() {
