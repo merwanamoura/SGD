@@ -38,8 +38,6 @@ public class Avis {
         this.avis = avis;
         this.dateCom = dateCom;
     }
-    
-    
 
     public int getIdUser() {
         return idUser;
@@ -73,48 +71,6 @@ public class Avis {
         this.dateCom = dateCom;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.idUser;
-        hash = 97 * hash + this.idJeu;
-        hash = 97 * hash + Objects.hashCode(this.avis);
-        hash = 97 * hash + (int) (this.dateCom ^ (this.dateCom >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Avis other = (Avis) obj;
-        if (this.idUser != other.idUser) {
-            return false;
-        }
-        if (this.idJeu != other.idJeu) {
-            return false;
-        }
-        if (this.dateCom != other.dateCom) {
-            return false;
-        }
-        if (!Objects.equals(this.avis, other.avis)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Avis{" + "idUser=" + idUser + ", idJeu=" + idJeu + ", avis=" + avis + ", dateCom=" + dateCom + '}';
-    }
-    
     
     
     

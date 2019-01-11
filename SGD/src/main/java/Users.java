@@ -77,41 +77,49 @@ public class Users {
     
     public boolean hasComment(int id){
         boolean bol = false;
-        
-        MongoDatabase db = MongoDBConnection.getDb();
-        
-        MongoCursor<Document> it;
-        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
-        
-        it = avis.find(eq(Avis.idUserCollection , this.idU)).iterator();
-        
-        while(it.hasNext()){
-            Document doc = it.next();
-                        
-            if( (int)doc.get(Avis.idJeuCollection ) == id){
-                bol = true;
+        try{
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+
+            it = avis.find(eq(Avis.idUserCollection , this.idU)).iterator();
+
+            while(it.hasNext()){
+                Document doc = it.next();
+
+                if( (int)doc.get(Avis.idJeuCollection ) == id){
+                    bol = true;
+                }
             }
-        }
- 
+
+            
+        }catch(IllegalArgumentException e){}
         return bol;
     }
     
+    
+    
     public String getAvis(int idJeu){
         String str = "";
-        MongoDatabase db = MongoDBConnection.getDb();
         
-        MongoCursor<Document> it;
-        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+        try{
+           MongoDatabase db = MongoDBConnection.getDb();
         
-        it = avis.find(eq(Avis.idUserCollection  , this.idU)).iterator();
+            MongoCursor<Document> it;
+            MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+
+            it = avis.find(eq(Avis.idUserCollection  , this.idU)).iterator();
+
+            while(it.hasNext()){
+                Document doc = it.next();
+
+                if( (int)doc.get(Avis.idJeuCollection ) == idJeu  ){
+                    str = ((String) doc.get(Avis.avisCollection ));
+                }
+            } 
+        }catch(IllegalArgumentException e){}
         
-        while(it.hasNext()){
-            Document doc = it.next();
-            
-            if( (int)doc.get(Avis.idJeuCollection ) == idJeu  ){
-                str = ((String) doc.get(Avis.avisCollection ));
-            }
-        }
         
         return str;
     }
@@ -119,156 +127,188 @@ public class Users {
     public boolean isFavori(String nomJeu)
     {
         boolean bol = false;
-        for(int i = 0 ; i < listeJeuFavori.size(); i++){
-            if(listeJeuFavori.get(i).equals(nomJeu)) bol = true;
-        }
+        
+        try{
+            for(int i = 0 ; i < listeJeuFavori.size(); i++){
+                if(listeJeuFavori.get(i).equals(nomJeu)) bol = true;
+            }
+        }catch(IllegalArgumentException e){}
+        
+        
         return bol;     
     }
     
     public boolean isLike(String nomJeu)
     {
         boolean bol = false;
-        for(int i = 0 ; i < listeLike.size(); i++){
-            if(listeLike.get(i).equals(nomJeu)) bol = true;
-        }
+        try{
+            for(int i = 0 ; i < listeLike.size(); i++){
+                if(listeLike.get(i).equals(nomJeu)) bol = true;
+            }
+        }catch(IllegalArgumentException e){}
+        
         return bol;     
     }
     
     public boolean isDislike(String nomJeu)
     {
         boolean bol = false;
-        for(int i = 0 ; i < listeDislike.size(); i++){
-            if(listeDislike.get(i).equals(nomJeu)) bol = true;
-        }
+        try{
+            for(int i = 0 ; i < listeDislike.size(); i++){
+                if(listeDislike.get(i).equals(nomJeu)) bol = true;
+            }
+        }catch(IllegalArgumentException e){}
+        
         return bol;     
     }
     
     public void addFavori(String jeu){
-        this.listeJeuFavori.add(jeu);
+        try{
+            this.listeJeuFavori.add(jeu);
+
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$push",  
+                 new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
         
-        MongoDatabase db = MongoDBConnection.getDb();
-        
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$push",  
-             new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
-        );
     }
     
     public void removeFavori(String jeu){
-        this.listeJeuFavori.remove(jeu);
-                                
-        MongoDatabase db = MongoDBConnection.getDb();
+        try{
+            this.listeJeuFavori.remove(jeu);
+
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$pull",  
+                 new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
         
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$pull",  
-             new BasicDBObject("jeuxFavoris", new BsonString(jeu)))
-        );
     }
     
     public void addJeuLike(String jeu)
     {
-        this.listeLike.add(jeu);
+        try{
+            this.listeLike.add(jeu);
+
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$push",  
+                 new BasicDBObject("jeuLike", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
         
-        MongoDatabase db = MongoDBConnection.getDb();
-        
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$push",  
-             new BasicDBObject("jeuLike", new BsonString(jeu)))
-        );
         
     }
     
     public void updateAvis(String str, int idJeu){
-        MongoDatabase db = MongoDBConnection.getDb();
-        
-        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
-        avis.updateOne(and(eq(Avis.idJeuCollection , idJeu),eq(Avis.idUserCollection , idU)), new Document("$set", new Document(Avis.avisCollection , str)));
+        try{
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+            avis.updateOne(and(eq(Avis.idJeuCollection , idJeu),eq(Avis.idUserCollection , idU)), new Document("$set", new Document(Avis.avisCollection , str)));
+        }catch(IllegalArgumentException e){}
     }
     
     public void createAvis(String str, int idJeu){
         
-        MongoDatabase db = MongoDBConnection.getDb();
-        MongoCollection<Document> collection = db.getCollection(Avis.nomCollection);
-        
-        Document doc = new Document(Avis.idUserCollection , idU);
-        doc.append(Avis.idJeuCollection  , idJeu);
-        doc.append(Avis.avisCollection  , str);
-        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
-        
-        Date d = new Date();
-        Date dateS = new Date();
-        try {
-            dateS = dateFormat.parse(d.toString());
-        } catch (ParseException ex) {
-        }
- 
-        
-        doc.append(Avis.dateCollection , dateS);
+        try{
+            MongoDatabase db = MongoDBConnection.getDb();
+            MongoCollection<Document> collection = db.getCollection(Avis.nomCollection);
 
-        collection.insertOne(doc);
+            Document doc = new Document(Avis.idUserCollection , idU);
+            doc.append(Avis.idJeuCollection  , idJeu);
+            doc.append(Avis.avisCollection  , str);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+
+            Date d = new Date();
+            Date dateS = new Date();
+            try {
+                dateS = dateFormat.parse(d.toString());
+            } catch (ParseException ex) {
+            }
+
+
+            doc.append(Avis.dateCollection , dateS);
+
+            collection.insertOne(doc);
+        }catch(IllegalArgumentException e){}
+        
+        
     }
     
     public void addJeuDislike(String jeu)
     {
-        this.listeDislike.add(jeu);
-                
-        MongoDatabase db = MongoDBConnection.getDb();
-        
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$push",  
-             new BasicDBObject("jeuDislike", new BsonString(jeu)))
-        );
-        
+        try{
+            this.listeDislike.add(jeu);
 
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$push",  
+                 new BasicDBObject("jeuDislike", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
     }
     
     public void removeJeuLike(String jeu)
     {
-        this.listeLike.remove(jeu);
-                                
-        MongoDatabase db = MongoDBConnection.getDb();
+        try{
+            this.listeLike.remove(jeu);
+
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$pull",  
+                 new BasicDBObject("jeuLike", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
         
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$pull",  
-             new BasicDBObject("jeuLike", new BsonString(jeu)))
-        );
     }
     
     public void removeJeuDislike(String jeu)
     {
-        this.listeDislike.remove(jeu);
-                        
-        MongoDatabase db = MongoDBConnection.getDb();
+        try{
+            this.listeDislike.remove(jeu);
+
+            MongoDatabase db = MongoDBConnection.getDb();
+
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+
+            Document updatedDocument = user.findOneAndUpdate(
+                 Filters.eq("idA", this.idU),
+                 new Document("$pull",  
+                 new BasicDBObject("jeuDislike", new BsonString(jeu)))
+            );
+        }catch(IllegalArgumentException e){}
         
-        MongoCursor<Document> it;
-        MongoCollection<Document> user = db.getCollection("user");
-        
-        Document updatedDocument = user.findOneAndUpdate(
-             Filters.eq("idA", this.idU),
-             new Document("$pull",  
-             new BasicDBObject("jeuDislike", new BsonString(jeu)))
-        );
         
     }
 
