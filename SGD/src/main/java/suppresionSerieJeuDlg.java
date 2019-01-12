@@ -106,7 +106,7 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
         Document updatedDocument = SJ.findOneAndUpdate(
              Filters.eq("nomSerie", nomSerie),
              new Document("$pull",  
-             new BasicDBObject("tabJeux", (idJeu)))
+             new BasicDBObject("idsJeux", (idJeu)))
         );
         dispose();
         this.setVisible(false);
@@ -255,11 +255,6 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
 
         recherchePanel.add(leftRecherchePanel, java.awt.BorderLayout.WEST);
 
-        nomJeuText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomJeuTextActionPerformed(evt);
-            }
-        });
         nomJeuText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 nomJeuTextKeyPressed(evt);
@@ -314,14 +309,10 @@ public class suppresionSerieJeuDlg extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_supprimerButtonActionPerformed
 
-    private void nomJeuTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomJeuTextActionPerformed
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomJeuTextActionPerformed
-
     private void nomJeuTextKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomJeuTextKeyPressed
 
         // TODO add your handling code here:
+        fillListeJeux();
     }//GEN-LAST:event_nomJeuTextKeyPressed
 
 

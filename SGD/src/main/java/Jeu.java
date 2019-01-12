@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import org.bson.Document;
 
@@ -66,6 +67,24 @@ public class Jeu {
         setNomEditeur((String) doc.get("nomEditeur"));
         setCategorie((String) doc.get("categorie"));
         setImage((String) doc.get("image"));
+    }
+    
+    public boolean isInSerie(){
+        boolean bol = false;
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> sj = db.getCollection("SerieJeux");
+
+        it = sj.find().iterator();
+        
+        while(it.hasNext()){
+            Document doc = it.next();
+            List<Integer> liste = (List<Integer>) doc.get("idsJeux");
+            for(int i = 0; i < liste.size() ; i ++) if( liste.get(i) == this.idJeu ) bol = true;
+        }
+        
+        return bol;
     }
 
     public void setNbLikes(int nbLikes) {

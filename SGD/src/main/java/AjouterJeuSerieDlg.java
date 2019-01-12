@@ -41,12 +41,12 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     ArrayList <Integer> listIdJeu;
     
     
-    public AjouterJeuSerieDlg(java.awt.Frame parent, boolean modal,String nomSerie) {
+    public AjouterJeuSerieDlg(java.awt.Frame parent, boolean modal,String nom) {
         super(parent, modal);
         initComponents();
         MongoDBConnection.connect();
         db = MongoDBConnection.getDb();
-        this.nomSerie = nomSerie;
+        this.nomSerie = nom;
 
         fillListeJeux();
 
@@ -61,7 +61,6 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         DefaultListModel dlm = new DefaultListModel();
         MongoCursor<Document> it;
         MongoCursor<Document> cursor;
-        System.out.println("---->" + nomSerie);
         it = sj.find(eq("nomSerie",nomSerie)).iterator();
         
         Document doc = it.next();
@@ -94,10 +93,14 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         while (cursor.hasNext()) 
         {
             Document dac = cursor.next();
-            File f = new File((String) dac.get("image"));
-            
-            if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon((String) dac.get("image"))));
-            else dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon("imageJeux/default.png")));
+            Jeu jeu = new Jeu((int) dac.get("idJeu"));
+            if(!jeu.isInSerie()){ 
+                File f = new File((String) dac.get("image"));
+
+                if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon((String) dac.get("image"))));
+                else dlm.addElement(new ListEntry((String) dac.get("nom"), new ImageIcon("imageJeux/default.png")));
+            }
+                
         }
         
         list = new JList(dlm);
@@ -114,23 +117,23 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     {
         if(list.getSelectedValue() != null)
         {
-        MongoCollection<Document> SJ = db.getCollection("seriesJeux");  
+        MongoCollection<Document> SJ = db.getCollection("SerieJeux");  
         MongoCollection<Document> jeux = db.getCollection("jeux");
         String nameGame = list.getSelectedValue().toString(); 
         MongoCursor<Document> cursor;
         
-        cursor = SJ.find(eq("nom",nomSerie)).iterator();
+        cursor = SJ.find(eq("nomSerie",nomSerie)).iterator();
         Document doc = cursor.next();
         
         MongoCursor<Document> at = jeux.find(eq("nom",nameGame)).iterator();
-        Document jeu = at.next();
         
-        int idJeu = (int)jeu.get("idJeu");
-       
+        Document j = at.next();
+        Jeu jeu = new Jeu((int) j.get("idJeu"));
+               
         Document updatedDocument = SJ.findOneAndUpdate(
-             Filters.eq("nom", nomSerie),
+             Filters.eq("nomSerie", nomSerie),
              new Document("$push",  
-             new BasicDBObject("tabJeux", (idJeu)))
+             new BasicDBObject("idsJeux", jeu.getIdJeu() ))
         );
         dispose();
         this.setVisible(false);
@@ -154,7 +157,7 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         botPanel = new javax.swing.JPanel();
         leftSpacePanel = new javax.swing.JPanel();
         buttonPannel = new javax.swing.JPanel();
-        supprimerButton = new javax.swing.JButton();
+        ajouterButton = new javax.swing.JButton();
         rightSpacePanel = new javax.swing.JPanel();
         midPanel = new javax.swing.JPanel();
         listeJeuPanel = new javax.swing.JPanel();
@@ -201,10 +204,10 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
 
         botPanel.add(leftSpacePanel);
 
-        supprimerButton.setText("Ajouter");
-        supprimerButton.addActionListener(new java.awt.event.ActionListener() {
+        ajouterButton.setText("Ajouter");
+        ajouterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supprimerButtonActionPerformed(evt);
+                ajouterButtonActionPerformed(evt);
             }
         });
 
@@ -214,14 +217,14 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
             buttonPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPannelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(supprimerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addComponent(ajouterButton, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addContainerGap())
         );
         buttonPannelLayout.setVerticalGroup(
             buttonPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPannelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(supprimerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(ajouterButton, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -282,11 +285,6 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
 
         recherchePanel.add(leftRecherchePanel, java.awt.BorderLayout.WEST);
 
-        saisie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saisieActionPerformed(evt);
-            }
-        });
         saisie.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 saisieKeyPressed(evt);
@@ -334,18 +332,12 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void supprimerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerButtonActionPerformed
+    private void ajouterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterButtonActionPerformed
 
         ajouterGame();
-        
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_supprimerButtonActionPerformed
-
-    private void saisieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saisieActionPerformed
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_saisieActionPerformed
+    }//GEN-LAST:event_ajouterButtonActionPerformed
 
     private void saisieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_saisieKeyPressed
 
@@ -356,6 +348,7 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ajouterButton;
     private javax.swing.JPanel botPanel;
     private javax.swing.JPanel buttonPannel;
     private javax.swing.JPanel general;
@@ -370,7 +363,6 @@ public class AjouterJeuSerieDlg extends javax.swing.JDialog {
     private javax.swing.JPanel rightSpacePanel;
     private javax.swing.JTextField saisie;
     private javax.swing.JScrollPane scrollListeJeux;
-    private javax.swing.JButton supprimerButton;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }

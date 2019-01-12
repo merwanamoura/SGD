@@ -22,6 +22,9 @@ public class SerieJeux {
     private int idSerie;
     private String nomSerie;
     private List<Integer> idsJeux;
+    private String description;
+
+    
     
     public SerieJeux(String nom){
         this.nomSerie = nom;
@@ -37,6 +40,15 @@ public class SerieJeux {
 
         setIdSerie((int)doc.get("idSerie"));
         setIdsJeux((List<Integer>) doc.get("idsJeux"));
+        setDescription((String) doc.get("description"));
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getIdSerie() {

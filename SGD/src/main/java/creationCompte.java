@@ -193,8 +193,10 @@ public class creationCompte extends javax.swing.JFrame {
 
                                System.out.println("Le pseudo n'existe pas encore");
                                
+                               int id = (int)collection.count();
+                               
                                List<BasicDBObject> list = new ArrayList<>();
-                               Document doc = new Document("idA",(int)collection.count())
+                               Document doc = new Document("idA",id)
                                               .append("name", new Document("first",prenom).append("last", nom))
                                               .append("pseudo",pseudo)
                                               .append("passWord",pwd)
@@ -215,8 +217,8 @@ public class creationCompte extends javax.swing.JFrame {
                                previousFrame.dispose();
                                this.dispose();
 
-                               pageAcceuil pa= new pageAcceuil((int)collection.count(),false);
-                               pa.show();
+                               pageAcceuil pa= new pageAcceuil(id,false);
+                               pa.setVisible(true);
 
                           }
 

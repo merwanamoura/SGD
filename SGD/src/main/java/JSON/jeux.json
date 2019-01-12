@@ -7,8 +7,7 @@
     "prix": 49.59,
     "dateSortie": ISODate('2018-11-17T00:00:00.000Z'),
     "image": "imageJeux/fifa19.jpeg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 11
   },
   {
     "idJeu": 1,
@@ -18,8 +17,7 @@
     "prix": 59.99,
     "dateSortie": ISODate('2017-12-14T00:00:00.000Z'),
     "image": "imageJeux/fifa18.jpg",
-    "prix" : 29.99,
-    "idA" : 1  
+    "idA" : 11  
   },
   {
     "idJeu": 2,
@@ -29,8 +27,7 @@
     "prix": 24.99,
     "dateSortie": ISODate('1992-12-11T00:00:00.000Z'),
     "image":"imageJeux/2k92.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 11
   },
   {
     "idJeu": 3,
@@ -40,8 +37,7 @@
     "prix": 34.99,
     "dateSortie": ISODate('2016-06-15T00:00:00.000Z'),
     "image": "imageJeux/poke.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 26
   },
   {
     "idJeu": 4,
@@ -51,8 +47,7 @@
     "prix":5.99,
     "dateSortie": ISODate('1994-08-29T00:00:00.000Z'),
     "image": "../defaultImage.png",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 26
   },
   {
     "idJeu": 5,
@@ -62,8 +57,7 @@
     "prix": 29.99,
     "dateSortie": ISODate('2012-05-12T00:00:00.000Z'),
     "image": "imageJeux/tetris.jpeg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 14
   },
   {
     "idJeu": 6,
@@ -73,8 +67,7 @@
     "prix": 9.99,
     "dateSortie": ISODate('2017-10-17T00:00:00.000Z'),
     "image": "imageJeux/fortnite.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 26
   },
   {
     "idJeu": 7,
@@ -84,8 +77,7 @@
     "prix": 4.99,
     "dateSortie": ISODate('2004-11-05T00:00:00.000Z'),
     "image": "imageJeux/pes2005.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 11
   },
   {
     "idJeu": 8,
@@ -95,8 +87,7 @@
     "prix": 59.99,
     "dateSortie": ISODate('2016-04-22T00:00:00.000Z'),
     "image":"imageJeux/gow3.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 14
   },
   {
     "idJeu": 9,
@@ -106,8 +97,7 @@
     "prix": 29.99,
     "dateSortie": ISODate('2013-09-13T00:00:00.000Z'),
     "image": "../defaultImage.png",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 11
   },
   {
     "idJeu": 10,
@@ -117,8 +107,7 @@
     "prix": 23.99,
     "dateSortie": ISODate('2017-11-07T00:00:00.000Z'),
     "image": "../defaultImage.png",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 14
   },
   {
     "idJeu": 11,
@@ -128,8 +117,7 @@
     "prix": 23.99,
     "dateSortie": ISODate('2006-06-16T00:00:00.000Z'),
     "image": "imageJeux/fifa14.jpeg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 26
   },
   {
     "idJeu": 12,
@@ -139,8 +127,7 @@
     "prix": 69.99,
     "dateSortie": ISODate('2015-11-08T00:00:00.000Z'),
     "image": "imageJeux/gta5.jpg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 14
   },
   {
     "idJeu": 13,
@@ -150,8 +137,7 @@
     "prix": 19.99,
     "dateSortie": ISODate('2014-12-18T00:00:00.000Z'),
     "image": "imageJeux/lapin.jpeg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 26
   },
   {
     "idJeu": 14,
@@ -161,7 +147,6 @@
     "prix": 39.99,
     "dateSortie": ISODate('2016-11-13T00:00:00.000Z'),
     "image": "imageJeux/fifa16.jpeg",
-    "prix" : 29.99,
-    "idA" : 1
+    "idA" : 11
   }
 ]

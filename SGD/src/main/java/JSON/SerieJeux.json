@@ -2,11 +2,14 @@
   {
     "idSerie": 0,
     "nomSerie": "FIFA",
-    "idsJeux": [0,1,9,14]
+    "idsJeux": [0,1,9,14],
+    "description" : "Fifa est un jeu de foot, chaque version représente une amélioration du jeu ainsi que la mise à jour des capacités des joueurs ainsi que leur design."
   },
   {
     "idSerie": 1,
     "nomSerie": "NBA 2K",
-    "idsJeux": [2]
+    "idsJeux": [2],
+    "description" : "Le jeu de basket le plus populaire du marché, chaque nouvelle version est une amélioration de la précédente."
+
   }
 ]

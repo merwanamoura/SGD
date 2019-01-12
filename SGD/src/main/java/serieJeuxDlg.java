@@ -90,6 +90,9 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         };
         list.addMouseListener(mouseListener);
         
+        list.setSelectedIndex(0);
+        refresh( list.getSelectedValue().toString() );
+        
         scrollLesSeries.add(list); 
         scrollLesSeries.setViewportView(list);
         
@@ -173,12 +176,14 @@ public class serieJeuxDlg extends javax.swing.JDialog {
     {      
         SerieJeux serie = new SerieJeux(nomSerieJeu);
 
-        String description = serie.getNomSerie();
+        String description = serie.getDescription();
+        descriptionText.setLineWrap(true);
         descriptionText.setText(description);
 
         JLabel label2 = new JLabel(new ImageIcon("imageJeux/default.png"));
         panelImage.add(label2);
-        panelImage.repaint();panelImage.revalidate();
+        panelImage.repaint();
+        panelImage.revalidate();
 
         fillListeJeux(nomSerieJeu);
 
