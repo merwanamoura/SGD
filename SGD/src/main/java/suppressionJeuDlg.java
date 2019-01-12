@@ -83,10 +83,62 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
     {
         if(list.getSelectedValue() != null)
         {
-        MongoCollection<Document> jeux = db.getCollection("jeux");
-        String nameGame = list.getSelectedValue().toString(); 
-        jeux.deleteOne(eq("nom",nameGame));
-        fillListGames();
+            //on supprime le jeu 
+            
+            MongoCollection<Document> jeux = db.getCollection("jeux");
+            String nameGame = list.getSelectedValue().toString(); 
+            System.out.println("--->" + nameGame);
+ 
+            MongoCursor<Document> cursor;
+            cursor = (MongoCursor<Document>) jeux.find(eq("nom",nameGame)).iterator();
+            Document document = cursor.next();
+            Jeu jeu = new Jeu((int) document.get("idJeu"));
+            
+            jeux.deleteOne(eq("nom",nameGame));
+            fillListGames();
+            
+            //on supprime le jeu des favoris, like et dislike de chaque utilisateur
+            
+            MongoCursor<Document> it;
+            MongoCollection<Document> user = db.getCollection("user");
+            it = (MongoCursor<Document>) user.find().iterator();
+            while(it.hasNext()){
+                Document doc = it.next();
+                Users us = new Users((int) doc.get("idA"));
+                
+                if(us.isLike(nameGame)) us.removeJeuLike(nameGame);
+                if(us.isDislike(nameGame)) us.removeJeuDislike(nameGame);
+                if(us.isFavori(nameGame)) us.removeFavori(nameGame);
+                
+            }
+            
+            //on supprime le jeu si il appartient a une série de jeu
+            
+            MongoCursor<Document> it3;
+            MongoCollection<Document> sj = db.getCollection("SerieJeux");
+            it3 = (MongoCursor<Document>) sj.find().iterator();
+            
+            while(it3.hasNext()){
+                Document doc = it3.next();
+                SerieJeux serie = new SerieJeux((String) doc.get("nomSerie"));
+                
+                if(serie.isInSerie(jeu.getIdJeu())) serie.supprimerJeu(jeu.getIdJeu());
+                
+                System.out.println("is in serie---->" + serie.isInSerie(1));
+                
+            }
+            
+            //on supprime tous les avis du jeu
+            
+            jeu.removeAllAvis();
+            
+            //on supprime la note
+            
+            jeu.removeNote();
+            
+            //on supprime la note
+            
+            jeu.removeDescription();
         }
         else
         {

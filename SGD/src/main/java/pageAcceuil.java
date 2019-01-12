@@ -248,15 +248,20 @@ public class pageAcceuil extends javax.swing.JFrame {
 
     }
         
+    public void refreshListe(){
+        fillJlistRecent(db);
+        fillJlistPopular(db);
+        fillJlistComments(db);
+    }
         
-        public void ajoutSuppressionButton()
+    public void ajoutSuppressionButton()
+    {
+        if(!isAdmin)
         {
-            if(!isAdmin)
-            {
-                ajoutButton.setVisible(false);
-                SuppressionButton.setVisible(false);
-            }
+            ajoutButton.setVisible(false);
+            SuppressionButton.setVisible(false);
         }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -631,6 +636,7 @@ public class pageAcceuil extends javax.swing.JFrame {
 
         suppressionJeuDlg sjd = new suppressionJeuDlg(this,true);
         sjd.setVisible(true);
+        refreshListe();
         // TODO add your handling code here:
     }//GEN-LAST:event_SuppressionButtonActionPerformed
 

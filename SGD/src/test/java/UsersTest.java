@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
+/** 
  *
  * @author ai265149
  */
@@ -137,18 +137,6 @@ public class UsersTest {
         boolean result = us.isLike(nomJeu);
         assertEquals(expResult, result);
         us.removeJeuLike(nomJeu);
-    }
-
-    /**
-     * Test of updateAvis method, of class Users.
-     */
-    @Test
-    public void testUpdateAvis() {
-        String ancienAvis = av.getAvis();
-        us.updateAvis("c'est très bien",idJeu); 
-        String expResult = "c'est bien";
-        assertEquals(expResult, av.getAvis());
-        us.updateAvis(ancienAvis,idJeu);
     }
 
     /**

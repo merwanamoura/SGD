@@ -30,6 +30,8 @@ public class Jeu {
   private String image;
   private int nbLikes;
   private int nbDislikes;
+  
+  private MongoDatabase db;
 
    
 
@@ -56,23 +58,27 @@ public class Jeu {
     {
         this.idJeu=id;
         
+        db = MongoDBConnection.getDb();
+        
         MongoCursor<Document> it;
-        MongoCollection<Document> jeux = MongoDBConnection.getDb().getCollection("jeux");
+        MongoCollection<Document> jeux = db.getCollection("jeux");
 
         it = jeux.find(eq("idJeu" , id)).iterator();
-        
-        Document doc = it.next();
+        while(it.hasNext()){
+           Document doc = it.next();
 
         setNom((String) doc.get("nom"));
         setNomEditeur((String) doc.get("nomEditeur"));
         setCategorie((String) doc.get("categorie"));
-        setImage((String) doc.get("image"));
+        setImage((String) doc.get("image")); 
+        }
+        
+        
     }
     
     public boolean isInSerie(){
         boolean bol = false;
         
-        MongoDatabase db = MongoDBConnection.getDb();
         MongoCursor<Document> it;
         MongoCollection<Document> sj = db.getCollection("SerieJeux");
 
@@ -80,10 +86,10 @@ public class Jeu {
         
         while(it.hasNext()){
             Document doc = it.next();
-            List<Integer> liste = (List<Integer>) doc.get("idsJeux");
-            for(int i = 0; i < liste.size() ; i ++) if( liste.get(i) == this.idJeu ) bol = true;
+            SerieJeux serie = new SerieJeux((String) doc.get("nomSerie"));
+            for(int i = 0; i < serie.getIdsJeux().size() ; i ++) if( serie.getIdsJeux().get(i) == this.idJeu ) bol = true;
         }
-        
+        System.out.println("c'est " + bol);
         return bol;
     }
 
@@ -97,6 +103,8 @@ public class Jeu {
     
     public Jeu(Document doc)
     {
+        db = MongoDBConnection.getDb();
+        
         if(doc.get("idJeu") instanceof Integer)
         {
             setIdJeu((int)doc.get("idJeu"));
@@ -112,6 +120,43 @@ public class Jeu {
         setCategorie((String) doc.get("categorie"));
         setImage((String) doc.get("image"));
   
+    }
+    
+    public void removeAllAvis(){
+        MongoCollection<Document> avis = db.getCollection("Avis");
+
+        MongoCursor<Document> cursor;
+        cursor = (MongoCursor<Document>) avis.find(eq("idJeu",idJeu)).iterator();
+        
+        while(cursor.hasNext()){
+            Document document = cursor.next();
+            avis.deleteOne(eq("idJeu",idJeu)); 
+        }
+        
+    }
+    
+    public void removeNote(){
+        MongoCollection<Document> note = db.getCollection("Note");
+
+        MongoCursor<Document> cursor;
+        cursor = (MongoCursor<Document>) note.find(eq("idJeu",idJeu)).iterator();
+        
+        while(cursor.hasNext()){
+            Document document = cursor.next();
+            note.deleteOne(eq("idJeu",idJeu)); 
+        }
+    }
+    
+    public void removeDescription(){
+        MongoCollection<Document> desc = db.getCollection("description");
+
+        MongoCursor<Document> cursor;
+        cursor = (MongoCursor<Document>) desc.find(eq("idJeu",idJeu)).iterator();
+        
+        while(cursor.hasNext()){
+            Document document = cursor.next();
+            desc.deleteOne(eq("idJeu",idJeu)); 
+        }
     }
     
     public void setIdJeu(int idJeu) {
@@ -142,7 +187,7 @@ public class Jeu {
     {
         int annee =2000;
         MongoCursor<Document> it;
-        MongoCollection<Document> jeux = MongoDBConnection.getDb().getCollection("jeux");
+        MongoCollection<Document> jeux = db.getCollection("jeux");
 
         it = jeux.find(eq("idJeu" , idJeu)).iterator();
         Document doc = it.next();
@@ -161,7 +206,7 @@ public class Jeu {
     {
         
         MongoCursor<Document> it;
-        MongoCollection<Document> note = MongoDBConnection.getDb().getCollection("Note");
+        MongoCollection<Document> note = db.getCollection("Note");
 
         it = note.find(eq("idJeu" , this.idJeu)).iterator();
         

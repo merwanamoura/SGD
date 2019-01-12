@@ -51,10 +51,11 @@ public class Avis {
         MongoCollection<Document> user = db.getCollection("Avis");
 
         it = user.find(and(eq("idUser" , idUser),eq("idJeu" , idJeu))).iterator();
+        while(it.hasNext()){
+            Document doc = it.next();
+            setAvis((String) doc.get("avis"));
+        }
         
-        Document doc = it.next();
-
-        setAvis((String) doc.get("avis"));
     }
     
     public boolean exist() 
