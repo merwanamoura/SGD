@@ -4,7 +4,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import java.util.List;
 import java.util.Objects;
 import org.bson.BsonString;
 import org.bson.Document;
@@ -39,7 +41,37 @@ public class Avis {
         this.dateCom = dateCom;
     }
     
+    public Avis(int idUser, int idJeu){
+        this.idUser = idUser;
+        this.idJeu = idJeu;
+        MongoDBConnection.connect(); 
+        
+        MongoDatabase db = MongoDBConnection.getDb();
+        MongoCursor<Document> it;
+        MongoCollection<Document> user = db.getCollection("Avis");
+
+        it = user.find(and(eq("idUser" , idUser),eq("idJeu" , idJeu))).iterator();
+        
+        Document doc = it.next();
+
+        setAvis((String) doc.get("avis"));
+    }
     
+    public boolean exist() 
+    {
+        boolean bol = false;
+        MongoDatabase db = MongoDBConnection.getDb();
+
+        MongoCursor<Document> it;
+        MongoCollection<Document> avis = db.getCollection(Avis.nomCollection);
+
+        it = avis.find(and(eq(Avis.idUserCollection , this.idUser),eq(Avis.idJeuCollection , this.idJeu))).iterator();
+        
+        while(it.hasNext()){
+            bol = true;
+        }
+        return bol;
+    }
 
     public int getIdUser() {
         return idUser;
@@ -73,48 +105,6 @@ public class Avis {
         this.dateCom = dateCom;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.idUser;
-        hash = 97 * hash + this.idJeu;
-        hash = 97 * hash + Objects.hashCode(this.avis);
-        hash = 97 * hash + (int) (this.dateCom ^ (this.dateCom >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Avis other = (Avis) obj;
-        if (this.idUser != other.idUser) {
-            return false;
-        }
-        if (this.idJeu != other.idJeu) {
-            return false;
-        }
-        if (this.dateCom != other.dateCom) {
-            return false;
-        }
-        if (!Objects.equals(this.avis, other.avis)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Avis{" + "idUser=" + idUser + ", idJeu=" + idJeu + ", avis=" + avis + ", dateCom=" + dateCom + '}';
-    }
-    
     
     
     

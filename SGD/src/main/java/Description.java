@@ -36,33 +36,6 @@ public class Description {
         this.synopsis = synopsis;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Description other = (Description) obj;
-        if (this.idJeu != other.idJeu) {
-            return false;
-        }
-        if (!Objects.equals(this.synopsis, other.synopsis)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Description{" + "idJeu=" + idJeu + ", synopsis=" + synopsis + '}';
-    }
-    
-    
     
     
 }

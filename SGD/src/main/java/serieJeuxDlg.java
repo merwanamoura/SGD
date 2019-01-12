@@ -95,7 +95,7 @@ public class serieJeuxDlg extends javax.swing.JDialog {
         
         scrollLesSeries.add(list); 
         scrollLesSeries.setViewportView(list);
-        
+        list.setSelectedIndex(0);
     }
     
     public void fillListeJeux(String nomSerie)
