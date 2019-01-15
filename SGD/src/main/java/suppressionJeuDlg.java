@@ -102,9 +102,20 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
             MongoCursor<Document> it;
             MongoCollection<Document> user = db.getCollection("user");
             it = (MongoCursor<Document>) user.find().iterator();
+            
             while(it.hasNext()){
                 Document doc = it.next();
-                Users us = new Users((int) doc.get("idA"));
+                int idJeu;
+            if( doc.get("idA") instanceof Double )
+            {
+                idJeu = ((Double)doc.get("idA")).intValue();
+            }
+            else 
+            {
+                idJeu = (int) doc.get("idA");
+            }
+            
+                Users us = new Users(idJeu );
                 
                 if(us.isLike(nameGame)) us.removeJeuLike(nameGame);
                 if(us.isDislike(nameGame)) us.removeJeuDislike(nameGame);
@@ -124,7 +135,6 @@ public class suppressionJeuDlg extends javax.swing.JDialog {
                 
                 if(serie.isInSerie(jeu.getIdJeu())) serie.supprimerJeu(jeu.getIdJeu());
                 
-                System.out.println("is in serie---->" + serie.isInSerie(1));
                 
             }
             

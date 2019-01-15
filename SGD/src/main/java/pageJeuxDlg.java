@@ -425,7 +425,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
         
         for(int i=0;i<listEditeurs.size();i++) listEditeurs.remove(i);
         
-        for(int i=0;i<LesEditeurs.getComponentCount()-1;i++)
+        for(int i=0;i<LesEditeurs.getComponentCount();i++)
         {
             if(((JCheckBox)LesEditeurs.getComponent(i)).isSelected())
             {
@@ -435,7 +435,7 @@ public class pageJeuxDlg extends javax.swing.JDialog {
         
         for(int i=0;i<listCategorie.size();i++) listCategorie.remove(i);
         listCategorie.clear();
-        for(int i=0;i<lesCategories.getComponentCount()-1;i++)
+        for(int i=0;i<lesCategories.getComponentCount();i++)
         {
             if(((JCheckBox)lesCategories.getComponent(i)).isSelected())
             {

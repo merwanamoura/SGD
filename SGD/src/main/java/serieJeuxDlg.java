@@ -122,6 +122,8 @@ public class serieJeuxDlg extends javax.swing.JDialog {
 
             if(f.exists() && !f.isDirectory())dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon(jeu.getImage())));
             else dlm.addElement(new ListEntry(jeu.getNom(), new ImageIcon("imageJeux/default.png")));
+            
+            
         }
          
         

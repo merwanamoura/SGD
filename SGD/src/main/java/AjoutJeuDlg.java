@@ -130,14 +130,18 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
     {
         MongoCollection<Document> jeux = db.getCollection("jeux");
         
-        AggregateIterable<Document> output = jeux.aggregate(Arrays.asList(
+      //  AggregateIterable<Document> output = jeux.aggregate(Arrays.asList(
                 
-           Aggregates.group("idJeu", Accumulators.sum("count", 1))
-        ));
+           //Aggregates.group("idJeu", Accumulators.sum("count", 1))
+        //));
       
-            int id = (int)output.iterator().next().get("count");
-           
-            id++;
+           // int id = (int)output.iterator().next().get("count");
+        MongoCursor<Document> it;
+
+
+            it = jeux.find().sort(new BasicDBObject("idJeu",-1)).limit(1).iterator();
+            Document idDoc = it.next();
+            int id = (int)idDoc.get("idJeu")+1;
             
             Document doc = new Document();
             doc.append("idJeu", id);
@@ -146,10 +150,28 @@ public class AjoutJeuDlg extends javax.swing.JDialog {
             doc.append("dateSortie",dateS);
             doc.append("categorie",categorie); 
             doc.append("image", pathImage);
-            doc.append("description", descriptionJeu);
+            /*doc.append("description", descriptionJeu);*/
             doc.append("idA", idUser);
             jeux.insertOne(doc); 
             test = true;
+            
+            MongoCollection<Document> d = db.getCollection("description");
+
+            Document desc = new Document();
+            desc.append("idJeu",id);
+            desc.append("synopsis",descriptionJeu);
+            
+            d.insertOne(desc);
+            
+            Document note = new Document();
+
+            note.append("idJeu",id);
+            note.append("nbLikes", 0);
+            note.append("nbDislikes", 0);
+            
+            MongoCollection<Document> n = db.getCollection("Note");
+            n.insertOne(note);
+
         
        /* champs description a ajouter */
     }

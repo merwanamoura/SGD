@@ -33,7 +33,7 @@ import java.util.Arrays;
 public class MongoDBConnection {
     
     static MongoDatabase db;
-      /*
+      
     static void connect()
     {
         char[] pass = new char[10];
@@ -44,12 +44,7 @@ public class MongoDBConnection {
         db = client.getDatabase("ma522501");
      
     } 
-*/ 
-    static void connect()
-    {
-        MongoClient client = new MongoClient("localhost");
-        db = client.getDatabase("ma522501");
-    }
+
 
     public static MongoDatabase getDb() {
         return db;
